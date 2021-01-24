@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get ('/',[ProductController::class, 'index'] )->name('index');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [ProductController::class, 'for_user'])->name('dashboard');
+Route::get ('product/{id}/edit',[ProductController::class, 'edit'] )->name('edit_product');
+Route::patch ('product/{id}/update',[ProductController::class, 'update'] )->name('update_product');
+Route::delete ('product/{id}/destroy',[ProductController::class, 'destroy'] )->name('destroy_product');
