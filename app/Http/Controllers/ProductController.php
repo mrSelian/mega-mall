@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -13,15 +14,13 @@ class ProductController extends Controller
         return view('index', compact('products'));
     }
 
-    public function create()
+    public function store(CreateProductRequest $request)
     {
-        return view('create_product');
-    }
+        $request->user()->products()->create($request->all()
 
-    public function store(Request $request)
-    {
-        Product::create($request->all());
-        return redirect('/')->with('success', 'Товар добавлен успешно.');
+        );
+
+        return redirect('/dashboard');
     }
 
     public function edit($id)

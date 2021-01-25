@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-sm-8 offset-sm-2">
             <h1 class="display-3">Редактировать Товар </h1>
-
+            @include('layouts.errors')
 
             <form method="post" action="{{ route('update_product', $product->id ) }}">
                 @method('PATCH')
@@ -15,7 +15,7 @@
                 </div>
 
                 <div class="price">
-                    <label for="full_specification">Описание:</label>
+                    <label for="full_specification">Цена:</label>
                     <input type="text" class="form-control" name="price" value="{{ $product->price }}" dusk="description-field" />
                 </div>
 
