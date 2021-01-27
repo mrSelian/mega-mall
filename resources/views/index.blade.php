@@ -429,6 +429,7 @@
                     <td>{{$product->name}}</td>
                     <td><img src="{{$product->main_photo_path}}" width="120px" height="120px"> </td>
                     <td>{{$product->price}} RUR</td>
+                    <td> <a href="/product/{{$product->id}}">Подробнее</a></td>
 
                 </tr>
             @endforeach
