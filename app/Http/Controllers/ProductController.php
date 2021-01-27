@@ -64,6 +64,6 @@ class ProductController extends Controller
         $products = $request->user()->products()->get();
 
 
-        return view('dashboard', compact('products'));
+        return view('seller', compact('products'));
     }
 }
