@@ -4,6 +4,6 @@
             {{ __('Корзина') }}
         </h2>
     </x-slot>
-    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">Позже здесь будет корзина</div>
+    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">Общая сумма {{session('total')}} RUR </div>
 
 </x-app-layout>
