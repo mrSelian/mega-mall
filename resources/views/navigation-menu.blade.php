@@ -16,6 +16,13 @@
                         {{ __('Магазин') }}
                     </x-jet-nav-link>
                 </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('cart') }}" :active="request()->routeIs('cart')">
+                        {{ __('Корзина') }}
+                    </x-jet-nav-link>
+                </div>
+
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Кабинет покупателя') }}
@@ -110,13 +117,6 @@
                                 {{ __('Профиль') }}
                             </x-jet-dropdown-link>
 
-                            <x-jet-dropdown-link href="{{ route('dashboard') }}">
-                                {{ __('Кабинет Покупателя') }}
-                            </x-jet-dropdown-link>
-
-                            <x-jet-dropdown-link href="{{ route('seller') }}">
-                                {{ __('Кабинет Продавца') }}
-                            </x-jet-dropdown-link>
 
 
 
@@ -158,9 +158,7 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-jet-responsive-nav-link>
+
         </div>
 
         <!-- Responsive Settings Options -->
@@ -182,6 +180,23 @@
                 <!-- Account Management -->
                 <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                     {{ __('Профиль') }}
+                </x-jet-responsive-nav-link>
+
+                <x-jet-responsive-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                    {{ __('Магазин') }}
+                </x-jet-responsive-nav-link>
+
+
+                <x-jet-responsive-nav-link href="{{ route('cart') }}" :active="request()->routeIs('cart')">
+                    {{ __('Корзина') }}
+                </x-jet-responsive-nav-link>
+
+                <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                    {{ __('Кабинет Покупателя') }}
+                </x-jet-responsive-nav-link>
+
+                <x-jet-responsive-nav-link href="{{ route('seller') }}" :active="request()->routeIs('seller')">
+                    {{ __('Кабинет Продавца') }}
                 </x-jet-responsive-nav-link>
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())

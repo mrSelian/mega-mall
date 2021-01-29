@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/', [ProductController::class, 'index'])->name('index');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('cart', [CartController::class, 'index'])->name('cart');
 
 Route::post('/product/create', [ProductController::class, 'store'])->name('store');
 
