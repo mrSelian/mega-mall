@@ -8,7 +8,8 @@
         @php
        // var_dump(session('cart'));
         @endphp
-  {{$totalPrice}}
+  Итоговая сумма: {{$totalPrice}} RUR
+
 
 
     </div>
