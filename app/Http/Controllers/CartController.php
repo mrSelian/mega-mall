@@ -47,6 +47,8 @@ class CartController extends Controller
         $cart = new Cart();
 
         $cart->clear();
+
+        return view('cart');
     }
 
 }

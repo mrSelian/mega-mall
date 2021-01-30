@@ -6,13 +6,13 @@ namespace App;
 
 class Product
 {
-    public int $id;
-    public string $name;
-    public string $main_photo_path;
-    public int $price;
-    public int $quantity;
-    public string $full_specification;
-    public int $user_id;
+    private int $id;
+    private string $name;
+    private string $main_photo_path;
+    private int $price;
+    private int $quantity;
+    private string $full_specification;
+    private int $user_id;
 
     public function __construct($productRec)
     {
@@ -24,6 +24,42 @@ class Product
         $this->full_specification = $productRec->full_specification;
         $this->user_id = $productRec->user_id;
     }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getPhoto()
+    {
+        return $this->main_photo_path;
+    }
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function getQuantitty()
+    {
+        return $this->quantity;
+    }
+
+    public function getFullSpec()
+    {
+        return $this->full_specification;
+    }
+
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
+
 
     public function qtyIsAvailable(int $qty)
     {

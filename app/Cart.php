@@ -38,7 +38,7 @@ class Cart
         $totalPrice = 0;
 
         foreach ($this->products as $product => $qty) {
-            $totalPrice = $totalPrice + ($product->price * $qty);
+            $totalPrice = $totalPrice + ($product->getPrice() * $qty);
         }
 
         return $totalPrice;
@@ -48,7 +48,7 @@ class Cart
     {
         $id = $productRec->id;
         foreach ($this->products as $product => $qty) {
-            if ($product->id = $id) return $product;
+            if ($product->getId() == $id) return $product;
         }
         $product = new Product($productRec);
         array_push($this->products, [$product] = 0);
@@ -70,7 +70,7 @@ class Cart
 
 
         } else {
-            //Exception
+            throw new \Exception('Запрашиваемое количество товара больше остатка !');
         }
     }
 
