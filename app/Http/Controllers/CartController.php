@@ -3,28 +3,50 @@
 namespace App\Http\Controllers;
 
 
+use App\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 
 class CartController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        if (!$request->session()->has('total'))
-            session(['total' => 0]);
+        $cart = new Cart();
+        $totalPrice = $cart->calcTotalPrice();
+
+        return view('cart', compact('totalPrice'));
+    }
+
+
+    public function addProduct(Request $request)
+    {
+        $productRec = Product::where('id', $request->id)->firstOrFail();
+
+        $cart = new Cart();
+
+        $cart->addToCart($productRec);
 
         return view('cart');
     }
 
-    public function addToCart(Request $request)
+
+    public function removeProduct(Request $request)
     {
-        $product = Product::where('id', $request->id)->first();
+        $productRec = Product::where('id', $request->id)->firstOrFail();
 
-// дописать
+        $cart = new Cart();
 
+        $cart->removeFromCart($productRec);
 
         return view('cart');
+    }
+
+    public function clearCart()
+    {
+        $cart = new Cart();
+
+        $cart->clear();
     }
 
 }
