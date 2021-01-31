@@ -5,9 +5,11 @@
         </h2>
     </x-slot>
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+        @include('layouts.errors')
         @php
             echo '<pre>';
            var_dump(session('cart'));
+
         @endphp
   Итоговая сумма: {{$totalPrice}} RUR
         <br>
