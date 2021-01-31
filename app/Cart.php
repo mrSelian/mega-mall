@@ -99,4 +99,10 @@ class Cart
         }
         $this->toSession();
     }
+
+    public function toOrder()
+    {
+        if ($this->products==[]) throw new \Exception('В корзине нет товаров для заказа !');
+        dd('Тут будет страница заказа !');
+    }
 }

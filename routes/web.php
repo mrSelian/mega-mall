@@ -23,6 +23,8 @@ Route::middleware(['auth:sanctum', 'verified'])->post('cart/clear', [CartControl
 
 Route::middleware(['auth:sanctum', 'verified'])->post('cart/actualize', [CartController::class, 'actualize'])->name('actualize_cart');
 
+Route::middleware(['auth:sanctum', 'verified'])->post('cart/to-order', [CartController::class, 'toOrder'])->name('cart_to_order');
+
 Route::middleware(['auth:sanctum', 'verified'])->post('product/{id}/add-to-cart', [CartController::class, 'addProduct'])->name('add_to_cart');
 
 Route::middleware(['auth:sanctum', 'verified'])->post('product/{id}/remove-from-cart', [CartController::class, 'removeProduct'])->name('remove_from_cart');

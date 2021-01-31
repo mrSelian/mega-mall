@@ -67,4 +67,11 @@ class CartController extends Controller
         return redirect('/cart');
     }
 
+    public function toOrder(Request $request)
+    {
+        $cart = $request->session()->get('cart');
+        $cart->actualize();
+        $cart->toOrder();
+    }
+
 }

@@ -65,6 +65,19 @@
             </div>
         </form>
 
+        <form action="/cart/to-order" method="POST" class="form-horizontal">
+            @csrf
+
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-6">
+                    <button type="submit" class="btn btn-default">
+                        <i class="fa fa-plus"></i> Оформить Заказ
+                    </button>
+                </div>
+            </div>
+        </form>
+
+
 
 
 
