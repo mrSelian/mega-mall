@@ -9,7 +9,7 @@ class Product
     private int $id;
     private string $name;
     private string $main_photo_path;
-    private int $price;
+    public int $price;
     private int $quantity;
     private string $full_specification;
     private int $user_id;

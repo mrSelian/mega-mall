@@ -10,9 +10,9 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $cart = new Cart();
+        $cart = new Cart($request);
         $totalPrice = $cart->calcTotalPrice();
 
         return view('cart', compact('totalPrice'));
@@ -23,11 +23,13 @@ class CartController extends Controller
     {
         $productRec = Product::where('id', $request->id)->firstOrFail();
 
-        $cart = new Cart();
+        $cart = new Cart($request);
 
-        $cart->addToCart($productRec);
+        $product = new \App\Product($productRec);
 
-        return view('cart');
+        $cart->addToCart($product);
+
+        return redirect('/cart');
     }
 
 
@@ -35,20 +37,22 @@ class CartController extends Controller
     {
         $productRec = Product::where('id', $request->id)->firstOrFail();
 
-        $cart = new Cart();
+        $cart = new Cart($request);
 
-        $cart->removeFromCart($productRec);
+        $product = new \App\Product($productRec);
 
-        return view('cart');
+        $cart->removeFromCart($product);
+
+        $this->index($request);
     }
 
-    public function clearCart()
+    public function clearCart(Request $request)
     {
-        $cart = new Cart();
+        $cart = new Cart($request);
 
         $cart->clear();
 
-        return view('cart');
+        return redirect('/cart');
     }
 
 }

@@ -4,25 +4,29 @@
 namespace App;
 
 use App\Product;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 
 class Cart
 {
-    public array $products;
+    public ?array $products = [];
 
-    public function __construct()
+    public function __construct(Request $request)
     {
-        if (session()->has('cart')) {
-            return session('cart');
+        if ($request->session()->has('cart')) {
+            $cart = ($request->session()->get('cart'));
+            $this->products = $cart->products;
+            return $this;
+        } else {
+            $this->toSession();
+            return $this;
         }
-        $this->products = [];
-        $this->toSession();
-        return $this;
     }
 
     public function isEmpty()
     {
-        if ($this->products == []) {
+        if ($this->products == null) {
             return true;
         }
         return false;
@@ -30,71 +34,55 @@ class Cart
 
     public function toSession()
     {
-        session('cart', $this);
+        Session::put('cart', $this);
+
     }
 
     public function calcTotalPrice()
     {
+        if ($this->products == []) return 0;
         $totalPrice = 0;
-
-        foreach ($this->products as $product => $qty) {
-            $totalPrice = $totalPrice + ($product->getPrice() * $qty);
+        foreach ($this->products as $product) {
+            $totalPrice = $totalPrice + ($product->getPrice());
         }
 
         return $totalPrice;
     }
 
-    private function cartHasProduct($productRec)
+    public function calcQty($product)
     {
-        $id = $productRec->id;
-        foreach ($this->products as $product => $qty) {
-            if ($product->getId() == $id) return $product;
+        $qty = 0;
+        foreach ($this->products as $prod) {
+            if ($prod->getId() == $product->getId()) $qty++;
         }
-        $product = new Product($productRec);
-        array_push($this->products, [$product] = 0);
-        return $product;
-
+        return $qty;
     }
 
-    public function addToCart($productRec)
-    {
-        $product = $this->cartHasProduct($productRec);
 
-        $newQty = $this->products[$product]++;
+    public function addToCart(\App\Product $product)
+    {
+        $newQty = 1 + $this->calcQty($product);
 
         if ($product->qtyIsAvailable($newQty)) {
 
-            $this->products[$product] = $newQty;
+            array_push($this->products, $product);
 
             $this->toSession();
-
 
         } else {
             throw new \Exception('Запрашиваемое количество товара больше остатка !');
         }
     }
 
-    public function removeFromCart($productRec)
+//переписать
+    public function removeFromCart(\App\Product $product)
     {
-        $product = $this->cartHasProduct($productRec);
 
-        $newQty = $this->products[$product]--;
-
-        $this->products[$product] = $newQty;
-
-        $this->cartCheck();
 
         $this->toSession();
 
     }
 
-    private function cartCheck()
-    {
-        foreach ($this->products as $product => $qty) {
-            if ($qty <= 0) unset($this->products[$product]);
-        }
-
-    }
 
     public function clear()
     {

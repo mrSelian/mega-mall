@@ -44,18 +44,28 @@
 
 
                         <!-- Product Quantity -->
-                            <div class="product_quantity_container">
-                                <div class="product_quantity clearfix">
-                                    <input id="quantity_input" type="text" pattern="[0-9]*" value="1">
-                                    <span>шт</span>
-                                    <div class="quantity_buttons">
-                                        <div id="quantity_inc_button" class="quantity_inc quantity_control"><i
-                                                class="fa fa-chevron-up" aria-hidden="true"></i></div>
-                                        <div id="quantity_dec_button" class="quantity_dec quantity_control"><i
-                                                class="fa fa-chevron-down" aria-hidden="true"></i></div>
+{{--                            <div class="product_quantity_container">--}}
+{{--                                <div class="product_quantity clearfix">--}}
+{{--                                    <input id="quantity_input" type="text" pattern="[0-9]*" value="1">--}}
+{{--                                    <span>шт</span>--}}
+{{--                                    <div class="quantity_buttons">--}}
+{{--                                        <div id="quantity_inc_button" class="quantity_inc quantity_control"><i--}}
+{{--                                                class="fa fa-chevron-up" aria-hidden="true"></i></div>--}}
+{{--                                        <div id="quantity_dec_button" class="quantity_dec quantity_control"><i--}}
+{{--                                                class="fa fa-chevron-down" aria-hidden="true"></i></div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+                                <form action="{{$product->id}}/add-to-cart" method="POST" class="form-horizontal">
+                                    @csrf
+                                    <div class="form-group">
+                                    <input type="hidden" name="id" id="id" value="{{$product->id}}">
+                                        <div class="col-sm-offset-3 col-sm-6">
+                                            <button type="submit" class="btn btn-default">
+                                                <i class="fa fa-plus"></i> Добавить в корзину
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="button cart_button"><a href="#">Добавить в корзину</a></div>
+                                </form>
                             </div>
                             <div class="row description_row">
                                 <div class="col">
