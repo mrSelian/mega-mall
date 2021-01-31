@@ -7,10 +7,37 @@
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
         @include('layouts.errors')
         @php
-            echo '<pre>';
-           var_dump(session('cart'));
+           // echo '<pre>';
+         //  var_dump(session('cart'));
 
         @endphp
+        <table class="table table-striped" dusk="product-table">
+            <thead>
+            @php
+             $products = session('cart')->getProducts();
+            @endphp
+            @foreach($products as $product)
+
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{$product->getName()}}</td>
+                <td><img src="{{$product->getPhoto()}}" width="120px" height="120px"></td>
+                <td>{{$product->getPrice()}} RUR</td>
+                <td>{{$product->getFullSpec()}} </td>
+
+            </tr>
+
+            <td>
+                <form action="{{ route('remove_from_cart', $product->getId())}}" method="post">
+                    @csrf
+                    <button class="btn btn-danger" type="submit" dusk="delete-button">Удалить</button>
+                </form>
+            </td>
+            @endforeach
+            </tbody>
+        </table>
+        <br>
   Итоговая сумма: {{$totalPrice}} RUR
         <br>
         <form action="/cart/clear" method="POST" class="form-horizontal">

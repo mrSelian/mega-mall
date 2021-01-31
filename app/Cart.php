@@ -24,6 +24,11 @@ class Cart
         }
     }
 
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
     public function isEmpty()
     {
         if ($this->products == null) {
@@ -45,7 +50,6 @@ class Cart
         foreach ($this->products as $product) {
             $totalPrice = $totalPrice + ($product->getPrice());
         }
-
         return $totalPrice;
     }
 
@@ -57,7 +61,6 @@ class Cart
         }
         return $qty;
     }
-
 
     public function addToCart(\App\Product $product)
     {
@@ -74,15 +77,16 @@ class Cart
         }
     }
 
-//переписать
-    public function removeFromCart(\App\Product $product)
+    public function removeFromCart(int $id)
     {
-
-
+        /** @var Product $prod */
+        foreach ($this->products as $prod) {
+            if ($prod->getId() === $id) {
+                unset ($this->products[key($this->products)]);
+            }
+        }
         $this->toSession();
-
     }
-
 
     public function clear()
     {

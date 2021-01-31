@@ -45,7 +45,7 @@ class Product
         return $this->price;
     }
 
-    public function getQuantitty()
+    public function getQuantity()
     {
         return $this->quantity;
     }

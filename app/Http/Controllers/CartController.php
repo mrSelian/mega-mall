@@ -35,15 +35,11 @@ class CartController extends Controller
 
     public function removeProduct(Request $request)
     {
-        $productRec = Product::where('id', $request->id)->firstOrFail();
-
         $cart = new Cart($request);
 
-        $product = new \App\Product($productRec);
+        $cart->removeFromCart($request->id);
 
-        $cart->removeFromCart($product);
-
-        $this->index($request);
+        return redirect('/cart');
     }
 
     public function clearCart(Request $request)
