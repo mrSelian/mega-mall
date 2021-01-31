@@ -12,8 +12,14 @@ class CartController extends Controller
 {
     public function index(Request $request)
     {
-        $cart = new Cart($request);
-        $totalPrice = $cart->calcTotalPrice();
+
+        if ($request->session()->has('cart')) {
+            $cart = ($request->session()->get('cart'));
+            $totalPrice = $cart->calcTotalPrice();
+        } else {
+            $cart = new Cart($request);
+            $totalPrice = $cart->calcTotalPrice();
+        }
 
         return view('cart', compact('totalPrice'));
     }
@@ -23,8 +29,11 @@ class CartController extends Controller
     {
         $productRec = Product::where('id', $request->id)->firstOrFail();
 
-        $cart = new Cart($request);
-
+        if ($request->session()->has('cart')) {
+            $cart = ($request->session()->get('cart'));
+        } else {
+            $cart = new Cart($request);
+        }
         $product = new \App\Product($productRec);
 
         $cart->addToCart($product);
@@ -35,8 +44,8 @@ class CartController extends Controller
 
     public function removeProduct(Request $request)
     {
-        $cart = new Cart($request);
 
+        $cart = $request->session()->get('cart');
         $cart->removeFromCart($request->id);
 
         return redirect('/cart');
@@ -44,10 +53,17 @@ class CartController extends Controller
 
     public function clearCart(Request $request)
     {
-        $cart = new Cart($request);
+        $cart = $request->session()->get('cart');
 
         $cart->clear();
 
+        return redirect('/cart');
+    }
+
+    public function actualize(Request $request)
+    {
+        $cart = $request->session()->get('cart');
+        $cart->actualize();
         return redirect('/cart');
     }
 

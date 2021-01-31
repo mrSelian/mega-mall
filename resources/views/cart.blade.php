@@ -40,6 +40,19 @@
         <br>
   Итоговая сумма: {{$totalPrice}} RUR
         <br>
+
+        <form action="/cart/actualize" method="POST" class="form-horizontal">
+            @csrf
+
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-6">
+                    <button type="submit" class="btn btn-default">
+                        <i class="fa fa-plus"></i> Актуализировать
+                    </button>
+                </div>
+            </div>
+        </form>
+
         <form action="/cart/clear" method="POST" class="form-horizontal">
             @csrf
 
@@ -51,6 +64,8 @@
                 </div>
             </div>
         </form>
+
+
 
 
 

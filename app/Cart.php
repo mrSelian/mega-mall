@@ -14,14 +14,8 @@ class Cart
 
     public function __construct(Request $request)
     {
-        if ($request->session()->has('cart')) {
-            $cart = ($request->session()->get('cart'));
-            $this->products = $cart->products;
-            return $this;
-        } else {
             $this->toSession();
             return $this;
-        }
     }
 
     public function getProducts()
@@ -92,6 +86,17 @@ class Cart
     {
         $this->products = [];
 
+        $this->toSession();
+    }
+
+    public function actualize()
+    {
+        /** @var Product $product */
+        foreach ($this->products as $product) {
+            $newProduct = new Product (\App\Models\Product::where('id', $product->getId())->firstOrFail());
+            unset ($this->products[key($this->products)]);
+            array_push($this->products, $newProduct);
+        }
         $this->toSession();
     }
 }
