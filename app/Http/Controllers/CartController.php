@@ -48,7 +48,7 @@ class CartController extends Controller
         $cart = $request->session()->get('cart');
         $cart->removeFromCart($request->id);
 
-        return redirect('/cart');
+        return redirect()->back();
     }
 
     public function clearCart(Request $request)
@@ -57,14 +57,14 @@ class CartController extends Controller
 
         $cart->clear();
 
-        return redirect('/cart');
+        return redirect()->back();
     }
 
     public function actualize(Request $request)
     {
         $cart = $request->session()->get('cart');
         $cart->actualize();
-        return redirect('/cart');
+        return redirect()->back();
     }
 
     public function toOrder(Request $request)

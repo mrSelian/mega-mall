@@ -37,10 +37,14 @@
             @endforeach
             </tbody>
         </table>
-        <br>
-  Итоговая сумма: {{$totalPrice}} RUR
-        <br>
 
+
+        @if($products == [])
+        Корзина пуста.
+        @else
+            <br>
+            Итоговая сумма: {{$totalPrice}} RUR
+            <br>
         <form action="/cart/actualize" method="POST" class="form-horizontal">
             @csrf
 
@@ -76,8 +80,7 @@
                 </div>
             </div>
         </form>
-
-
+        @endif
 
 
 

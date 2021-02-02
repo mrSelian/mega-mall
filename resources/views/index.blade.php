@@ -29,6 +29,17 @@
                                 <p class="uppercase tracking-wide text-sm font-bold text-gray-700">{{$product->name}}</p>
                                 <p class="text-3xl text-gray-900">{{$product->price}} RUR</p>
                                 <a href="/product/{{$product->id}}">Подробнее</a>
+                                <form action="/product/{{$product->id}}/add-to-cart" target="_blank" method="POST" class="form-horizontal">
+                                    @csrf
+                                    <div class="form-group">
+                                        <input type="hidden" name="id" id="id" value="{{$product->id}}">
+                                        <div class="col-sm-offset-3 col-sm-6">
+                                            <button type="submit" class="btn btn-default">
+                                                <i class="fa fa-plus"></i> Добавить в корзину
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
 

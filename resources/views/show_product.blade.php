@@ -55,7 +55,7 @@
 {{--                                                class="fa fa-chevron-down" aria-hidden="true"></i></div>--}}
 {{--                                    </div>--}}
 {{--                                </div>--}}
-                                <form action="{{$product->id}}/add-to-cart" method="POST" class="form-horizontal">
+                                <form action="{{$product->id}}/add-to-cart" target="_blank" method="POST" class="form-horizontal">
                                     @csrf
                                     <div class="form-group">
                                     <input type="hidden" name="id" id="id" value="{{$product->id}}">
