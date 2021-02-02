@@ -14,29 +14,38 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(['middleware' => 'auth:sanctum'], function () {
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/', [ProductController::class, 'index'])->name('index');
+    Route::get('/', [ProductController::class, 'index'])->name('index');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/cart', [CartController::class, 'index'])->name('cart');
+    Route::group(['prefix' => '/'], function () {
+        Route::get('cart', [CartController::class, 'index'])->name('cart');
+        Route::get('customer', function () {
+            return view('customer');
+        })->name('customer');
+        Route::get('seller', [ProductController::class, 'for_user'])->name('seller');
+    });
 
-Route::middleware(['auth:sanctum', 'verified'])->post('cart/clear', [CartController::class, 'clearCart'])->name('clear_cart');
 
-Route::middleware(['auth:sanctum', 'verified'])->post('cart/actualize', [CartController::class, 'actualize'])->name('actualize_cart');
+    Route::group(['prefix' => 'cart'], function () {
+        Route::post('/clear', [CartController::class, 'clearCart'])->name('clear_cart');
+        Route::post('/actualize', [CartController::class, 'actualize'])->name('actualize_cart');
+        Route::post('/to-order', [CartController::class, 'toOrder'])->name('cart_to_order');
+    });
 
-Route::middleware(['auth:sanctum', 'verified'])->post('cart/to-order', [CartController::class, 'toOrder'])->name('cart_to_order');
+    Route::group(['prefix' => 'product'], function () {
+        Route::post('/create', [ProductController::class, 'store'])->name('store');
+        Route::get('/{id}', [ProductController::class, 'show'])->name('show_product');
+        Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('edit_product');
+        Route::patch('/{id}/update', [ProductController::class, 'update'])->name('update_product');
+        Route::delete('/{id}/destroy', [ProductController::class, 'destroy'])->name('destroy_product');
+        Route::post('/{id}/add-to-cart', [CartController::class, 'addProduct'])->name('add_to_cart');
+        Route::post('/{id}/remove-from-cart', [CartController::class, 'removeProduct'])->name('remove_from_cart');
+    });
 
-Route::middleware(['auth:sanctum', 'verified'])->post('product/{id}/add-to-cart', [CartController::class, 'addProduct'])->name('add_to_cart');
 
-Route::middleware(['auth:sanctum', 'verified'])->post('product/{id}/remove-from-cart', [CartController::class, 'removeProduct'])->name('remove_from_cart');
+});
 
-Route::middleware(['auth:sanctum', 'verified'])->post('/product/create', [ProductController::class, 'store'])->name('store');
+//Route::middleware(['auth:sanctum', 'verified'])->get('/', [ProductController::class, 'index'])->name('index');
 
-//позде этот роут будет вести на заказы покупателя
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard/seller', [ProductController::class, 'for_user'])->name('seller');
-Route::middleware(['auth:sanctum', 'verified'])->get('product/{id}/edit', [ProductController::class, 'edit'])->name('edit_product');
-Route::middleware(['auth:sanctum', 'verified'])->get('product/{id}', [ProductController::class, 'show'])->name('show_product');
-Route::middleware(['auth:sanctum', 'verified'])->patch('product/{id}/update', [ProductController::class, 'update'])->name('update_product');
-Route::middleware(['auth:sanctum', 'verified'])->delete('product/{id}/destroy', [ProductController::class, 'destroy'])->name('destroy_product');
+

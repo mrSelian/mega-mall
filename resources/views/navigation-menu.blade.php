@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                    <x-jet-nav-link href="{{ route('customer') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Кабинет покупателя') }}
                     </x-jet-nav-link>
                 </div>
@@ -191,7 +191,7 @@
                     {{ __('Корзина') }}
                 </x-jet-responsive-nav-link>
 
-                <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                <x-jet-responsive-nav-link href="{{ route('customer') }}" :active="request()->routeIs('dashboard')">
                     {{ __('Кабинет Покупателя') }}
                 </x-jet-responsive-nav-link>
 
