@@ -8,7 +8,7 @@
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             @include('layouts.errors')
 
-            <form action="/product/create" method="POST" class="form-horizontal">
+            <form action="{{route('store')}}" method="POST" class="form-horizontal">
                 @csrf
 
 

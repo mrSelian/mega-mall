@@ -38,7 +38,7 @@ class CartController extends Controller
 
         $cart->addToCart($product);
 
-        return redirect('/cart');
+        return redirect('cart');
     }
 
 

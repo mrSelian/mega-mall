@@ -28,8 +28,8 @@
                             <div class="p-4">
                                 <p class="uppercase tracking-wide text-sm font-bold text-gray-700">{{$product->name}}</p>
                                 <p class="text-3xl text-gray-900">{{$product->price}} RUR</p>
-                                <a href="/product/{{$product->id}}">Подробнее</a>
-                                <form action="/product/{{$product->id}}/add-to-cart" target="_blank" method="POST" class="form-horizontal">
+                                <a href="{{route('show_product',$product->id)}}">Подробнее</a>
+                                <form action="{{route('add_to_cart',$product->id)}}" target="_blank" method="POST" class="form-horizontal">
                                     @csrf
                                     <div class="form-group">
                                         <input type="hidden" name="id" id="id" value="{{$product->id}}">

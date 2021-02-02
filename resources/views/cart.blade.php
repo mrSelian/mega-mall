@@ -45,7 +45,7 @@
             <br>
             Итоговая сумма: {{$totalPrice}} RUR
             <br>
-        <form action="/cart/actualize" method="POST" class="form-horizontal">
+        <form action="{{ route('actualize_cart')}}" method="POST" class="form-horizontal">
             @csrf
 
             <div class="form-group">
@@ -57,7 +57,7 @@
             </div>
         </form>
 
-        <form action="/cart/clear" method="POST" class="form-horizontal">
+        <form action="{{ route('clear_cart')}}" method="POST" class="form-horizontal">
             @csrf
 
             <div class="form-group">
@@ -69,7 +69,7 @@
             </div>
         </form>
 
-        <form action="/cart/to-order" method="POST" class="form-horizontal">
+        <form action="{{ route('cart_to_order')}}" method="POST" class="form-horizontal">
             @csrf
 
             <div class="form-group">
