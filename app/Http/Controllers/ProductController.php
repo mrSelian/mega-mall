@@ -26,7 +26,7 @@ class ProductController extends Controller
 
         );
 
-        return redirect('seller');
+        return redirect(route('seller_products'));
     }
 
     public function edit($id)
@@ -47,7 +47,7 @@ class ProductController extends Controller
         $product->full_specification = $request->get('full_specification');
         $product->save();
 
-        return redirect('seller')->with('success', 'Товар успешно обновлен.');
+        return redirect(route('seller_products'))->with('success', 'Товар успешно обновлен.');
     }
 
     public function destroy($id)
@@ -56,7 +56,7 @@ class ProductController extends Controller
         $product->delete();
 
 
-        return redirect('seller')->with('success', 'Товар удалён.');
+        return redirect(route('seller_products'))->with('success', 'Товар удалён.');
     }
 
     public function for_user(Request $request)
@@ -64,6 +64,6 @@ class ProductController extends Controller
         $products = $request->user()->products()->get();
 
 
-        return view('seller', compact('products'));
+        return view('seller_products', compact('products'));
     }
 }

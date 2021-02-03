@@ -16,7 +16,8 @@
         </div>
     </x-slot>
 
-    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-        Здесь будут данные продавца и информация о комиссиях.
-    </div>
+
+        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+            Здесь будет список заказов продавца.
+        </div>
 </x-app-layout>

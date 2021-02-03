@@ -23,7 +23,16 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('customer', function () {
             return view('customer');
         })->name('customer');
-        Route::get('seller', [ProductController::class, 'for_user'])->name('seller');
+        Route::get('seller', function () {
+            return view('seller');
+        })->name('seller');
+    });
+
+    Route::group(['prefix' => 'seller'], function () {
+        Route::get('/orders', function () {
+            return view('seller_orders');
+        })->name('seller_orders');
+        Route::get('/products', [ProductController::class, 'for_user'])->name('seller_products');
     });
 
 
@@ -34,6 +43,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 
     Route::group(['prefix' => 'product'], function () {
+        Route::get('/create', function () {
+            return view('create_product');
+        })->name('create_product');
         Route::post('/create', [ProductController::class, 'store'])->name('store');
         Route::get('/{id}', [ProductController::class, 'show'])->name('show_product');
         Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('edit_product');
