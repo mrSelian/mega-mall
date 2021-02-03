@@ -23,7 +23,7 @@
             <tr>
                 <td>{{$product->getName()}}</td>
                 <td><img src="{{$product->getPhoto()}}" width="120px" height="120px"></td>
-                <td>{{$product->getPrice()}} RUR</td>
+                <td>{{$product->getPrice()}} &#8381;</td>
                 <td>{{$product->getFullSpec()}} </td>
 
             </tr>
@@ -39,11 +39,11 @@
         </table>
 
 
-        @if($products == [])
+        @if($products == null)
         Корзина пуста.
         @else
             <br>
-            Итоговая сумма: {{$totalPrice}} RUR
+            Итоговая сумма: {{$totalPrice}} &#8381;
             <br>
         <form action="{{ route('actualize_cart')}}" method="POST" class="form-horizontal">
             @csrf

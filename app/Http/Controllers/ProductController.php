@@ -17,7 +17,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::findOrFail($id);
-        return view('show_product', compact('product'));
+        return view('product.show', compact('product'));
     }
 
     public function store(CreateProductRequest $request)
@@ -32,7 +32,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        return view('edit_product', compact('product'));
+        return view('product.edit', compact('product'));
     }
 
     public function update(Request $request, $id)
@@ -64,6 +64,6 @@ class ProductController extends Controller
         $products = $request->user()->products()->get();
 
 
-        return view('seller_products', compact('products'));
+        return view('seller.products', compact('products'));
     }
 }

@@ -30,7 +30,7 @@
                     <div class="col-lg-6">
                         <div class="details_content">
                             <div class="details_name" data-id="{{$product->id}}">{{$product->name}}</div>
-                            <div class="details_price">{{$product->price}} RUR</div>
+                            <div class="details_price">{{$product->price}} &#8381;</div>
 
                                             <!-- In Stock -->
                                                 <div class="in_stock_container">

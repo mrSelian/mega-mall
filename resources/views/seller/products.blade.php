@@ -17,12 +17,17 @@
     </x-slot>
 
     <div>
+
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             @include('layouts.errors')
+            @if($products->isEmpty())
+                Товаров нет.
+            @else
 
 
             <table class="table table-striped" dusk="product-table">
                 <thead>
+
                 @foreach($products as $product)
 
                 </thead>
@@ -30,7 +35,8 @@
                 <tr>
                     <td>{{$product->name}}</td>
                     <td><img src="{{$product->main_photo_path}}" width="120px" height="120px"></td>
-                    <td>{{$product->price}} RUR</td>
+                    <td>{{$product->full_specification}} </td>
+                    <td>{{$product->price}} &#8381;</td>
                     <td>{{$product->quantity}} шт.</td>
 
                 </tr>
@@ -47,6 +53,7 @@
                 @endforeach
                 </tbody>
             </table>
+            @endif
         </div>
     </div>
 

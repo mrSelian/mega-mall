@@ -21,16 +21,26 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => '/'], function () {
         Route::get('cart', [CartController::class, 'index'])->name('cart');
         Route::get('customer', function () {
-            return view('customer');
+            return view('customer.index');
         })->name('customer');
         Route::get('seller', function () {
-            return view('seller');
+            return view('seller.index');
         })->name('seller');
+        Route::get('dashboard', function () {
+            return redirect('/');
+        });
     });
+
+    Route::group(['prefix' => 'customer'], function () {
+        Route::get('/orders', function () {
+            return view('customer.orders');
+        })->name('customer_orders');
+    });
+
 
     Route::group(['prefix' => 'seller'], function () {
         Route::get('/orders', function () {
-            return view('seller_orders');
+            return view('seller.orders');
         })->name('seller_orders');
         Route::get('/products', [ProductController::class, 'for_user'])->name('seller_products');
     });
@@ -44,7 +54,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['prefix' => 'product'], function () {
         Route::get('/create', function () {
-            return view('create_product');
+            return view('product.create');
         })->name('create_product');
         Route::post('/create', [ProductController::class, 'store'])->name('store');
         Route::get('/{id}', [ProductController::class, 'show'])->name('show_product');
