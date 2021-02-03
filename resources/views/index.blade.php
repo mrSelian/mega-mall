@@ -7,8 +7,8 @@
     </x-slot>
 
 
-
     <div class="flex flex-wrap max-w-6xl mx-auto ">
+
         @foreach($products as $product)
 
 
@@ -48,6 +48,7 @@
 
 
         @endforeach
+        <div class="items-center"> {{ $products->links() }} </div>
     </div>
 
 
