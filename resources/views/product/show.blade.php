@@ -7,18 +7,18 @@
     </x-slot>
 
     <!-- Product Details -->
-    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-        <div class="product_details">
+    <div class="max-w-2xl mx-auto py-10 sm:px-6 lg:px-8">
+        <div class="product_details bg-white shadow-xl rounded-lg overflow-hidden ">
             <div class="container">
                 <div class="row details_row">
 
                     <!-- Product Image -->
-                    <div class="col-lg-6">
-                        <div class="details_image">
+                    <div class="col-lg-6 ">
+                        <div class="details_image ">
                             @php
                                 $image = $product->main_photo_path;
                             @endphp
-                            <div class="details_image_large"><img src="{{$image}}">
+                            <div class="details_image_large "><img src="{{$image}}">
                             </div>
                             <div
                                 class="details_image_thumbnails d-flex flex-row align-items-start justify-content-between">
@@ -28,19 +28,19 @@
 
                     <!-- Product Content -->
                     <div class="col-lg-6">
-                        <div class="details_content">
-                            <div class="details_name" data-id="{{$product->id}}">{{$product->name}}</div>
-                            <div class="details_price">{{$product->price}} &#8381;</div>
+                        <div class="px-2 details_content">
+                            <div class="details_name uppercase tracking-wide mb-3 text-lg font-semibold text-gray-700 " data-id="{{$product->id}}">{{$product->name}}</div>
+                            <!-- In Stock -->
+                            <div class="in_stock_container tracking-wide font-semibold  mb-1 ">
+                                @if($product->quantity > 0)
+                                    <span class="" style="color: green">В наличии</span>
+                                @else
+                                    <span style="color: red">Отсутствует</span>
+                                @endif
+                            </div>
+                            <div class="details_price text-3xl text-gray-900 mb-3">{{$product->price}} &#8381;</div>
 
-                                            <!-- In Stock -->
-                                                <div class="in_stock_container">
-                                                    <div class="availability">Доступность:</div>
-                                                    @if($product->quantity > 0)
-                                                        <span style="color: green">В наличии</span>
-                                                    @else
-                                                        <span style="color: #cc0000">Отсутствует</span>
-                                                    @endif
-                                                </div>
+
 
 
                         <!-- Product Quantity -->
@@ -55,28 +55,30 @@
 {{--                                                class="fa fa-chevron-down" aria-hidden="true"></i></div>--}}
 {{--                                    </div>--}}
 {{--                                </div>--}}
-                                <form action="{{route('add_to_cart',$product->id)}}" target="_blank" method="POST" class="form-horizontal">
-                                    @csrf
-                                    <div class="form-group">
-                                    <input type="hidden" name="id" id="id" value="{{$product->id}}">
-                                        <div class="col-sm-offset-3 col-sm-6">
-                                            <button type="submit" class="btn btn-default">
-                                                <i class="fa fa-plus"></i> Добавить в корзину
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
+
                             </div>
-                            <div class="row description_row">
+                            <div class="px-2 row description_row mb-3">
                                 <div class="col">
                                     <div class="description_title_container">
-                                        <div class="description_title">Описание</div>
+                                        <div class="tracking-wide text-xl font-semibold text-gray-700 description_title">Описание</div>
                                     </div>
-                                    <div class="description_text">
+                                    <div class="description_text text-lg">
                                         <p>{{$product->full_specification}}</p>
                                     </div>
                                 </div>
                             </div>
+                        <form action="{{route('add_to_cart',$product->id)}}" target="_blank" method="POST"  class="text-center  form-horizontal">
+                            @csrf
+                            <div class="form-group">
+                                <input type="hidden" name="id" id="id" value="{{$product->id}}">
+                                <div class="col-sm-offset-3 col-sm-6">
+                                    <button type="submit" class="text-xl w-full bg-indigo-500 text-white px-4 py-2  border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                                        <i class="fa fa-plus"></i> Добавить в корзину
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
                         </div>
                     </div>
                 </div>
