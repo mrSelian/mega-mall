@@ -28,7 +28,7 @@
 
     <div class="antialiased text-gray-900">
 
-        <form action="{{route('store')}}" method="POST" class="form mt-4">
+        <form action="{{route('store_product')}}" method="POST" class="form mt-4">
         <div class="mx-4 card bg-white max-w-md p-10 md:rounded-lg my-12 mx-auto">
 
                 <label for="product" class=" control-label font-bold text-center"><h1>Добавить товар</h1></label>

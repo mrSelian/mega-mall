@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -20,9 +21,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['prefix' => '/'], function () {
         Route::get('cart', [CartController::class, 'index'])->name('cart');
-        Route::get('customer', function () {
-            return view('customer.index');
-        })->name('customer');
+        Route::get('customer', [AddressController::class, 'show'])->name('customer');
         Route::get('seller', function () {
             return view('seller.index');
         })->name('seller');
@@ -35,6 +34,14 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/orders', function () {
             return view('customer.orders');
         })->name('customer_orders');
+        Route::group(['prefix' => 'address'], function () {
+            Route::get('/create', function () {
+                return view('address.create');
+            })->name('create_address');
+            Route::post('/create', [AddressController::class, 'store'])->name('store_address');
+            Route::get('/edit',[AddressController::class, 'edit'])->name('edit_address');
+            Route::patch('/update', [AddressController::class, 'update'])->name('update_address');
+        });
     });
 
 
@@ -56,7 +63,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/create', function () {
             return view('product.create');
         })->name('create_product');
-        Route::post('/create', [ProductController::class, 'store'])->name('store');
+        Route::post('/create', [ProductController::class, 'store'])->name('store_product');
         Route::get('/{id}', [ProductController::class, 'show'])->name('show_product');
         Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('edit_product');
         Route::patch('/{id}/update', [ProductController::class, 'update'])->name('update_product');
