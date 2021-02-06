@@ -71,7 +71,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 
     Route::group(['prefix' => 'product'], function () {
-        Route::get('/{id}', [ProductController::class, 'show'])->name('show_product');
+        Route::get('/{id}/show', [ProductController::class, 'show'])->name('show_product');
 
         Route::get('/create', function () {
             return view('product.create');
