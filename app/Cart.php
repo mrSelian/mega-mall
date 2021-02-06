@@ -10,44 +10,40 @@ use Illuminate\Support\Facades\Session;
 
 class Cart
 {
-    public ?array $products = [];
+    /** @var Product[] $products */
+    public array $products = [];
 
-    public function __construct(Request $request)
+    public function __construct()
     {
-            $this->toSession();
-            return $this;
+        $this->toSession();
     }
 
-    public function getProducts()
+    public function getProducts(): array
     {
         return $this->products;
     }
 
-    public function isEmpty()
+    public function isEmpty(): bool
     {
-        if ($this->products == null) {
-            return true;
-        }
-        return false;
+        return !$this->products;
     }
 
     public function toSession()
     {
         Session::put('cart', $this);
-
+// в класс cart repository который будет брать откуда-то и сохранять куда-то
     }
 
-    public function calcTotalPrice()
+    public function calcTotalPrice(): int
     {
-        if ($this->products == []) return 0;
         $totalPrice = 0;
         foreach ($this->products as $product) {
-            $totalPrice = $totalPrice + ($product->getPrice());
+            $totalPrice += $product->getPrice();
         }
         return $totalPrice;
     }
 
-    public function calcQty($product)
+    public function calcQty($product): int
     {
         $qty = 0;
         foreach ($this->products as $prod) {
@@ -73,7 +69,6 @@ class Cart
 
     public function removeFromCart(int $id)
     {
-        /** @var Product $prod */
         foreach ($this->products as $prod) {
             if ($prod->getId() === $id) {
                 unset ($this->products[key($this->products)]);
@@ -91,7 +86,7 @@ class Cart
 
     public function actualize()
     {
-        /** @var Product $product */
+        // в параметре принимает что-то, что будет подключаться к базе,сессии и куда-то ещё ( репозиторий или сервис)
         foreach ($this->products as $product) {
             $newProduct = new Product (\App\Models\Product::where('id', $product->getId())->firstOrFail());
             unset ($this->products[key($this->products)]);
@@ -102,7 +97,7 @@ class Cart
 
     public function toOrder()
     {
-        if ($this->products==[]) throw new \Exception('В корзине нет товаров для заказа !');
+        if ($this->products == []) throw new \Exception('В корзине нет товаров для заказа !');
         dd('Тут будет страница заказа !');
     }
 }

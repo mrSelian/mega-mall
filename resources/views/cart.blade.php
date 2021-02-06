@@ -14,7 +14,7 @@
 
     </div>
     <div class="bg-gray-100">
-        <div class="container mx-auto mt-10">
+        <div class="container mx-auto mt-10 ">
             <div class="flex shadow-md my-10">
                 <div class="w-3/4 bg-white px-10 py-10">
                     <div class="flex justify-between border-b pb-8">
@@ -78,15 +78,10 @@
                         </svg>
                         Продолжить покупки
                     </a>
-                    <hr>
-                    <form action="{{ route('actualize_cart')}}" method="POST">
-                        @csrf
-                    <button class="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase w-full">Обновить цены</button>
-                    </form>
-                    <hr>
+
                     <form action="{{ route('clear_cart')}}" method="POST">
                         @csrf
-                    <button  class="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase w-full">Очистить корзину</button>
+                    <button  class="float-right bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase ">Очистить корзину</button>
                     </form>
                 </div>
 

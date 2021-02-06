@@ -61,12 +61,10 @@ class Product
     }
 
 
-    public function qtyIsAvailable(int $qty)
+    public function qtyIsAvailable(int $qty): bool
     {
-        if ($this->quantity >= $qty) {
-            return true;
-        }
-        return false;
+        return $this->quantity >= $qty;
+
     }
 
 }

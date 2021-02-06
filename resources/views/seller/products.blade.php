@@ -1,28 +1,14 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-evenly ">
-            <a href="{{route('seller')}}"
-               class="font-semibold hover:underline text-center text-lg text-gray-800 leading-tight">
-                {{ __('Кабинет Продавца') }}
-            </a>
-            <a href="{{route('seller_products')}}"
-               class="font-semibold hover:underline text-center text-lg text-gray-800 leading-tight">
-                {{ __('Мои Товары') }}
-            </a>
-            <a href="{{route('create_product')}}"
-               class="font-semibold hover:underline text-center text-lg text-gray-800 leading-tight">
-                {{ __('Добавить товар') }}
-            </a>
-            <a href="{{route('seller_orders')}}"
-               class="font-semibold hover:underline text-center text-lg text-gray-800 leading-tight">
-                {{ __('Мои Заказы') }}
-            </a>
-        </div>
-    </x-slot>
+  @include('layouts.headers.seller')
 
 
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 overflow-x-auto">
         @include('layouts.errors')
+
+        <a href="{{ route('create_product')}}"
+           class="float-right bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black"
+           dusk="edit-button">Добавить Товар</a>
+
         @if($products->isEmpty())
             Товаров нет.
         @else

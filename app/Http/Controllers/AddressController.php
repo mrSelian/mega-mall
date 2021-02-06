@@ -10,7 +10,7 @@ class AddressController extends Controller
 {
     public function show(Request $request)
     {
-        $address = $request->user()->address()->get()[0];
+        $address = $request->user()->address()->first();
         return view('customer.index', compact('address'));
     }
 

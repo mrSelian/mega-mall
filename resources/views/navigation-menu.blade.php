@@ -25,12 +25,12 @@
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('customer') }}" :active="request()->routeIs('customer')">
-                        {{ __('Кабинет покупателя') }}
+                        {{ __('Кабинет Покупателя') }}
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('seller') }}" :active="request()->routeIs('seller')">
-                        {{ __('Кабинет продавца') }}
+                        {{ __('Кабинет Продавца') }}
                     </x-jet-nav-link>
                 </div>
             </div>

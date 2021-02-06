@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-evenly ">
-            <a href="{{route('seller')}}"
+            <a href="{{route('headers')}}"
                class="font-semibold hover:underline text-center text-lg text-gray-800 leading-tight">
                 {{ __('Кабинет Продавца') }}
             </a>

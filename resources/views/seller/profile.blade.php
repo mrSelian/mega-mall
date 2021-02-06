@@ -2,8 +2,7 @@
     @include('layouts.headers.seller')
 
 
-
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-            Здесь будет список заказов продавца.
-        </div>
+        Здесь будут данные продавца и информация о комиссиях.
+    </div>
 </x-app-layout>
