@@ -11,7 +11,12 @@ class AddressController extends Controller
     public function show(Request $request)
     {
         $address = $request->user()->address()->first();
-        return view('customer.index', compact('address'));
+        return view('customer.profile', compact('address'));
+    }
+
+    public function create()
+    {
+        return view('customer.address.create');
     }
 
     public function store(CreateAddressRequest $request)
@@ -20,13 +25,13 @@ class AddressController extends Controller
 
         );
 
-        return redirect(route('customer'));
+        return redirect(route('customer_profile'));
     }
 
     public function edit(Request $request)
     {
         $address = $request->user()->address()->get()[0];
-        return view('address.edit', compact('address'));
+        return view('customer.address.edit', compact('address'));
     }
 
     public function update(CreateAddressRequest $request)
@@ -42,6 +47,6 @@ class AddressController extends Controller
         $address->apt = $request->get('apt');
         $address->save();
 
-        return redirect(route('customer'));
+        return redirect(route('customer_profile'));
     }
 }

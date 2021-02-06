@@ -28,7 +28,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/orders', fn() => view('customer.orders'))->name('customer_orders');
 
         Route::group(['prefix' => 'address'], function () {
-            Route::get('/create', fn() => view('address.create'))->name('create_address');
+            Route::get('/create', [AddressController::class, 'create'])->name('create_address');
             Route::post('/create', [AddressController::class, 'store'])->name('store_address');
             Route::get('/edit', [AddressController::class, 'edit'])->name('edit_address');
             Route::patch('/update', [AddressController::class, 'update'])->name('update_address');
@@ -43,7 +43,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/products', [ProductController::class, 'for_user'])->name('seller_products');
 
         Route::group(['prefix' => 'product'], function () {
-            Route::get('/create', fn() => view('product.create'))->name('create_product');
+            Route::get('/create', [ProductController::class, 'create'])->name('create_product');
             Route::post('/create', [ProductController::class, 'store'])->name('store_product');
             Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('edit_product');
             Route::patch('/{id}/update', [ProductController::class, 'update'])->name('update_product');

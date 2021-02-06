@@ -11,13 +11,18 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $products = Product::paginate(12);
-        return view('index', compact('products'));
+        return view('shop.index', compact('products'));
+    }
+
+    public function create()
+    {
+        return view('seller.product.create');
     }
 
     public function show($id)
     {
         $product = Product::findOrFail($id);
-        return view('product.show', compact('product'));
+        return view('shop.product.show', compact('product'));
     }
 
     public function store(CreateProductRequest $request)
@@ -32,7 +37,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        return view('product.edit', compact('product'));
+        return view('seller.product.edit', compact('product'));
     }
 
     public function update(CreateProductRequest $request, $id)
