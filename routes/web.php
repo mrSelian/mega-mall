@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['prefix' => '/'], function () {
         Route::get('/', [ProductController::class, 'index'])->name('index');
+        Route::post('/search', [ProductController::class, 'search'])->name('search');
         Route::get('dashboard', fn() => redirect('/'))->name('dashboard');
     });
 
