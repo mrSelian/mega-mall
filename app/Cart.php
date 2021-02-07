@@ -35,7 +35,7 @@ class Cart
     {
         $totalPrice = 0;
         foreach ($this->products as $product) {
-            $totalPrice += ($product->getPrice())*($product->getAmount());
+            $totalPrice += ($product->getPrice()) * ($product->getAmount());
         }
         return $totalPrice;
     }
@@ -47,9 +47,12 @@ class Cart
 
     public function addToCart(CartProduct $product)
     {
-            array_push($this->products, $product);
+        array_push($this->products, $product);
 
-            $this->repository->save($this);
+        $this->repository->save($this);
+
+        if ($product->getAmount() == 0) $this->removeFromCart($product->getId());
+
     }
 
     public function removeFromCart(int $id)
@@ -74,6 +77,7 @@ class Cart
         foreach ($this->products as $product) {
             if ($product->getId() == $id) {
                 $product->correctAmount($amount);
+                if ($amount == 0) $this->removeFromCart($product->getId());
             }
         }
 
