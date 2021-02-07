@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Cart;
+use App\CartRepository;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -13,13 +14,9 @@ class CartController extends Controller
     public function index(Request $request)
     {
 
-        if ($request->session()->has('cart')) {
-            $cart = ($request->session()->get('cart'));
-            $totalPrice = $cart->calcTotalPrice();
-        } else {
-            $cart = new Cart($request);
-            $totalPrice = $cart->calcTotalPrice();
-        }
+        $cart = $this->getCart($request);
+
+        $totalPrice = $cart->calculateTotalPrice();
 
         return view('shop.cart', compact('totalPrice'));
     }
@@ -29,11 +26,8 @@ class CartController extends Controller
     {
         $productRec = Product::where('id', $request->id)->firstOrFail();
 
-        if ($request->session()->has('cart')) {
-            $cart = ($request->session()->get('cart'));
-        } else {
-            $cart = new Cart($request);
-        }
+        $cart = $this->getCart($request);
+
         $product = new \App\Product($productRec);
 
         $cart->addToCart($product);
@@ -42,36 +36,41 @@ class CartController extends Controller
     }
 
 
-    public function removeProduct(Request $request)
+    public function removeProduct(Request $request): \Illuminate\Http\RedirectResponse
     {
 
-        $cart = $request->session()->get('cart');
+        $cart = $this->getCart($request);
         $cart->removeFromCart($request->id);
 
         return redirect()->back();
     }
 
-    public function clearCart(Request $request)
+    public function clearCart(Request $request): \Illuminate\Http\RedirectResponse
     {
-        $cart = $request->session()->get('cart');
-
+        $cart = $this->getCart($request);
         $cart->clear();
 
         return redirect()->back();
     }
 
-    public function actualize(Request $request)
+    public function actualize(Request $request): \Illuminate\Http\RedirectResponse
     {
-        $cart = $request->session()->get('cart');
+        $cart = $this->getCart($request);
         $cart->actualize();
         return redirect()->back();
     }
 
     public function toOrder(Request $request)
     {
-        $cart = $request->session()->get('cart');
+        $cart = $this->getCart($request);
         $cart->actualize();
         $cart->toOrder();
+    }
+
+    private function getCart(Request $request): Cart
+    {
+        $repository = new CartRepository();
+        return $repository->get($request);
     }
 
 }

@@ -11,11 +11,13 @@ use Illuminate\Support\Facades\Session;
 class Cart
 {
     /** @var Product[] $products */
-    public array $products = [];
+    private array $products = [];
+    private CartRepositoryInterface $repository;
 
-    public function __construct()
+    public function __construct(CartRepositoryInterface $repository)
     {
-        $this->toSession();
+        $this->repository = $repository;
+        $this->repository->save($this);
     }
 
     public function getProducts(): array
@@ -28,13 +30,8 @@ class Cart
         return !$this->products;
     }
 
-    public function toSession()
-    {
-        Session::put('cart', $this);
-// в класс cart repository который будет брать откуда-то и сохранять куда-то
-    }
 
-    public function calcTotalPrice(): int
+    public function calculateTotalPrice(): int
     {
         $totalPrice = 0;
         foreach ($this->products as $product) {
@@ -43,7 +40,7 @@ class Cart
         return $totalPrice;
     }
 
-    public function calcQty($product): int
+    public function calculateQty($product): int
     {
         $qty = 0;
         foreach ($this->products as $prod) {
@@ -54,13 +51,13 @@ class Cart
 
     public function addToCart(\App\Product $product)
     {
-        $newQty = 1 + $this->calcQty($product);
+        $newQty = 1 + $this->calculateQty($product);
 
         if ($product->qtyIsAvailable($newQty)) {
 
             array_push($this->products, $product);
 
-            $this->toSession();
+            $this->repository->save($this);
 
         } else {
             throw new \Exception('Запрашиваемое количество товара больше остатка !');
@@ -74,14 +71,14 @@ class Cart
                 unset ($this->products[key($this->products)]);
             }
         }
-        $this->toSession();
+        $this->repository->save($this);
     }
 
     public function clear()
     {
         $this->products = [];
 
-        $this->toSession();
+        $this->repository->save($this);
     }
 
     public function actualize()
@@ -92,7 +89,7 @@ class Cart
             unset ($this->products[key($this->products)]);
             array_push($this->products, $newProduct);
         }
-        $this->toSession();
+        $this->repository->save($this);
     }
 
     public function toOrder()
