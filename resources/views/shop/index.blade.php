@@ -10,8 +10,9 @@
     <div class="flex flex-wrap max-w-6xl mx-auto ">
 
         @foreach($products as $product)
-
-
+            @if($product->quantity <1 )
+                @continue
+            @endif
             <div class="max-w-sm w-full sm:w-1/2 lg:w-1/3 py-6 px-3">
                 <div class="bg-white shadow-xl rounded-lg overflow-hidden">
 
@@ -25,16 +26,18 @@
                     </div>
                     <div class="p-4">
                         <p class="uppercase tracking-wide text-lg font-semibold text-gray-700">{{$product->name}}</p>
-                        <p class="text-3xl text-gray-900 mb-3">{{$product->price}}  &#8381;</p>
+                        <p class="text-3xl text-gray-900 mb-3">{{$product->price}} &#8381;</p>
 
-                        <a href="{{route('show_product',$product->id)}}" class="float-right bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black font-semibold">Подробнее</a>
+                        <a href="{{route('show_product',$product->id)}}"
+                           class="float-right bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black font-semibold">Подробнее</a>
                         <form action="{{route('add_to_cart',$product->id)}}" target="_blank" method="POST"
                               class="form-horizontal">
                             @csrf
                             <div class="form-group">
-                                <input type="hidden" name="id" id="id" value="{{$product->id}}">
+                                <input type="hidden" name="amount" id="amount" value="1">
                                 <div class="col-sm-offset-3 col-sm-6">
-                                    <button type="submit" class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black font-semibold ">
+                                    <button type="submit"
+                                            class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black font-semibold ">
                                         <i class="fa fa-plus"></i> Добавить в корзину
                                     </button>
                                 </div>

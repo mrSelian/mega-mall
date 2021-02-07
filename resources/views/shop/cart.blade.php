@@ -18,17 +18,21 @@
             <div class="flex shadow-md my-10">
                 <div class="w-3/4 bg-white px-10 py-10">
                     <div class="flex justify-between border-b pb-8">
-                        <h1 class="font-semibold text-2xl">Товаров в корзине:</h1>
-                        <h2 class="font-semibold text-2xl">{{count($products)}}</h2>
+                        <h1 class="font-semibold text-2xl">Товары в корзине:</h1>
+
                     </div>
                     <div class="flex justify-evenly mt-10 mb-5">
                         <h3 class="font-semibold text-gray-600 text-xs uppercase w-2/5">Товар</h3>
-{{--                        <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">--}}
-{{--                            Количество</h3>--}}
+
+
                         <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">
                             Цена</h3>
-{{--                        <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">--}}
-{{--                            Сумма</h3>--}}
+
+                        <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">
+                            Количество</h3>
+
+                        <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">
+                            Сумма</h3>
                     </div>
                     @if($products == null)
                     <h1 class="text-center font-semibold text-2xl">Корзина пуста</h1>
@@ -51,21 +55,25 @@
                                 </form>
                             </div>
                         </div>
-{{--                        <div class="flex justify-center w-1/5">--}}
+                        <span class="text-center w-1/5 font-semibold text-sm">{{$product->getPrice()}} &#8381;</span>
+                        <div class="flex justify-center w-1/5">
 {{--                            <svg class="fill-current text-gray-600 w-3" viewBox="0 0 448 512">--}}
 {{--                                <path--}}
 {{--                                    d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>--}}
 {{--                            </svg>--}}
+                            <form action="{{ route('correct_amount', $product->getId())}}" method="post">
+                                @csrf
+                                <label for="amount"></label><input class="mx-2 border text-center w-14 h-8" type="text" name="amount" id="amount" value="{{$product->getAmount()}}" >
 
-{{--                            <input class="mx-2 border text-center w-8" type="text" value="1">--}}
-
+                                    <br>
+                                <button class="font-semibold hover:text-red-500 text-gray-500 text-xs">Изменить</button>
+                            </form>
 {{--                            <svg class="fill-current text-gray-600 w-3" viewBox="0 0 448 512">--}}
 {{--                                <path--}}
 {{--                                    d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>--}}
 {{--                            </svg>--}}
-{{--                        </div>--}}
-                        <span class="text-center w-1/5 font-semibold text-sm">{{$product->getPrice()}} &#8381;</span>
-{{--                        <span class="text-center w-1/5 font-semibold text-sm">$400.00</span>--}}
+                        </div>
+                        <span class="text-center w-1/5 font-semibold text-sm">{{$product->getPrice() * $product->getAmount()}} &#8381;</span>
                     </div>
                     @endforeach
                     @endif

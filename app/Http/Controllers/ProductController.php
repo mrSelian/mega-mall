@@ -10,7 +10,7 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $products = Product::paginate(12);
+        $products = Product::where('quantity','>',0)->paginate(12);
         return view('shop.index', compact('products'));
     }
 

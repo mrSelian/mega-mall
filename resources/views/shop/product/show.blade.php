@@ -33,7 +33,7 @@
                             <!-- In Stock -->
                             <div class="in_stock_container tracking-wide font-semibold  mb-1 ">
                                 @if($product->quantity > 0)
-                                    <span class="" style="color: green">В наличии</span>
+                                    <span class="" style="color: green">В наличии: <br>{{$product->quantity}} шт</span>
                                 @else
                                     <span style="color: red">Отсутствует</span>
                                 @endif
@@ -42,42 +42,50 @@
 
 
 
-
+                            <form action="{{route('add_to_cart',$product->id)}}" target="_blank" method="POST"  class="form-horizontal">
+                            @csrf
                         <!-- Product Quantity -->
-{{--                            <div class="product_quantity_container">--}}
-{{--                                <div class="product_quantity clearfix">--}}
-{{--                                    <input id="quantity_input" type="text" pattern="[0-9]*" value="1">--}}
-{{--                                    <span>шт</span>--}}
+                            <div class="product_quantity_container">
+                                <div class="product_quantity clearfix">
+                                    <label for="amount"></label><input name="amount" id="amount" type="text"  value="1">
+                                    <span>шт</span>
 {{--                                    <div class="quantity_buttons">--}}
 {{--                                        <div id="quantity_inc_button" class="quantity_inc quantity_control"><i--}}
 {{--                                                class="fa fa-chevron-up" aria-hidden="true"></i></div>--}}
 {{--                                        <div id="quantity_dec_button" class="quantity_dec quantity_control"><i--}}
 {{--                                                class="fa fa-chevron-down" aria-hidden="true"></i></div>--}}
 {{--                                    </div>--}}
-{{--                                </div>--}}
+                                </div>
 
                             </div>
-                            <div class="px-2 row description_row mb-3">
-                                <div class="col">
-                                    <div class="description_title_container">
-                                        <div class="tracking-wide text-xl font-semibold text-gray-700 description_title">Описание</div>
-                                    </div>
-                                    <div class="description_text text-lg">
-                                        <p>{{$product->full_specification}}</p>
+                                <div class="px-2 row description_row mb-3">
+                                    <div class="col">
+                                        <div class="description_title_container">
+                                            <div class="tracking-wide text-xl font-semibold text-gray-700 description_title">Описание</div>
+                                        </div>
+                                        <div class="description_text text-lg">
+                                            <p>{{$product->full_specification}}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        <form action="{{route('add_to_cart',$product->id)}}" target="_blank" method="POST"  class="text-center  form-horizontal">
-                            @csrf
+
+
                             <div class="form-group">
                                 <input type="hidden" name="id" id="id" value="{{$product->id}}">
                                 <div class="col-sm-offset-3 col-sm-6">
-                                    <button type="submit" class="text-xl w-full bg-indigo-500 text-white px-4 py-2  border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                                    @if($product->quantity < 1)
+                                        <button type="submit" class="text-xl w-full bg-gray-800 text-white px-4 py-2 border disabled:opacity-40 rounded-md  " disabled>
+                                            <i class="fa fa-plus"></i> Добавить в корзину
+                                        </button>
+                                    @else
+                                    <button type="submit" class="text-xl w-full bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
                                         <i class="fa fa-plus"></i> Добавить в корзину
                                     </button>
+                                    @endif
                                 </div>
                             </div>
                         </form>
+
 
                         </div>
                     </div>

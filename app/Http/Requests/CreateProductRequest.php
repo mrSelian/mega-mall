@@ -26,7 +26,7 @@ class CreateProductRequest extends FormRequest
         return [
             'name' => ['required','string', 'max:25'],
             'price' => ['required','min:1','integer'],
-            'quantity' => ['required','min:1','integer'],
+            'quantity' => ['required','min:0','integer'],
             'main_photo_path' => ['required','string'],
             'full_specification' => ['required','string','max:800'],
         ];

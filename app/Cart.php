@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Session;
 
 class Cart
 {
-    /** @var Product[] $products */
+    /** @var CartProduct[] $products */
     private array $products = [];
     private CartRepositoryInterface $repository;
 
@@ -35,39 +35,27 @@ class Cart
     {
         $totalPrice = 0;
         foreach ($this->products as $product) {
-            $totalPrice += $product->getPrice();
+            $totalPrice += ($product->getPrice())*($product->getAmount());
         }
         return $totalPrice;
     }
 
     public function calculateQty($product): int
     {
-        $qty = 0;
-        foreach ($this->products as $prod) {
-            if ($prod->getId() == $product->getId()) $qty++;
-        }
-        return $qty;
+        return $this->products[$product]->getAmount();
     }
 
-    public function addToCart(\App\Product $product)
+    public function addToCart(CartProduct $product)
     {
-        $newQty = 1 + $this->calculateQty($product);
-
-        if ($product->qtyIsAvailable($newQty)) {
-
             array_push($this->products, $product);
 
             $this->repository->save($this);
-
-        } else {
-            throw new \Exception('Запрашиваемое количество товара больше остатка !');
-        }
     }
 
     public function removeFromCart(int $id)
     {
-        foreach ($this->products as $prod) {
-            if ($prod->getId() === $id) {
+        foreach ($this->products as $product) {
+            if ($product->getId() === $id) {
                 unset ($this->products[key($this->products)]);
             }
         }
@@ -79,6 +67,16 @@ class Cart
         $this->products = [];
 
         $this->repository->save($this);
+    }
+
+    public function correctAmount($id, $amount)
+    {
+        foreach ($this->products as $product) {
+            if ($product->getId() == $id) {
+                $product->correctAmount($amount);
+            }
+        }
+
     }
 
     public function actualize()

@@ -55,6 +55,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'cart'], function () {
         Route::get('/', [CartController::class, 'index'])->name('cart');
         Route::post('/clear', [CartController::class, 'clearCart'])->name('clear_cart');
+        Route::post('/correct/{id}',[CartController::class, 'correctAmount'])->name('correct_amount');
 //        Route::post('/actualize', [CartController::class, 'actualize'])->name('actualize_cart');
         Route::post('/to-order', [CartController::class, 'toOrder'])->name('cart_to_order');
         Route::post('/add/{id}', [CartController::class, 'addProduct'])->name('add_to_cart');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Cart;
+use App\CartProduct;
 use App\CartRepository;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -28,9 +29,17 @@ class CartController extends Controller
 
         $cart = $this->getCart($request);
 
+        $amount = $request->amount;
+
         $product = new \App\Product($productRec);
 
-        $cart->addToCart($product);
+        if (!$product->qtyIsAvailable($amount)) {
+            throw new \Exception('Запрашиваемое количество товара больше остатка !');
+        }
+
+        $cartProduct = new CartProduct($product,$amount);
+
+        $cart->addToCart($cartProduct);
 
         return redirect(route('cart'));
     }
@@ -66,6 +75,17 @@ class CartController extends Controller
         $cart->actualize();
         $cart->toOrder();
     }
+
+    public function correctAmount(Request $request)
+    {
+        $cart = $this->getCart($request);
+        $amount = $request->amount;
+        $id = $request->id;
+        $cart->correctAmount($id,$amount);
+        return redirect()->back();
+
+    }
+
 
     private function getCart(Request $request): Cart
     {
