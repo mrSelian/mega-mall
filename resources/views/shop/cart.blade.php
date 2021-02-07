@@ -63,7 +63,7 @@
 {{--                            </svg>--}}
                             <form action="{{ route('correct_amount', $product->getId())}}" method="post">
                                 @csrf
-                                <label for="amount"></label><input class="mx-2 border text-center w-14 h-8" type="text" name="amount" id="amount" value="{{$product->getAmount()}}" >
+                                <label for="amount"></label><input class="mx-2 border text-center w-14 h-8" type="text" pattern="[0-9]*" name="amount" id="amount" value="{{$product->getAmount()}}" >
 
                                     <br>
                                 <button class="font-semibold hover:text-red-500 text-gray-500 text-xs">Изменить</button>

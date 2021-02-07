@@ -47,7 +47,7 @@
                         <!-- Product Quantity -->
                             <div class="product_quantity_container">
                                 <div class="product_quantity clearfix">
-                                    <label for="amount"></label><input name="amount" id="amount" type="text"  value="1">
+                                    <label for="amount"></label><input name="amount" id="amount" pattern="[0-9]*" type="text"  value="1">
                                     <span>шт</span>
 {{--                                    <div class="quantity_buttons">--}}
 {{--                                        <div id="quantity_inc_button" class="quantity_inc quantity_control"><i--}}

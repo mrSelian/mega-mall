@@ -5,7 +5,25 @@
         </h2>
 
     </x-slot>
+    <div class="p-6 max-w-6xl mx-auto">
+        <form action="{{route('search')}}" method="POST"
+              class="form-horizontal">
+            @csrf
+            <div class="bg-white flex items-center rounded-full shadow-xl">
+                <label for="search"></label><input
+                    class="rounded-l-full w-full py-4 px-6 text-gray-700 border-0 focus:outline-none focus:border-opacity-100"
+                    name="search" id="search"
+                    type="text" placeholder="Поиск по товарам">
 
+                <div class="p-4">
+                    <button
+                        class="bg-indigo-500 text-white rounded-full p-2 hover:bg-gray-400 focus:outline-none w-12 h-12 flex items-center justify-center">
+                        &#128270;
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
 
     <div class="flex flex-wrap max-w-6xl mx-auto ">
 
