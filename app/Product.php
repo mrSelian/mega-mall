@@ -8,21 +8,21 @@ class Product
 {
     private int $id;
     private string $name;
-    private string $main_photo_path;
-    public int $price;
-    private int $quantity;
-    private string $full_specification;
-    private int $user_id;
+    private string $mainPhoto;
+    private int $price;
+    private int $amount;
+    private string $fullSpec;
+    private int $userId;
 
     public function __construct($productRec)
     {
         $this->id = $productRec->id;
         $this->name = $productRec->name;
-        $this->main_photo_path = $productRec->main_photo_path;
+        $this->mainPhoto = $productRec->main_photo_path;
         $this->price = $productRec->price;
         $this->quantity = $productRec->quantity;
-        $this->full_specification = $productRec->full_specification;
-        $this->user_id = $productRec->user_id;
+        $this->fullSpec = $productRec->full_specification;
+        $this->userId = $productRec->user_id;
     }
 
     public function getId()
@@ -37,7 +37,7 @@ class Product
 
     public function getPhoto()
     {
-        return $this->main_photo_path;
+        return $this->mainPhoto;
     }
 
     public function getPrice()
@@ -45,19 +45,19 @@ class Product
         return $this->price;
     }
 
-    public function getQuantity()
+    public function getAmount()
     {
         return $this->quantity;
     }
 
     public function getFullSpec()
     {
-        return $this->full_specification;
+        return $this->fullSpec;
     }
 
     public function getUserId()
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
 
