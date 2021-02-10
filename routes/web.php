@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\AddressController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Customer\AddressController;
+use App\Http\Controllers\Shop\PageController;
+use App\Http\Controllers\Shop\CartController;
+use App\Http\Controllers\Seller\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,8 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['prefix' => '/'], function () {
-        Route::get('/', [ProductController::class, 'index'])->name('index');
-        Route::post('/search', [ProductController::class, 'search'])->name('search');
+        Route::get('/', [PageController::class, 'shop'])->name('index');
+        Route::post('/search', [PageController::class, 'search'])->name('search');
         Route::get('dashboard', fn() => redirect('/'))->name('dashboard');
     });
 
@@ -41,7 +42,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/', fn() => redirect(route('seller_orders')))->name('seller');
         Route::get('/profile', fn() => view('seller.profile'))->name('seller_profile');
         Route::get('/orders', fn() => view('seller.orders'))->name('seller_orders');
-        Route::get('/products', [ProductController::class, 'forUser'])->name('seller_products');
+        Route::get('/products', [ProductController::class, 'forSeller'])->name('seller_products');
 
         Route::group(['prefix' => 'product'], function () {
             Route::get('/create', [ProductController::class, 'create'])->name('create_product');
@@ -64,7 +65,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 
     Route::group(['prefix' => 'product'], function () {
-        Route::get('/{id}/show', [ProductController::class, 'show'])->name('show_product');
+        Route::get('/{id}/show', [PageController::class, 'showProduct'])->name('show_product');
 
     });
 });

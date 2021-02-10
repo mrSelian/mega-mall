@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Shop;
 
 
 use App\Cart;
 use App\CartProduct;
+use App\Http\Controllers\Controller;
 use App\SessionCartRepository;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -25,21 +26,29 @@ class CartController extends Controller
 
     public function addProduct(Request $request)
     {
-        $productRec = Product::where('id', $request->id)->firstOrFail();
-
-        $cart = $this->getCart();
+        $id = $request->id;
 
         $amount = $request->amount;
 
-        $product = new \App\Product($productRec);
+        $productRec = Product::where('id', $id)->firstOrFail();
 
-        if (!$product->qtyIsAvailable($amount)) {
-            throw new \Exception('Запрашиваемое количество товара больше остатка !');
+        $cart = $this->getCart();
+
+        if (!$cart->hasProductWithId($id)) {
+
+            $product = new \App\Product($productRec);
+
+            if (!$product->qtyIsAvailable($amount)) {
+                throw new \Exception('Запрашиваемое количество товара больше остатка !');
+            }
+
+            $cartProduct = new CartProduct($product, $amount);
+
+            $cart->addToCart($cartProduct);
+
+            return redirect(route('cart'));
         }
-
-        $cartProduct = new CartProduct($product,$amount);
-
-        $cart->addToCart($cartProduct);
+        $cart->correctAmount($id,$cart->hasProductWithId($id)->getAmount()+$amount);
 
         return redirect(route('cart'));
     }
@@ -81,7 +90,7 @@ class CartController extends Controller
         $cart = $this->getCart();
         $amount = $request->amount;
         $id = $request->id;
-        $cart->correctAmount($id,$amount);
+        $cart->correctAmount($id, $amount);
         return redirect()->back();
 
     }

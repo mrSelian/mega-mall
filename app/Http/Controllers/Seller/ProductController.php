@@ -1,35 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Seller;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index(Request $request)
-    {
-        $products = Product::where('quantity', '>', 0)->paginate(12);
-
-        return view('shop.index', compact('products'));
-    }
-
-    public function search(Request $request)
-    {
-
-    }
 
     public function create()
     {
         return view('seller.product.create');
     }
 
-    public function show($id)
-    {
-        $product = Product::findOrFail($id);
-        return view('shop.product.show', compact('product'));
-    }
 
     public function store(CreateProductRequest $request)
     {
@@ -70,7 +55,7 @@ class ProductController extends Controller
         return redirect(route('seller_products'))->with('success', 'Товар удалён.');
     }
 
-    public function forUser(Request $request)
+    public function forSeller(Request $request)
     {
         $products = $request->user()->products()->get();
 

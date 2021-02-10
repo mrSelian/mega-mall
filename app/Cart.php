@@ -55,11 +55,19 @@ class Cart
     public function removeFromCart(int $id)
     {
         foreach ($this->products as $product) {
-            if ($product->getId() === $id) {
+            if ($product->getId() == $id) {
                 unset ($this->products[key($this->products)]);
             }
         }
         $this->repository->save($this);
+    }
+
+    public function hasProductWithId(int $id)
+    {
+        foreach ($this->products as $product) {
+            if ($product->getId() == $id) return $product;
+        }
+        return false;
     }
 
     public function clear()
@@ -76,7 +84,6 @@ class Cart
                 $product->correctAmount($amount);
             }
         }
-
     }
 
     public function actualize()
