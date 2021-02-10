@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
-    public function shop(Request $request)
+    public function shop()
     {
         $products = Product::where('quantity', '>', 0)->paginate(12);
 
@@ -24,5 +24,12 @@ class PageController extends Controller
     public function search(Request $request)
     {
 
+    }
+
+    public function customerProfile(Request $request)
+    {
+        $address = $request->user()->address()->first();
+        $info = $request->user()->customerInfo()->first();
+        return view('customer.profile', compact('address'),compact('info'));
     }
 }

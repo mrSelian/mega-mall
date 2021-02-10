@@ -9,11 +9,6 @@ use Illuminate\Http\Request;
 
 class AddressController extends Controller
 {
-    public function show(Request $request)
-    {
-        $address = $request->user()->address()->first();
-        return view('customer.profile', compact('address'));
-    }
 
     public function create()
     {

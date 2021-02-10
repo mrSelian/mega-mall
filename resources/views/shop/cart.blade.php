@@ -41,7 +41,7 @@
                     <div class="flex justify-evenly hover:bg-gray-100 -mx-8 px-6 py-5">
                         <div class="flex w-2/5"> <!-- product -->
                             <div class="w-20">
-                                <img class="h-24" src="{{$product->getSource()->getPhoto()}}"
+                                <img class="h-24" src="{{$product->getPhoto()}}"
                                      alt="">
                             </div>
                             <div class="flex flex-col justify-between ml-4 flex-grow">

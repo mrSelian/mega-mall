@@ -3,15 +3,14 @@
 
 namespace App;
 
+use App\Product;
+
 class CartProduct
 {
     private int $id;
     private string $name;
     private int $price;
     private int $amount;
-    private Product $source;
-
-    // продукт не хранится в классе. Корзина запрашивает у кого-то нужную инфу о товаре для вывода. Может и нейм не нужен.
 
     public function __construct(Product $product, int $amount)
     {
@@ -19,7 +18,6 @@ class CartProduct
         $this->name = $product->getName();
         $this->price = $product->getPrice();
         $this->amount = abs($amount);
-        $this->source = $product;
     }
 
     public function getId(): int
@@ -34,7 +32,8 @@ class CartProduct
 
     public function correctAmount(int $newAmount)
     {
-        if ($newAmount > $this->source->getAmount()) {
+        $product = $this->getProductById();
+        if ($newAmount > $product->getAmount()) {
             throw new \Exception('Указаное количество больше остатка товара у продавца.');
         }
 
@@ -42,9 +41,20 @@ class CartProduct
 
     }
 
+    private function getProductById(): \App\Product
+    {
+        return new \App\Product(\App\Models\Product::where('id', '=', $this->id)->first());
+    }
+
     public function getPrice(): int
     {
         return $this->price;
+    }
+
+    public function getPhoto(): string
+    {
+        $product = $this->getProductById();
+        return $product->getPhoto();
     }
 
     public function getAmount(): int
@@ -52,9 +62,4 @@ class CartProduct
         return $this->amount;
     }
 
-
-    public function getSource(): Product
-    {
-        return $this->source;
-    }
 }

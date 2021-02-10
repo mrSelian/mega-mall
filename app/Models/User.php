@@ -59,13 +59,23 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function products()
+    public function products(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Product::class);
     }
 
-    public function address()
+    public function address(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Address::class);
+    }
+
+    public function sellerInfo(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(SellerInfo::class);
+    }
+
+    public function customerInfo(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(CustomerInfo::class);
     }
 }

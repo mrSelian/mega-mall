@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Shop;
 
 use App\Cart;
 use App\CartProduct;
+use App\CartRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\SessionCartRepository;
 use App\Models\Product;
@@ -13,6 +14,13 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    private CartRepositoryInterface $cartRepository;
+
+    public function __construct()
+    {
+        $this->cartRepository = new SessionCartRepository();
+    }
+
     public function index()
     {
 
@@ -50,6 +58,8 @@ class CartController extends Controller
         }
         $cart->correctAmount($id,$cart->hasProductWithId($id)->getAmount()+$amount);
 
+        $this->cartRepository->save($cart);
+
         return redirect(route('cart'));
     }
 
@@ -60,6 +70,8 @@ class CartController extends Controller
         $cart = $this->getCart();
         $cart->removeFromCart($request->id);
 
+        $this->cartRepository->save($cart);
+
         return redirect()->back();
     }
 
@@ -67,6 +79,7 @@ class CartController extends Controller
     {
         $cart = $this->getCart();
         $cart->clear();
+        $this->cartRepository->save($cart);
 
         return redirect()->back();
     }
@@ -75,6 +88,7 @@ class CartController extends Controller
     {
         $cart = $this->getCart();
         $cart->actualize();
+        $this->cartRepository->save($cart);
         return redirect()->back();
     }
 
@@ -98,8 +112,7 @@ class CartController extends Controller
 
     private function getCart(): Cart
     {
-        $repository = new SessionCartRepository();
-        return $repository->get();
+        return $this->cartRepository->get();
     }
 
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\Shop\PageController;
 use App\Http\Controllers\Shop\CartController;
 use App\Http\Controllers\Seller\ProductController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Customer\InfoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,8 +27,15 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['prefix' => 'customer'], function () {
         Route::get('/', fn() => redirect(route('customer_orders')))->name('customer');
-        Route::get('/profile', [AddressController::class, 'show'])->name('customer_profile');
+        Route::get('/profile', [PageController::class, 'customerProfile'])->name('customer_profile');
         Route::get('/orders', fn() => view('customer.orders'))->name('customer_orders');
+
+        Route::group(['prefix' => 'info'], function () {
+            Route::get('/create', [InfoController::class, 'create'])->name('create_customer_info');
+            Route::post('/create', [InfoController::class, 'store'])->name('store_customer_info');
+            Route::get('/edit', [InfoController::class, 'edit'])->name('edit_customer_info');
+            Route::patch('/update', [InfoController::class, 'update'])->name('update_customer_info');
+        });
 
         Route::group(['prefix' => 'address'], function () {
             Route::get('/create', [AddressController::class, 'create'])->name('create_address');
