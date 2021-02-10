@@ -14,6 +14,8 @@ class Cart
     private array $products = [];
     private CartRepositoryInterface $repository;
 
+    //корзина не должна знать про репозиторий
+
     public function __construct(CartRepositoryInterface $repository)
     {
         $this->repository = $repository;
@@ -30,19 +32,14 @@ class Cart
         return !$this->products;
     }
 
-
     public function calculateTotalPrice(): int
     {
+        // каждый продукт считает свой тотал прайс, а карт складывает результаты
         $totalPrice = 0;
         foreach ($this->products as $product) {
             $totalPrice += ($product->getPrice()) * ($product->getAmount());
         }
         return $totalPrice;
-    }
-
-    public function calculateQty($product): int
-    {
-        return $this->products[$product]->getAmount();
     }
 
     public function addToCart(CartProduct $product)
@@ -77,7 +74,6 @@ class Cart
         foreach ($this->products as $product) {
             if ($product->getId() == $id) {
                 $product->correctAmount($amount);
-                if ($amount == 0) $this->removeFromCart($product->getId());
             }
         }
 

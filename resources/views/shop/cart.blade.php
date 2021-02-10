@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Корзина') }}
-        </h2>
+        @section('page-title')
+            Корзина
+        @endsection
     </x-slot>
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
         @include('layouts.errors')
@@ -41,7 +41,7 @@
                     <div class="flex justify-evenly hover:bg-gray-100 -mx-8 px-6 py-5">
                         <div class="flex w-2/5"> <!-- product -->
                             <div class="w-20">
-                                <img class="h-24" src="{{$product->getPhoto()}}"
+                                <img class="h-24" src="{{$product->getSource()->getPhoto()}}"
                                      alt="">
                             </div>
                             <div class="flex flex-col justify-between ml-4 flex-grow">

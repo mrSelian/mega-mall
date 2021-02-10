@@ -1,17 +1,16 @@
 <x-slot name="header">
     <div class="flex justify-evenly ">
-        <a href="{{route('seller_profile')}}"
-           class="font-semibold hover:underline text-center text-lg text-gray-800 leading-tight">
-            {{ __('Профиль Продавца') }}
-        </a>
-        <a href="{{route('seller_products')}}"
-           class="font-semibold hover:underline text-center text-lg text-gray-800 leading-tight">
-            {{ __('Мои Товары') }}
-        </a>
+        <x-jet-nav-link href="{{ route('seller_profile') }}" :active="request()->routeIs('seller_profile')">
+            {{ __('Профиль продавца') }}
+        </x-jet-nav-link>
 
-        <a href="{{route('seller_orders')}}"
-           class="font-semibold hover:underline text-center text-lg text-gray-800 leading-tight">
-            {{ __('Мои Заказы') }}
-        </a>
+        <x-jet-nav-link href="{{ route('seller_products') }}" :active="request()->routeIs('seller_products')">
+            {{ __('Мои товары') }}
+        </x-jet-nav-link>
+
+        <x-jet-nav-link href="{{ route('seller_orders') }}" :active="request()->routeIs('seller_orders')">
+            {{ __('Мои продажи') }}
+        </x-jet-nav-link>
+
     </div>
 </x-slot>

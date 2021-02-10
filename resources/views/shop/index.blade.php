@@ -1,9 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Магазин') }}
-        </h2>
-
+    @section('page-title')
+        Магазин
+    @endsection
     </x-slot>
     <div class="p-6 max-w-6xl mx-auto">
         <form action="{{route('search')}}" method="POST"
@@ -24,7 +23,6 @@
             </div>
         </form>
     </div>
-
     <div class="flex flex-wrap max-w-6xl mx-auto ">
 
         @foreach($products as $product)

@@ -5,17 +5,17 @@ namespace App\Http\Controllers;
 
 use App\Cart;
 use App\CartProduct;
-use App\CartRepository;
+use App\SessionCartRepository;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 
 class CartController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
 
-        $cart = $this->getCart($request);
+        $cart = $this->getCart();
 
         $totalPrice = $cart->calculateTotalPrice();
 
@@ -27,7 +27,7 @@ class CartController extends Controller
     {
         $productRec = Product::where('id', $request->id)->firstOrFail();
 
-        $cart = $this->getCart($request);
+        $cart = $this->getCart();
 
         $amount = $request->amount;
 
@@ -48,15 +48,15 @@ class CartController extends Controller
     public function removeProduct(Request $request): \Illuminate\Http\RedirectResponse
     {
 
-        $cart = $this->getCart($request);
+        $cart = $this->getCart();
         $cart->removeFromCart($request->id);
 
         return redirect()->back();
     }
 
-    public function clearCart(Request $request): \Illuminate\Http\RedirectResponse
+    public function clearCart(): \Illuminate\Http\RedirectResponse
     {
-        $cart = $this->getCart($request);
+        $cart = $this->getCart();
         $cart->clear();
 
         return redirect()->back();
@@ -64,21 +64,21 @@ class CartController extends Controller
 
     public function actualize(Request $request): \Illuminate\Http\RedirectResponse
     {
-        $cart = $this->getCart($request);
+        $cart = $this->getCart();
         $cart->actualize();
         return redirect()->back();
     }
 
-    public function toOrder(Request $request)
+    public function toOrder()
     {
-        $cart = $this->getCart($request);
+        $cart = $this->getCart();
         $cart->actualize();
         $cart->toOrder();
     }
 
     public function correctAmount(Request $request)
     {
-        $cart = $this->getCart($request);
+        $cart = $this->getCart();
         $amount = $request->amount;
         $id = $request->id;
         $cart->correctAmount($id,$amount);
@@ -87,10 +87,10 @@ class CartController extends Controller
     }
 
 
-    private function getCart(Request $request): Cart
+    private function getCart(): Cart
     {
-        $repository = new CartRepository();
-        return $repository->get($request);
+        $repository = new SessionCartRepository();
+        return $repository->get();
     }
 
 }

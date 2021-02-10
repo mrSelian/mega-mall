@@ -4,7 +4,7 @@
 namespace App;
 interface CartRepositoryInterface
 {
-    public function get($source);
+    public function get();
 
     public function save(Cart $cart);
 }

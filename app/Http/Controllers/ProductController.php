@@ -70,10 +70,9 @@ class ProductController extends Controller
         return redirect(route('seller_products'))->with('success', 'Товар удалён.');
     }
 
-    public function for_user(Request $request)
+    public function forUser(Request $request)
     {
         $products = $request->user()->products()->get();
-
 
         return view('seller.products', compact('products'));
     }

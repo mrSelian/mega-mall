@@ -1,9 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        @section('page-title')
             {{$product->name}}
-        </h2>
-
+        @endsection
     </x-slot>
 
     <!-- Product Details -->

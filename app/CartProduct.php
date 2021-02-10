@@ -11,12 +11,14 @@ class CartProduct
     private int $amount;
     private Product $source;
 
+    // продукт не хранится в классе. Корзина запрашивает у кого-то нужную инфу о товаре для вывода. Может и нейм не нужен.
+
     public function __construct(Product $product, int $amount)
     {
         $this->id = $product->getId();
         $this->name = $product->getName();
         $this->price = $product->getPrice();
-        $this->amount = $amount;
+        $this->amount = abs($amount);
         $this->source = $product;
     }
 
@@ -36,7 +38,7 @@ class CartProduct
             throw new \Exception('Указаное количество больше остатка товара у продавца.');
         }
 
-        $this->amount = $newAmount;
+        $this->amount = abs($newAmount);
 
     }
 
@@ -50,10 +52,6 @@ class CartProduct
         return $this->amount;
     }
 
-    public function getPhoto(): string
-    {
-        return $this->source->getPhoto();
-    }
 
     public function getSource(): Product
     {

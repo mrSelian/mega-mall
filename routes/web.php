@@ -41,7 +41,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/', fn() => redirect(route('seller_orders')))->name('seller');
         Route::get('/profile', fn() => view('seller.profile'))->name('seller_profile');
         Route::get('/orders', fn() => view('seller.orders'))->name('seller_orders');
-        Route::get('/products', [ProductController::class, 'for_user'])->name('seller_products');
+        Route::get('/products', [ProductController::class, 'forUser'])->name('seller_products');
 
         Route::group(['prefix' => 'product'], function () {
             Route::get('/create', [ProductController::class, 'create'])->name('create_product');

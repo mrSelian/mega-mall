@@ -1,5 +1,9 @@
 <x-app-layout>
     @include('layouts.headers.customer')
+    @section('page-title')
+        Профиль покупателя
+    @endsection
+
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
         @if($address == null)
             <div>Вы ещё не добавили адрес.</div>

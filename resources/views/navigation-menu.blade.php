@@ -23,16 +23,6 @@
                     </x-jet-nav-link>
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('customer') }}" :active="request()->routeIs('customer')">
-                        {{ __('Кабинет Покупателя') }}
-                    </x-jet-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('seller') }}" :active="request()->routeIs('seller')">
-                        {{ __('Кабинет Продавца') }}
-                    </x-jet-nav-link>
-                </div>
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -117,6 +107,14 @@
                                 {{ __('Профиль') }}
                             </x-jet-dropdown-link>
 
+                            <x-jet-dropdown-link href="{{ route('customer') }}">
+                                {{ __('Кабинет покупателя') }}
+                            </x-jet-dropdown-link>
+
+                            <x-jet-dropdown-link href="{{ route('seller') }}">
+                                {{ __('Кабинет продавца') }}
+                            </x-jet-dropdown-link>
+
 
 
 
@@ -192,11 +190,11 @@
                 </x-jet-responsive-nav-link>
 
                 <x-jet-responsive-nav-link href="{{ route('customer') }}" :active="request()->routeIs('dashboard')">
-                    {{ __('Кабинет Покупателя') }}
+                    {{ __('Кабинет покупателя') }}
                 </x-jet-responsive-nav-link>
 
                 <x-jet-responsive-nav-link href="{{ route('seller') }}" :active="request()->routeIs('seller')">
-                    {{ __('Кабинет Продавца') }}
+                    {{ __('Кабинет продавца') }}
                 </x-jet-responsive-nav-link>
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
