@@ -32,10 +32,10 @@
                     @php
                         $products =  $cart->getProducts();
                     @endphp
-                    @if($products == null)
+                    @if($products == [])
                     <h1 class="text-center font-semibold text-2xl">Корзина пуста</h1>
                     @else
-                       
+
                     @foreach($products as $product)
                     <div class="flex justify-evenly hover:bg-gray-100 -mx-8 px-6 py-5">
                         <div class="flex w-2/5"> <!-- product -->

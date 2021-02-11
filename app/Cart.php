@@ -4,14 +4,27 @@
 namespace App;
 
 
+use Illuminate\Support\Facades\Auth;
+
 class Cart
 {
     /** @var CartProduct[] $products */
     private array $products = [];
+    private int $customerId;
+
+    public function __construct()
+    {
+        $this->customerId = Auth::user()->id;
+    }
 
     public function getProducts(): array
     {
         return $this->products;
+    }
+
+    public function getCustomerId()
+    {
+        return $this->customerId;
     }
 
     public function isEmpty(): bool
@@ -21,10 +34,9 @@ class Cart
 
     public function calculateTotalPrice(): int
     {
-        // каждый продукт считает свой тотал прайс, а карт складывает результаты
         $totalPrice = 0;
         foreach ($this->products as $product) {
-            $totalPrice += ($product->getPrice()) * ($product->getAmount());
+            $totalPrice += $product->calculateTotalPrice();
         }
         return $totalPrice;
     }
@@ -57,7 +69,6 @@ class Cart
     public function clear()
     {
         $this->products = [];
-
     }
 
     public function correctAmount($id, $amount)
@@ -80,9 +91,9 @@ class Cart
         }
     }
 
-    public function toOrder()
+    public function toOrder(OrderServiceInterface $service)
     {
         if ($this->products == []) throw new \Exception('В корзине нет товаров для заказа !');
-        dd('Тут будет страница заказа !');
+        $service->create($this);
     }
 }

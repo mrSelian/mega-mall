@@ -30,6 +30,11 @@ class CartProduct
         return $this->name;
     }
 
+    public function calculateTotalPrice()
+    {
+        return $this->price * $this->amount;
+    }
+
     public function correctAmount(int $newAmount)
     {
         $product = $this->getProductById();
@@ -55,6 +60,12 @@ class CartProduct
     {
         $product = $this->getProductById();
         return $product->getPhoto();
+    }
+
+    public function getSellerId():int
+    {
+        $product = $this->getProductById();
+        return $product->getUserId();
     }
 
     public function getAmount(): int

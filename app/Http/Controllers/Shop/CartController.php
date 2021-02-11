@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Shop;
 use App\Cart;
 use App\CartProduct;
 use App\CartRepositoryInterface;
+use App\DbOrderService;
 use App\Http\Controllers\Controller;
 use App\SessionCartRepository;
 use App\Models\Product;
@@ -42,6 +43,8 @@ class CartController extends Controller
 
         $cart = $this->getCart();
 
+
+
         if (!$cart->hasProductWithId($id)) {
 
             $product = new \App\Product($productRec);
@@ -53,6 +56,8 @@ class CartController extends Controller
             $cartProduct = new CartProduct($product, $amount);
 
             $cart->addToCart($cartProduct);
+
+            $this->cartRepository->save($cart);
 
             return redirect(route('cart'));
         }
@@ -96,7 +101,7 @@ class CartController extends Controller
     {
         $cart = $this->getCart();
         $cart->actualize();
-        $cart->toOrder();
+        $cart->toOrder(new DbOrderService());
     }
 
     public function correctAmount(Request $request)
