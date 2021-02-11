@@ -152,11 +152,13 @@
                                 </div>
                             </div>
                         </div>
+                    @endforeach
+
                 </div>
             </div>
 
 
-            @endforeach
+
             <div class="max-w-sm sm:w-1/2 lg:w-1/3 py-6 px-3"> {{ $products->links() }} </div>
     </div>
 </x-app-layout>
