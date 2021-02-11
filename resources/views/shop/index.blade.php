@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-    @section('page-title')
-        Магазин
-    @endsection
+        @section('page-title')
+            Магазин
+        @endsection
     </x-slot>
     <div class="p-6 max-w-6xl mx-auto">
         <form action="{{route('search')}}" method="POST"
@@ -54,7 +54,7 @@
                                 <div class="col-sm-offset-3 col-sm-6">
                                     <button type="submit"
                                             class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black font-semibold ">
-                                        <i class="fa fa-plus"></i> Добавить в корзину
+                                        <i class="fa fa-plus"></i> В корзину
                                     </button>
                                 </div>
                             </div>
@@ -71,17 +71,10 @@
     </div>
 
 
-    </div>
-    </div>
-
-    <div class="flex justify-center mt-4 sm:items-center sm:justify-between">
-        <div class="text-center text-sm text-gray-500 sm:text-left">
-            (c) 2021 - Mega-Mall .inc
-        </div>
-
-
-    </div>
-    </div>
+    {{--    <div class="flex justify-center mt-4 sm:items-center sm:justify-between">--}}
+    {{--        <div class="text-center text-sm text-gray-500 sm:text-left">--}}
+    {{--            (c) 2021 - Mega-Mall .inc--}}
+    {{--        </div>--}}
 
 
 </x-app-layout>

@@ -11,6 +11,8 @@ class SellerInfo extends Model
 
     protected $fillable = [
         'info',
+        'name',
+        'main_photo',
         'phone',
         'email',
         'additional_contact',

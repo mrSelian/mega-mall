@@ -25,6 +25,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('dashboard', fn() => redirect('/'))->name('dashboard');
     });
 
+    Route::group(['prefix' => 'shop'], function () {
+        Route::get('/{id}', [PageController::class, 'sellerShop'])->name('seller_page');
+    });
     Route::group(['prefix' => 'customer'], function () {
         Route::get('/', fn() => redirect(route('customer_orders')))->name('customer');
         Route::get('/profile', [PageController::class, 'customerProfile'])->name('customer_profile');
@@ -48,9 +51,16 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['prefix' => 'seller'], function () {
         Route::get('/', fn() => redirect(route('seller_orders')))->name('seller');
-        Route::get('/profile', fn() => view('seller.profile'))->name('seller_profile');
+        Route::get('/profile', [PageController::class, 'sellerProfile'])->name('seller_profile');
         Route::get('/orders', fn() => view('seller.orders'))->name('seller_orders');
         Route::get('/products', [ProductController::class, 'forSeller'])->name('seller_products');
+
+        Route::group(['prefix' => 'info'], function () {
+            Route::get('/create', [\App\Http\Controllers\Seller\InfoController::class, 'create'])->name('create_seller_info');
+            Route::post('/create', [\App\Http\Controllers\Seller\InfoController::class, 'store'])->name('store_seller_info');
+            Route::get('/edit', [\App\Http\Controllers\Seller\InfoController::class, 'edit'])->name('edit_seller_info');
+            Route::patch('/update', [\App\Http\Controllers\Seller\InfoController::class, 'update'])->name('update_seller_info');
+        });
 
         Route::group(['prefix' => 'product'], function () {
             Route::get('/create', [ProductController::class, 'create'])->name('create_product');

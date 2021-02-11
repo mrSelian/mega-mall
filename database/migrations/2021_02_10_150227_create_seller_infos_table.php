@@ -15,10 +15,12 @@ class CreateSellerInfosTable extends Migration
     {
         Schema::create('seller_infos', function (Blueprint $table) {
             $table->id();
-            $table->string('info');
-            $table->string('phone');
+            $table->string('name');
+            $table->string('info')->nullable();
+            $table->string('main_photo')->nullable();
+            $table->string('phone')->nullable();
             $table->string('email');
-            $table->string('additional_contact');
+            $table->string('additional_contact')->nullable();
             $table->string('delivery_terms');
             $table->integer('user_id')->unsigned()->index();
             $table->timestamps();

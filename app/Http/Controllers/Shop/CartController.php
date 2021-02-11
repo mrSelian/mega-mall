@@ -28,7 +28,7 @@ class CartController extends Controller
 
         $totalPrice = $cart->calculateTotalPrice();
 
-        return view('shop.cart', compact('totalPrice'));
+        return view('shop.cart', compact('totalPrice'),compact('cart'));
     }
 
 

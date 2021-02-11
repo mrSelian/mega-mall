@@ -7,11 +7,6 @@
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
         @include('layouts.errors')
 
-
-            @php
-                $products = session('cart')->getProducts();
-            @endphp
-
     </div>
     <div class="bg-gray-100">
         <div class="container mx-auto mt-10 ">
@@ -34,9 +29,13 @@
                         <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">
                             Сумма</h3>
                     </div>
+                    @php
+                        $products =  $cart->getProducts();
+                    @endphp
                     @if($products == null)
                     <h1 class="text-center font-semibold text-2xl">Корзина пуста</h1>
                     @else
+                       
                     @foreach($products as $product)
                     <div class="flex justify-evenly hover:bg-gray-100 -mx-8 px-6 py-5">
                         <div class="flex w-2/5"> <!-- product -->
