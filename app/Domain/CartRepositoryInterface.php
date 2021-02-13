@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App;
+namespace App\Domain;
 interface CartRepositoryInterface
 {
     public function get();
 
-    public function save(Cart $cart);
+    public function save(array $cart);
 }

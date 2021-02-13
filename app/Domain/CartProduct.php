@@ -1,9 +1,8 @@
 <?php
 
 
-namespace App;
+namespace App\Domain;
 
-use App\Product;
 
 class CartProduct
 {
@@ -12,11 +11,11 @@ class CartProduct
     private int $price;
     private int $amount;
 
-    public function __construct(Product $product, int $amount)
+    public function __construct(int $id, string $name, int $price, int $amount)
     {
-        $this->id = $product->getId();
-        $this->name = $product->getName();
-        $this->price = $product->getPrice();
+        $this->id = $id;
+        $this->name = $name;
+        $this->price = $price;
         $this->amount = abs($amount);
     }
 
@@ -24,6 +23,21 @@ class CartProduct
     {
         return $this->id;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'price' => $this->price,
+            'amount' => $this->amount,
+        ];
+    }
+
+//    public static function fromProduct(ProductSpec $product, $amount)
+//    {
+//        return new self($product->getId(), $product->getName(), $product->getPrice(), $amount);
+//    }
 
     public function getName(): string
     {
@@ -35,37 +49,18 @@ class CartProduct
         return $this->price * $this->amount;
     }
 
-    public function correctAmount(int $newAmount)
+    public function correctAmount(Product $product, int $newAmount)
     {
-        $product = $this->getProductById();
-        if ($newAmount > $product->getAmount()) {
+        if (!$product->qtyIsAvailable($newAmount)) {
             throw new \Exception('Указаное количество больше остатка товара у продавца.');
         }
 
         $this->amount = abs($newAmount);
-
-    }
-
-    private function getProductById(): \App\Product
-    {
-        return new \App\Product(\App\Models\Product::where('id', '=', $this->id)->first());
     }
 
     public function getPrice(): int
     {
         return $this->price;
-    }
-
-    public function getPhoto(): string
-    {
-        $product = $this->getProductById();
-        return $product->getPhoto();
-    }
-
-    public function getSellerId():int
-    {
-        $product = $this->getProductById();
-        return $product->getUserId();
     }
 
     public function getAmount(): int

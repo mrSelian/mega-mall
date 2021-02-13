@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateAddressRequest;
+use App\Models\Order;
 use App\Models\Address;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AddressController extends Controller
 {
@@ -13,6 +15,57 @@ class AddressController extends Controller
     public function create()
     {
         return view('customer.address.create');
+    }
+
+    public function checkOut()
+    {
+        $cart = $this->cartRepositiry->get(Auth::id());
+
+        $order = Order::checkOut($cart);
+
+        $this->cartRepository->save($cart);
+        $this->orderRepository->save($order);
+
+//        return redirect()
+    }
+
+    public function addToCart(Request $request)
+    {
+        $cart = $this->cartRepositiry->get(Auth::id());
+        $product = $this->productRepository->getById($request->id);
+
+//        if(!$product) return redirect();
+
+        $cart->addProduct($product, $request->amount);
+
+        $this->cartRepository->save($cart);
+
+//        return redirect();
+    }
+
+    public function update(CreateAddressRequest $request)
+    {
+        $user = $this->userRepository->getById(Auth::id());
+
+        $user->updateAddress($request->all());
+
+        $this->userRepository->save($user);
+
+
+        $address = $this->addressRepository->getByUserId(Auth::id());
+
+        $address->update($request->all());
+
+        $this->addressRepository->save($address);
+
+
+        $address = $request->user()->address();
+
+        $address->update($request->all());
+
+        $address->save();
+
+        return redirect(route('customer_profile'));
     }
 
     public function store(CreateAddressRequest $request)

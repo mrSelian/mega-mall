@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App;
+namespace App\Domain;
 
+use App\Domain\CartProduct;
 
-use Illuminate\Support\Facades\Auth;
 
 class Cart
 {
@@ -12,9 +12,19 @@ class Cart
     private array $products = [];
     private int $customerId;
 
-    public function __construct()
+
+    public function __construct(int $customerId, array $products)
     {
-        $this->customerId = Auth::user()->id;
+        $this->customerId = $customerId;
+        $this->products = $products;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'customerId' => $this->customerId,
+            'products' => array_map(fn(CartProduct $product) => $product->toArray(), $this->products),
+        ];
     }
 
     public function getProducts(): array
@@ -71,11 +81,11 @@ class Cart
         $this->products = [];
     }
 
-    public function correctAmount($id, $amount)
+    public function correctAmount(Product $product, $amount)
     {
-        foreach ($this->products as $product) {
-            if ($product->getId() == $id) {
-                $product->correctAmount($amount);
+        foreach ($this->products as $productCart) {
+            if ($productCart->getId() == $productCart->getId()) {
+                $productCart->correctAmount($product, $amount);
             }
         }
     }

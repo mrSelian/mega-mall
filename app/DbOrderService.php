@@ -13,14 +13,12 @@ class DbOrderService implements OrderServiceInterface
         $order = new Order;
         $order->customer_id = $cart->getCustomerId();
         dd($cart->getProducts());
-        $order->seller_id = $cart->getProducts()[0]->getSellerId();
+        $order->seller_id = $cart->getProducts()[array_key_first ($cart->getProducts())]->getSellerId();
         $order->sum = $cart->calculateTotalPrice();
         $order->status = 'оформлен';
         $order->items = json_encode($cart->getProducts());
         $order->save();
         $cart->clear();
-        dd($order);
-        return redirect(route('customer_orders'));
     }
 
 }

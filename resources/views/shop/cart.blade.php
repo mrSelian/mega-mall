@@ -1,9 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
-        @section('page-title')
-            Корзина
-        @endsection
     </x-slot>
+    @section('page-title')
+        Корзина
+    @endsection
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
         @include('layouts.errors')
 
@@ -40,7 +40,7 @@
                     <div class="flex justify-evenly hover:bg-gray-100 -mx-8 px-6 py-5">
                         <div class="flex w-2/5"> <!-- product -->
                             <div class="w-20">
-                                <img class="h-24" src="{{$product->getPhoto()}}"
+                                <img class="h-24" src="{{$photos[$product->getId()]}}}}"
                                      alt="">
                             </div>
                             <div class="flex flex-col justify-between ml-4 flex-grow">
@@ -97,7 +97,7 @@
                     <div class="border-t mt-8">
                         <div class="flex font-semibold justify-between py-6 text-sm uppercase">
                             <span>Итоговая сумма:</span>
-                            <span> {{$totalPrice}} &#8381;</span>
+                            <span> {{$cart->calculateTotalPrice()}} &#8381;</span>
                         </div>
                         <form action="{{ route('cart_to_order')}}" method="POST">
                             @csrf

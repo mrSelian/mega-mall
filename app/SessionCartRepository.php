@@ -1,10 +1,12 @@
 <?php
 
-
 namespace App;
 
 
-use Illuminate\Support\Facades\Session;
+use App\Domain\Cart;
+use App\Domain\CartProduct;
+use App\Domain\CartRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 
 class SessionCartRepository implements CartRepositoryInterface
 {
@@ -13,15 +15,17 @@ class SessionCartRepository implements CartRepositoryInterface
     {
         if (session()->has('cart')) {
             $cart = (session()->get('cart'));
+            $cart['products'] = array_map(fn(array $product) => new CartProduct($product['id'],$product['name'],$product['price'],$product['amount']), $cart['products']);
         } else {
-            $cart = new Cart($this);
+            $cart = ['customerId' => Auth::id(),
+                'products' => []];
         }
-        return $cart;
+        return new Cart($cart['customerId'], $cart['products']);
     }
 
-    public function save(Cart $cart)
+    public function save(array $cart)
     {
-        Session::put('cart', $cart);
+        session()->put('cart', $cart);
     }
 
 }

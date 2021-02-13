@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Shop;
 
 
-use App\Cart;
-use App\CartProduct;
-use App\CartRepositoryInterface;
+use App\DbProductRepository;
+use App\Domain\Cart;
+use App\Domain\CartProduct;
+use App\Domain\CartRepositoryInterface;
 use App\DbOrderService;
+use App\Domain\ProductRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\SessionCartRepository;
 use App\Models\Product;
@@ -16,10 +18,12 @@ use Illuminate\Http\Request;
 class CartController extends Controller
 {
     private CartRepositoryInterface $cartRepository;
+    private ProductRepositoryInterface $productRepository;
 
     public function __construct()
     {
         $this->cartRepository = new SessionCartRepository();
+        $this->productRepository = new DbProductRepository();
     }
 
     public function index()
@@ -27,9 +31,13 @@ class CartController extends Controller
 
         $cart = $this->getCart();
 
-        $totalPrice = $cart->calculateTotalPrice();
+        $photos = [];
+        foreach ($cart->getProducts() as $product)
+        {
+           $photos[$product->getId()] = $this->productRepository->getPhoto($product->getId());
+        }
 
-        return view('shop.cart', compact('totalPrice'),compact('cart'));
+        return view('shop.cart',compact('cart'), compact('photos'));
     }
 
 
@@ -39,31 +47,27 @@ class CartController extends Controller
 
         $amount = $request->amount;
 
-        $productRec = Product::where('id', $id)->firstOrFail();
-
         $cart = $this->getCart();
 
-
+        $product = $this->productRepository->getById($id);
 
         if (!$cart->hasProductWithId($id)) {
-
-            $product = new \App\Product($productRec);
 
             if (!$product->qtyIsAvailable($amount)) {
                 throw new \Exception('Запрашиваемое количество товара больше остатка !');
             }
 
-            $cartProduct = new CartProduct($product, $amount);
+            $cartProduct = new CartProduct($product->getId(), $product->getName(), $product->getPrice() ,$amount);
 
             $cart->addToCart($cartProduct);
 
-            $this->cartRepository->save($cart);
+            $this->cartRepository->save($cart->toArray());
 
             return redirect(route('cart'));
         }
-        $cart->correctAmount($id,$cart->hasProductWithId($id)->getAmount()+$amount);
+        $cart->correctAmount($product,$cart->hasProductWithId($id)->getAmount()+$amount);
 
-        $this->cartRepository->save($cart);
+        $this->cartRepository->save($cart->toArray());
 
         return redirect(route('cart'));
     }
@@ -75,7 +79,7 @@ class CartController extends Controller
         $cart = $this->getCart();
         $cart->removeFromCart($request->id);
 
-        $this->cartRepository->save($cart);
+        $this->cartRepository->save($cart->toArray());
 
         return redirect()->back();
     }
@@ -84,7 +88,7 @@ class CartController extends Controller
     {
         $cart = $this->getCart();
         $cart->clear();
-        $this->cartRepository->save($cart);
+        $this->cartRepository->save($cart->toArray());
 
         return redirect()->back();
     }
@@ -93,7 +97,7 @@ class CartController extends Controller
     {
         $cart = $this->getCart();
         $cart->actualize();
-        $this->cartRepository->save($cart);
+        $this->cartRepository->save($cart->toArray());
         return redirect()->back();
     }
 
@@ -102,6 +106,7 @@ class CartController extends Controller
         $cart = $this->getCart();
         $cart->actualize();
         $cart->toOrder(new DbOrderService());
+        return redirect(route('customer_orders'));
     }
 
     public function correctAmount(Request $request)
@@ -109,7 +114,9 @@ class CartController extends Controller
         $cart = $this->getCart();
         $amount = $request->amount;
         $id = $request->id;
-        $cart->correctAmount($id, $amount);
+        $product = $this->productRepository->getById($id);
+        $cart->correctAmount($product, $amount);
+        $this->cartRepository->save($cart->toArray());
         return redirect()->back();
 
     }
