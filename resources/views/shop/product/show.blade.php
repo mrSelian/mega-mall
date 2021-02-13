@@ -1,7 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
+        <x-jet-nav-link href="{{ route('seller_page',$product->user_id) }}" :active="request()->routeIs('seller_page')">
+            {{ __('К магазину продавца') }}
+        </x-jet-nav-link>
         @section('page-title')
-            {{$product->name}}
+            {{$product->getName}}
         @endsection
     </x-slot>
 
