@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class InfoController extends Controller
 {
+    public function sellerProfile(Request $request)
+    {
+        $info = $request->user()->sellerInfo()->first();
+        return view('seller.profile',compact('info'));
+    }
+
     public function create()
     {
         return view('seller.info.create');

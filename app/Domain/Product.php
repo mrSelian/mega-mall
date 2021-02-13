@@ -55,7 +55,7 @@ class Product
         return $this->description;
     }
 
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }

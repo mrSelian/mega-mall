@@ -30,7 +30,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
     Route::group(['prefix' => 'customer'], function () {
         Route::get('/', fn() => redirect(route('customer_orders')))->name('customer');
-        Route::get('/profile', [PageController::class, 'customerProfile'])->name('customer_profile');
+        Route::get('/profile', [InfoController::class, 'customerProfile'])->name('customer_profile');
         Route::get('/orders', fn() => view('customer.orders'))->name('customer_orders');
 
         Route::group(['prefix' => 'info'], function () {
@@ -51,7 +51,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['prefix' => 'seller'], function () {
         Route::get('/', fn() => redirect(route('seller_orders')))->name('seller');
-        Route::get('/profile', [PageController::class, 'sellerProfile'])->name('seller_profile');
+        Route::get('/profile', [\App\Http\Controllers\Seller\InfoController::class, 'sellerProfile'])->name('seller_profile');
         Route::get('/orders', fn() => view('seller.orders'))->name('seller_orders');
         Route::get('/products', [ProductController::class, 'forSeller'])->name('seller_products');
 

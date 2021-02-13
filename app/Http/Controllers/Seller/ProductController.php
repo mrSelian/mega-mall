@@ -28,6 +28,9 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
+
+        $this->authorize('edit',$product);
+
         return view('seller.product.edit', compact('product'));
     }
 
@@ -35,6 +38,8 @@ class ProductController extends Controller
     {
 
         $product = Product::findOrFail($id);
+
+        $this->authorize('update',$product);
 
         $product->name = $request->get('name');
         $product->price = $request->get('price');
@@ -49,6 +54,9 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
+
+        $this->authorize('destroy',$product);
+
         $product->delete();
 
 

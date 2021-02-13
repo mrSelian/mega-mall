@@ -3,9 +3,6 @@
 
 namespace App\Domain;
 
-use App\Domain\CartProduct;
-
-
 class Cart
 {
     /** @var CartProduct[] $products */
@@ -32,7 +29,7 @@ class Cart
         return $this->products;
     }
 
-    public function getCustomerId()
+    public function getCustomerId(): int
     {
         return $this->customerId;
     }

@@ -29,44 +29,44 @@ class AddressController extends Controller
 //        return redirect()
     }
 
-    public function addToCart(Request $request)
-    {
-        $cart = $this->cartRepositiry->get(Auth::id());
-        $product = $this->productRepository->getById($request->id);
-
+//    public function addToCart(Request $request)
+//    {
+//        $cart = $this->cartRepositiry->get(Auth::id());
+//        $product = $this->productRepository->getById($request->id);
+//
 //        if(!$product) return redirect();
+//
+//        $cart->addProduct($product, $request->amount);
+//
+//        $this->cartRepository->save($cart);
+//
+//       return redirect();
+////    }
 
-        $cart->addProduct($product, $request->amount);
-
-        $this->cartRepository->save($cart);
-
-//        return redirect();
-    }
-
-    public function update(CreateAddressRequest $request)
-    {
-        $user = $this->userRepository->getById(Auth::id());
-
-        $user->updateAddress($request->all());
-
-        $this->userRepository->save($user);
-
-
-        $address = $this->addressRepository->getByUserId(Auth::id());
-
-        $address->update($request->all());
-
-        $this->addressRepository->save($address);
-
-
-        $address = $request->user()->address();
-
-        $address->update($request->all());
-
-        $address->save();
-
-        return redirect(route('customer_profile'));
-    }
+//    public function update(CreateAddressRequest $request)
+//    {
+//        $user = $this->userRepository->getById(Auth::id());
+//
+//        $user->updateAddress($request->all());
+//
+//        $this->userRepository->save($user);
+//
+//
+//        $address = $this->addressRepository->getByUserId(Auth::id());
+//
+//        $address->update($request->all());
+//
+//        $this->addressRepository->save($address);
+//
+//
+//        $address = $request->user()->address();
+//
+//        $address->update($request->all());
+//
+//        $address->save();
+//
+//        return redirect(route('customer_profile'));
+//    }
 
     public function store(CreateAddressRequest $request)
     {
