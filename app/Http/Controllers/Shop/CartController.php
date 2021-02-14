@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Shop;
 
 
+use App\DbOrderRepository;
 use App\DbProductRepository;
 use App\Domain\Cart;
 use App\Domain\CartProduct;
 use App\Domain\CartRepositoryInterface;
-use App\DbOrderService;
 use App\Domain\ProductRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\SessionCartRepository;
-use App\Models\Product;
 use Illuminate\Http\Request;
 
 
@@ -19,11 +18,13 @@ class CartController extends Controller
 {
     private CartRepositoryInterface $cartRepository;
     private ProductRepositoryInterface $productRepository;
+    private OrderController $orderController;
 
     public function __construct()
     {
         $this->cartRepository = new SessionCartRepository();
         $this->productRepository = new DbProductRepository();
+        $this->orderController =new OrderController();
     }
 
     public function index()
@@ -105,7 +106,8 @@ class CartController extends Controller
     {
         $cart = $this->getCart();
         $cart->actualize($this->productRepository);
-        $cart->toOrder(new DbOrderService());
+        $cart->toOrder($this->orderController);
+        $this->clearCart();
         return redirect(route('customer_orders'));
     }
 

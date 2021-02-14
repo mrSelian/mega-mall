@@ -4,7 +4,7 @@
             {{ __('К магазину продавца') }}
         </x-jet-nav-link>
         @section('page-title')
-            {{$product->getName}}
+            {{$product->name}}
         @endsection
     </x-slot>
 

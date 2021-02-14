@@ -81,7 +81,7 @@ class Cart
     public function correctAmount(Product $product, $amount)
     {
         foreach ($this->products as $productCart) {
-            if ($productCart->getId() == $productCart->getId()) {
+            if ($product->getId() == $productCart->getId()) {
                 $productCart->correctAmount($product, $amount);
             }
         }
@@ -92,13 +92,14 @@ class Cart
         foreach ($this->products as $product) {
             $newProduct = $repository->getById($product->getId());
             unset ($this->products[key($this->products)]);
-            array_push($this->products, $newProduct);
+            array_push($this->products, new CartProduct($newProduct->getId(),$newProduct->getName(),$newProduct->getPrice(),$product->getAmount()));
         }
     }
 
-    public function toOrder(OrderServiceInterface $service)
+    public function toOrder($controller)
     {
         if ($this->products == []) throw new \Exception('В корзине нет товаров для заказа !');
-        $service->create($this);
+        $order = $controller->create($this);
+        $controller->save($order);
     }
 }

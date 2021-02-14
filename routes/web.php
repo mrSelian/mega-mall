@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Customer\AddressController;
+use App\Http\Controllers\Shop\OrderController;
 use App\Http\Controllers\Shop\PageController;
 use App\Http\Controllers\Shop\CartController;
 use App\Http\Controllers\Seller\ProductController;
@@ -28,10 +29,16 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'shop'], function () {
         Route::get('/{id}', [PageController::class, 'sellerShop'])->name('seller_page');
     });
+
+    Route::group(['prefix' => 'order'], function () {
+        Route::get('/{id}', [OrderController::class, 'show'])->name('order_page');
+        Route::post('/{id}', [OrderController::class, 'changeStatus'])->name('change_order_status');
+    });
+
     Route::group(['prefix' => 'customer'], function () {
         Route::get('/', fn() => redirect(route('customer_orders')))->name('customer');
         Route::get('/profile', [InfoController::class, 'customerProfile'])->name('customer_profile');
-        Route::get('/orders', fn() => view('customer.orders'))->name('customer_orders');
+        Route::get('/orders', [OrderController::class, 'customerOrders'])->name('customer_orders');
 
         Route::group(['prefix' => 'info'], function () {
             Route::get('/create', [InfoController::class, 'create'])->name('create_customer_info');
@@ -52,7 +59,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'seller'], function () {
         Route::get('/', fn() => redirect(route('seller_orders')))->name('seller');
         Route::get('/profile', [\App\Http\Controllers\Seller\InfoController::class, 'sellerProfile'])->name('seller_profile');
-        Route::get('/orders', fn() => view('seller.orders'))->name('seller_orders');
+        Route::get('/orders', [OrderController::class, 'sellerOrders'])->name('seller_orders');
         Route::get('/products', [ProductController::class, 'forSeller'])->name('seller_products');
 
         Route::group(['prefix' => 'info'], function () {

@@ -13,10 +13,17 @@ class DbProductRepository implements ProductRepositoryInterface
         return new Product(Models\Product::where('id', '=', $id)->firstOrFail());
     }
 
-    public function getPhoto(int $id): string
+
+    public function getPhoto(int $productId): string
     {
-        $product = $this->getById($id);
+        $product = $this->getById($productId);
         return $product->getPhoto();
+    }
+
+    public function getSellerId(int $productId): int
+    {
+        $product = $this->getById($productId);
+        return $product->getUserId();
     }
 
 
