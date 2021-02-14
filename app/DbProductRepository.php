@@ -10,7 +10,7 @@ class DbProductRepository implements ProductRepositoryInterface
 {
     public function getById(int $id): Product
     {
-        return new Product(\App\Models\Product::where('id', '=', $id)->first());
+        return new Product(Models\Product::where('id', '=', $id)->firstOrFail());
     }
 
     public function getPhoto(int $id): string
@@ -18,4 +18,6 @@ class DbProductRepository implements ProductRepositoryInterface
         $product = $this->getById($id);
         return $product->getPhoto();
     }
+
+
 }

@@ -87,12 +87,10 @@ class Cart
         }
     }
 
-    public function actualize()
+    public function actualize($repository)
     {
-        // сейчас не используется. Позже переписать
-        // в параметре принимает что-то, что будет подключаться к базе,сессии и куда-то ещё ( репозиторий или сервис)
         foreach ($this->products as $product) {
-            $newProduct = new Product (\App\Models\Product::where('id', $product->getId())->firstOrFail());
+            $newProduct = $repository->getById($product->getId());
             unset ($this->products[key($this->products)]);
             array_push($this->products, $newProduct);
         }

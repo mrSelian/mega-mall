@@ -93,10 +93,10 @@ class CartController extends Controller
         return redirect()->back();
     }
 
-    public function actualize(Request $request): \Illuminate\Http\RedirectResponse
+    public function actualize(): \Illuminate\Http\RedirectResponse
     {
         $cart = $this->getCart();
-        $cart->actualize();
+        $cart->actualize($this->productRepository);
         $this->cartRepository->save($cart->toArray());
         return redirect()->back();
     }
@@ -104,7 +104,7 @@ class CartController extends Controller
     public function toOrder()
     {
         $cart = $this->getCart();
-        $cart->actualize();
+        $cart->actualize($this->productRepository);
         $cart->toOrder(new DbOrderService());
         return redirect(route('customer_orders'));
     }
