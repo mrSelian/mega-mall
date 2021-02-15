@@ -6,6 +6,7 @@ use App\DbAddressRepository;
 use App\Domain\AddressRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateAddressRequest;
+use App\Models\Address;
 use Illuminate\Support\Facades\Auth;
 
 class AddressController extends Controller
@@ -15,6 +16,11 @@ class AddressController extends Controller
     public function __construct()
     {
         $this->addressRepository = new DbAddressRepository();
+    }
+
+    public function getByUserId(int $id)
+    {
+        return Address::where('user_id','=',$id)->first();
     }
 
     public function create()

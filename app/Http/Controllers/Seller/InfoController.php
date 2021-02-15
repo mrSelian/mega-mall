@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SellerInfoRequest;
+use App\Models\SellerInfo;
 use Illuminate\Http\Request;
 
 class InfoController extends Controller
@@ -17,6 +18,11 @@ class InfoController extends Controller
     public function create()
     {
         return view('seller.info.create');
+    }
+
+    public function getBySellerId(int $id)
+    {
+        return SellerInfo::where('user_id','=',$id)->first();
     }
 
     public function store(SellerInfoRequest $request)

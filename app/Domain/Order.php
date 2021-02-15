@@ -29,6 +29,11 @@ class Order
         $this->status = $status;
     }
 
+    public function calculateCommission(): float
+    {
+        return $this->sum * 0.05;
+    }
+
 
     public function getSellerId(): int
     {

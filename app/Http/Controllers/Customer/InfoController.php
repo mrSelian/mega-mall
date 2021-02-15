@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerInfoRequest;
+use App\Models\CustomerInfo;
 use Illuminate\Http\Request;
 
 class InfoController extends Controller
@@ -13,6 +14,11 @@ class InfoController extends Controller
         $address = $request->user()->address()->first();
         $info = $request->user()->customerInfo()->first();
         return view('customer.profile', compact('address'),compact('info'));
+    }
+
+    public function getByCustomerId(int $id)
+    {
+        return CustomerInfo::where('user_id','=',$id)->first();
     }
 
     public function create()
