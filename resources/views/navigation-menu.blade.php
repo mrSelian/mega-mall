@@ -16,10 +16,13 @@
                         {{ __('Магазин') }}
                     </x-jet-nav-link>
                 </div>
-
+@php
+$cartController = new \App\Http\Controllers\Shop\CartController();
+$totalAmount = $cartController->getCart()->calculateTotalAmount();
+@endphp
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('cart') }}" :active="request()->routeIs('cart')">
-                        {{ __('Корзина') }}
+                        Корзина @if($totalAmount>0)({{$totalAmount}})@endif
                     </x-jet-nav-link>
                 </div>
 

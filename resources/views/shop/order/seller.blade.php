@@ -81,7 +81,7 @@
 
                         <div class="flex font-semibold justify-between py-3 text-sm uppercase">
                             <span>E-mail:</span>
-                            <span> {{$info->email}} &#8381;</span>
+                            <span> {{$info->email}} </span>
                         </div>
                         @if($info->phone != null)
                             <div class="flex font-semibold justify-between py-3 text-sm uppercase">

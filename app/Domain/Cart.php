@@ -39,6 +39,15 @@ class Cart
         return !$this->products;
     }
 
+    public function calculateTotalAmount(): int
+    {
+        $totalAmount = 0;
+        foreach ($this->products as $product) {
+            $totalAmount += $product->getAmount();
+        }
+        return $totalAmount;
+    }
+
     public function calculateTotalPrice(): int
     {
         $totalPrice = 0;

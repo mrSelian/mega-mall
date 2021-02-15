@@ -52,8 +52,8 @@
                         <td>
                             <form action="{{ route('change_order_status', $order->id)}}" method="post">
                                 @csrf
-                                <label for="status">
-                                    <select name="status" id="status">
+                                <label for="status" >
+                                    <select name="status" id="status" required>
                                         <option>оформлен</option>
                                         <option>оплачен</option>
                                         <option>собран</option>

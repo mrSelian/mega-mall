@@ -124,7 +124,7 @@ class CartController extends Controller
     }
 
 
-    private function getCart(): Cart
+    public function getCart(): Cart
     {
         return $this->cartRepository->get();
     }
