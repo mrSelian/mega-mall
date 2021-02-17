@@ -2,25 +2,18 @@
 
 namespace App\Http\Controllers\Customer;
 
-use App\DbAddressRepository;
 use App\Domain\AddressRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateAddressRequest;
-use App\Models\Address;
 use Illuminate\Support\Facades\Auth;
 
 class AddressController extends Controller
 {
     private AddressRepositoryInterface $addressRepository;
 
-    public function __construct()
+    public function __construct(AddressRepositoryInterface $addressRepository)
     {
-        $this->addressRepository = new DbAddressRepository();
-    }
-
-    public function getByUserId(int $id)
-    {
-        return Address::where('user_id','=',$id)->first();
+        $this->addressRepository = $addressRepository;
     }
 
     public function create()
