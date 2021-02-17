@@ -12,7 +12,7 @@ class Product
     private int $price;
     private int $amount;
     private string $description;
-    private int $userId;
+    private int $sellerId;
 
     public function __construct($productRec)
     {
@@ -22,7 +22,7 @@ class Product
         $this->price = $productRec->price;
         $this->amount = $productRec->quantity;
         $this->description = $productRec->full_specification;
-        $this->userId = $productRec->user_id;
+        $this->sellerId = $productRec->user_id;
     }
 
     public function getId(): int
@@ -55,9 +55,9 @@ class Product
         return $this->description;
     }
 
-    public function getUserId(): int
+    public function getSellerId(): int
     {
-        return $this->userId;
+        return $this->sellerId;
     }
 
     public function qtyIsAvailable(int $qty): bool

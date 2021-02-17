@@ -8,7 +8,7 @@
             Вы ещё ничего не покупали.
         @else
 
-            <table class=" max-w-7xl mx-auto  py-10 text-center  table-auto" dusk="product-table">
+            <table class=" max-w-5xl mx-auto w-full py-10 text-center  table-auto" dusk="product-table">
                 <thead class="justify-between  ">
                 <tr class="bg-gray-800">
 

@@ -13,7 +13,7 @@ class DbOrderRepository implements OrderRepositoryInterface
     {
         $record = \App\Models\Order::where('id','=',$id)->firstOrFail();
 
-        $products = array_map(fn(array $product) => new CartProduct($product['id'],$product['name'],$product['price'],$product['amount']), json_decode($record->items,true));
+        $products = array_map(fn(array $product) => new CartProduct($product['id'],$product['name'],$product['price'],$record->seller_id,$product['amount']), json_decode($record->items,true));
 
         return new Order($record->seller_id,$record->customer_id,$record->sum,$products,$record->status);
     }

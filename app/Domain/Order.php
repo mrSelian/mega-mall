@@ -46,29 +46,19 @@ class Order
         return $this->customerId;
     }
 
-
     public function getSum(): int
     {
         return $this->sum;
     }
-
 
     public function getStatus(): string
     {
         return $this->status;
     }
 
-
     public function getProducts(): array
     {
         return $this->products;
     }
-
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
 
 }

@@ -4,15 +4,12 @@ namespace App\Http\Controllers\Shop;
 
 use App\DbOrderRepository;
 use App\DbProductRepository;
-use App\Domain\Cart;
 use App\Domain\Order;
 use App\Domain\OrderRepositoryInterface;
 use App\Domain\ProductRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Customer\AddressController;
 use App\Http\Controllers\Customer\InfoController;
-use App\Models\Address;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,30 +30,21 @@ class OrderController extends Controller
 
         if (Auth::id() == $order->getSellerId()) {
             $infoController = new InfoController();
-            $info=$infoController->getByCustomerId($order->getCustomerId());
+            $info = $infoController->getByCustomerId($order->getCustomerId());
             $addressController = new AddressController();
             $address = $addressController->getByUserId($order->getCustomerId());
-            return view('shop.order.seller', compact('order','info','address'));
+            return view('shop.order.seller', compact('order', 'info', 'address'));
         }
 
         if (Auth::id() == $order->getCustomerId()) {
             $infoController = new \App\Http\Controllers\Seller\InfoController();
-            $info =  $infoController->getBySellerId($order->getSellerId());
-            return view('shop.order.customer', compact('order','info'));
+            $info = $infoController->getBySellerId($order->getSellerId());
+            return view('shop.order.customer', compact('order', 'info'));
         }
 
         return abort(403);
     }
 
-    public function create(Cart $cart): Order
-    {
-        return new Order($this->productRepository->getSellerId($cart->getProducts()[array_key_first($cart->getProducts())]->getId()), $cart->getCustomerId(), $cart->calculateTotalPrice(), $cart->getProducts(), 'оформлен');
-    }
-
-    public function save(Order $order)
-    {
-        $this->orderRepository->save($order);
-    }
 
     public function changeStatus($id, Request $request)
     {
@@ -72,6 +60,11 @@ class OrderController extends Controller
 
         return redirect(route('seller_orders'));
 
+    }
+
+    public function save(Order $order)
+    {
+        $this->orderRepository->save($order);
     }
 
     public function sellerOrders()

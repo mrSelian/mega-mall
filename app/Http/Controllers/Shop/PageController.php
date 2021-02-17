@@ -2,23 +2,33 @@
 
 namespace App\Http\Controllers\Shop;
 
+use App\Domain\ProductRepositoryInterface;
+use App\Domain\SellerInfoRepositoryInterface;
 use App\Http\Controllers\Controller;
-use App\Models\Product;
-use App\Models\SellerInfo;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
+    private ProductRepositoryInterface $productRepository;
+    private SellerInfoRepositoryInterface $sellerInfoRepository;
+
+    public function __construct(ProductRepositoryInterface $productRepository, SellerInfoRepositoryInterface $sellerInfoRepository)
+    {
+        $this->productRepository = $productRepository;
+        $this->sellerInfoRepository = $sellerInfoRepository;
+    }
+
     public function shop()
     {
-        $products = Product::where('quantity', '>', 0)->paginate(12);
+        $products = $this->productRepository->getAllAvailable();
 
         return view('shop.index', compact('products'));
     }
 
     public function showProduct($id)
     {
-        $product = Product::findOrFail($id);
+        $product = $this->productRepository->getById($id);
+
         return view('shop.product.show', compact('product'));
     }
 
@@ -29,10 +39,12 @@ class PageController extends Controller
 
     public function sellerShop($id)
     {
-        $products = Product::where('user_id', '=', $id)->paginate(12);
 
-        $info = SellerInfo::where('user_id', '=', $id)->first();
+        $products = $this->productRepository->getAllByUserId($id);
 
-        return view('shop.seller', compact('products'),compact('info'));
+        $info = $this->sellerInfoRepository->getBySellerId($id);
+
+        return view('shop.seller', compact('products', 'info'));
     }
 }
+

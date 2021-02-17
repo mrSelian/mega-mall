@@ -13,6 +13,19 @@ class DbProductRepository implements ProductRepositoryInterface
         return new Product(Models\Product::where('id', '=', $id)->firstOrFail());
     }
 
+    public function getAllAvailable()
+    {
+        return \App\Models\Product::where('quantity', '>', 0)->paginate(12);
+    }
+
+    public function getAllByUserId($id)
+    {
+        $records = \App\Models\Product::where('user_id', '=', $id)->get();
+        $products = $records->map(function ($item, $key) {
+            return new Product($item);
+        });
+        return $products;
+    }
 
     public function getPhoto(int $productId): string
     {
@@ -23,7 +36,7 @@ class DbProductRepository implements ProductRepositoryInterface
     public function getSellerId(int $productId): int
     {
         $product = $this->getById($productId);
-        return $product->getUserId();
+        return $product->getSellerId();
     }
 
 

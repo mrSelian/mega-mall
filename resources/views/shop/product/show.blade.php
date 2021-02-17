@@ -1,10 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-jet-nav-link href="{{ route('seller_page',$product->user_id) }}" :active="request()->routeIs('seller_page')">
+        <x-jet-nav-link href="{{ route('seller_page',$product->getSellerId()) }}" :active="request()->routeIs('seller_page')">
             {{ __('К магазину продавца') }}
         </x-jet-nav-link>
         @section('page-title')
-            {{$product->name}}
+            {{$product->getName()}}
         @endsection
     </x-slot>
 
@@ -18,7 +18,7 @@
                     <div class="col-lg-6 ">
                         <div class="details_image ">
                             @php
-                                $image = $product->main_photo_path;
+                                $image = $product->getPhoto();
                             @endphp
                             <div class="details_image_large "><img src="{{$image}}">
                             </div>
@@ -31,20 +31,20 @@
                     <!-- Product Content -->
                     <div class="col-lg-6">
                         <div class="px-2 details_content">
-                            <div class="details_name uppercase tracking-wide mb-3 text-lg font-semibold text-gray-700 " data-id="{{$product->id}}">{{$product->name}}</div>
+                            <div class="details_name uppercase tracking-wide mb-3 text-lg font-semibold text-gray-700 " data-id="{{$product->getId()}}">{{$product->getName()}}</div>
                             <!-- In Stock -->
                             <div class="in_stock_container tracking-wide font-semibold  mb-1 ">
-                                @if($product->quantity > 0)
-                                    <span class="" style="color: green">В наличии: <br>{{$product->quantity}} шт</span>
+                                @if($product->getAmount() > 0)
+                                    <span class="" style="color: green">В наличии: <br>{{$product->getAmount()}} шт</span>
                                 @else
                                     <span style="color: red">Отсутствует</span>
                                 @endif
                             </div>
-                            <div class="details_price text-3xl text-gray-900 mb-3">{{$product->price}} &#8381;</div>
+                            <div class="details_price text-3xl text-gray-900 mb-3">{{$product->getPrice()}} &#8381;</div>
 
 
 
-                            <form action="{{route('add_to_cart',$product->id)}}" target="_blank" method="POST"  class="form-horizontal">
+                            <form action="{{route('add_to_cart',$product->getId())}}" target="_blank" method="POST"  class="form-horizontal">
                             @csrf
                         <!-- Product Quantity -->
                             <div class="product_quantity_container">
@@ -66,10 +66,10 @@
                                             <div class="tracking-wide text-xl font-semibold text-gray-700 description_title">Описание</div>
                                         </div>
                                         <div class="description_text text-lg">
-                                            <p>{{$product->full_specification}}</p>
+                                            <p>{{$product->getDescription()}}</p>
                                         </div>
                                     </div>
-                                    <a href="{{route('seller_page',$product->user_id)}}" class="flex font-semibold text-indigo-600 text-sm mt-4">
+                                    <a href="{{route('seller_page',$product->getId())}}" class="flex font-semibold text-indigo-600 text-sm mt-4">
 
                                         <svg class="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512">
                                             <path
@@ -82,9 +82,9 @@
 
 
                             <div class="form-group">
-                                <input type="hidden" name="id" id="id" value="{{$product->id}}">
+                                <input type="hidden" name="id" id="id" value="{{$product->getId()}}">
                                 <div class="col-sm-offset-3 col-sm-6">
-                                    @if($product->quantity < 1)
+                                    @if($product->getamount() < 1)
                                         <button type="submit" class="text-xl w-full bg-gray-800 text-white px-4 py-2 border disabled:opacity-40 rounded-md  " disabled>
                                             <i class="fa fa-plus"></i> Добавить в корзину
                                         </button>
