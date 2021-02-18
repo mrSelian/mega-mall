@@ -12,8 +12,7 @@ class Order
     private string $status;
 
 
-
-    public function __construct(int $sellerId,int $customerId,int $sum, array $products,string $status)
+    public function __construct(int $sellerId, int $customerId, int $sum, array $products, string $status)
     {
         $this->sellerId = $sellerId;
         $this->customerId = $customerId;
@@ -25,8 +24,20 @@ class Order
 
     public function changeStatus(string $status)
     {
-        //проверка статуса на корректность по списку
+        $statuses = [
+//            'возврат',
+//            'отменён',
+            'оформлен',
+            'оплачен',
+            'собран',
+            'отправлен',
+            'доставлен',
+        ];
+
+        if (!in_array($status, $statuses)) return abort(403, 'Некорректный статус заказа');
+
         $this->status = $status;
+
     }
 
     public function calculateCommission(): float

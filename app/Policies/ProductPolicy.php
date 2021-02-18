@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Product;
+use App\Domain\Product;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -22,16 +22,16 @@ class ProductPolicy
 
     public function destroy(User $user, Product $product): bool
     {
-        return $user->id == $product->user_id;
+        return $user->id == $product->getSellerId();
     }
 
     public function edit(User $user, Product $product): bool
     {
-        return $user->id == $product->user_id;
+        return $user->id == $product->getSellerId();
     }
 
     public function update(User $user, Product $product): bool
     {
-        return $user->id == $product->user_id;
+        return $user->id == $product->getSellerId();
     }
 }

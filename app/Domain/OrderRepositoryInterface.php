@@ -9,5 +9,5 @@ interface OrderRepositoryInterface
 
     public function getByCustomerId(int $customerId);
 
-    public function save(Order $order);
+    public function save(Order $order, int $id);
 }

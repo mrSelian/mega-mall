@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Seller;
 use App\Domain\SellerInfoRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SellerInfoRequest;
-use App\Models\SellerInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

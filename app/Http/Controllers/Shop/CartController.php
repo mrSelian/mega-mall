@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Shop;
 
-use App\Domain\Cart;
 use App\Domain\CartRepositoryInterface;
 use App\Domain\OrderRepositoryInterface;
 use App\Domain\ProductRepositoryInterface;
@@ -35,23 +34,14 @@ class CartController extends Controller
         return view('shop.cart', compact('cart', 'photos'));
     }
 
-    public function getCart(): Cart
-    {
-        return $this->cartRepository->get();
-    }
 
     public function addProduct(Request $request)
     {
-        $id = $request->id;
 
-        $amount = $request->amount;
+        $cart = $this->cartRepository->get();
+        $product = $this->productRepository->getById($request->id);
 
-        $cart = $this->getCart();
-
-        $product = $this->productRepository->getById($id);
-
-        $cart->addProduct($product,$amount);
-
+        $cart->addProduct($product, $request->amount);
         $this->cartRepository->save($cart);
 
         return redirect()->route('cart');
@@ -60,7 +50,7 @@ class CartController extends Controller
     public function removeProduct(Request $request): RedirectResponse
     {
 
-        $cart = $this->getCart();
+        $cart = $this->cartRepository->get();
         $cart->removeProduct($request->id);
 
         $this->cartRepository->save($cart);
@@ -70,7 +60,7 @@ class CartController extends Controller
 
     public function actualize(): RedirectResponse
     {
-        $cart = $this->getCart();
+        $cart = $this->cartRepository->get();
         $cart->actualize($this->productRepository);
         $this->cartRepository->save($cart);
         return redirect()->back();
@@ -78,18 +68,19 @@ class CartController extends Controller
 
     public function toOrder()
     {
-        $cart = $this->getCart();
+        $cart = $this->cartRepository->get();
 
         $order = $cart->toOrder($this->productRepository);
-
         $this->orderRepository->save($order);
         $this->cartRepository->save($cart);
+
         return redirect(route('customer_orders'));
     }
 
     public function clearCart(): RedirectResponse
     {
-        $cart = $this->getCart();
+        $cart = $this->cartRepository->get();
+
         $cart->clear();
         $this->cartRepository->save($cart);
 
@@ -98,12 +89,12 @@ class CartController extends Controller
 
     public function correctAmount(Request $request): RedirectResponse
     {
-        $cart = $this->getCart();
-        $amount = $request->amount;
-        $id = $request->id;
-        $product = $this->productRepository->getById($id);
-        $cart->correctAmount($product, $amount);
+        $cart = $this->cartRepository->get();
+
+        $product = $this->productRepository->getById($request->id);
+        $cart->correctAmount($product, $request->amount);
         $this->cartRepository->save($cart);
+
         return redirect()->back();
 
     }

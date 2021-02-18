@@ -11,7 +11,7 @@
            class="float-right bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black"
            dusk="edit-button">Добавить Товар</a>
 
-        @if($products->isEmpty())
+        @if($products == [])
             Товаров нет.
         @else
 
@@ -55,21 +55,21 @@
                 <tbody>
                 @foreach($products as $product)
                     <tr class=" bg-white border-4 border-gray-200">
-                        <td class="" ><img src="{{$product->main_photo_path}}" width="120px" height="120px"></td>
-                        <td class="text-center ml-2 font-semibold">{{$product->name}}</td>
-                        <td>{{$product->price}} &#8381;</td>
-                        <td>{{$product->quantity}} шт.</td>
-                        <td><a href="{{route('show_product',$product->id)}}"
+                        <td class="" ><img src="{{$product->getPhoto()}}" width="120px" height="120px"></td>
+                        <td class="text-center ml-2 font-semibold">{{$product->getName()}}</td>
+                        <td>{{$product->getPrice()}} &#8381;</td>
+                        <td>{{$product->getAmount()}} шт.</td>
+                        <td><a href="{{route('show_product',$product->getId())}}"
                                class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
                                 Подробнее </a></td>
 
                         <td>
-                            <a href="{{ route('edit_product',$product->id)}}"
+                            <a href="{{ route('edit_product',$product->getId())}}"
                                class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black"
                                dusk="edit-button">Изменить</a>
                         </td>
                         <td>
-                            <form action="{{ route('destroy_product', $product->id)}}" method="post">
+                            <form action="{{ route('destroy_product', $product->getId())}}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button

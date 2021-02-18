@@ -60,7 +60,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/', fn() => redirect(route('seller_orders')))->name('seller');
         Route::get('/profile', [\App\Http\Controllers\Seller\InfoController::class, 'sellerProfile'])->name('seller_profile');
         Route::get('/orders', [OrderController::class, 'sellerOrders'])->name('seller_orders');
-        Route::get('/products', [ProductController::class, 'forSeller'])->name('seller_products');
+        Route::get('/products', [ProductController::class, 'getSellerProducts'])->name('seller_products');
 
         Route::group(['prefix' => 'info'], function () {
             Route::get('/create', [\App\Http\Controllers\Seller\InfoController::class, 'create'])->name('create_seller_info');

@@ -9,7 +9,7 @@
 
         <div class="antialiased text-gray-900">
 
-            <form action="{{ route('update_product', $product->id ) }}" method="POST" class="form mt-4">
+            <form action="{{ route('update_product', $product->getId() ) }}" method="POST" class="form mt-4">
                 @method('PATCH')
                 <div class="mx-4 card bg-white max-w-md p-10 md:rounded-lg my-12 mx-auto">
 
@@ -31,26 +31,26 @@
                         <label for="name" class="font-bold mt-4 mb-2">Название</label>
                         <input name="name" id="product-name"
                                class="appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
-                               type="text" value="{{ $product->name }}" placeholder="Название товара">
+                               type="text" value="{{ $product->getName() }}" placeholder="Название товара">
                     </div>
 
                     <div class="flex flex-col text-sm">
                         <label for="main_photo_path" class="font-bold mt-4 mb-2">Фото</label>
-                        <input name="main_photo_path" id="main_photo_path" value="{{ $product->main_photo_path }}"
+                        <input name="main_photo_path" id="main_photo_path" value="{{ $product->getPhoto() }}"
                                class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                type="text" placeholder="Ссылка на фото товара">
                     </div>
 
                     <div class="flex flex-col text-sm">
                         <label for="price" class="font-bold mt-4 mb-2">Цена, &#8381; </label>
-                        <input name="price" id="price" value="{{ $product->price }}"
+                        <input name="price" id="price" value="{{ $product->getPrice() }}"
                                class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                type="text" placeholder="Цена товара">
                     </div>
 
                     <div class="flex flex-col text-sm">
                         <label for="quantity" class="font-bold mt-4 mb-2">Количество, шт; </label>
-                        <input name="quantity" id="quantity" value="{{ $product->quantity }}"
+                        <input name="quantity" id="quantity" value="{{ $product->getAmount() }}"
                                class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                type="text" placeholder="Количество товара">
                     </div>
@@ -60,7 +60,7 @@
                         <textarea
                             name="full_specification" id="full_specification"
                             class=" appearance-none w-full border border-gray-200 p-2 h-40 focus:outline-none focus:border-gray-500"
-                            placeholder="Опишите ваш товар">{{ $product->full_specification }}</textarea>
+                            placeholder="Опишите ваш товар">{{ $product->getDescription() }}</textarea>
                     </div>
 
                     <div class="submit">

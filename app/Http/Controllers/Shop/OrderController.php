@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Shop;
 
-use App\DbOrderRepository;
-use App\DbProductRepository;
+use App\Domain\AddressRepositoryInterface;
+use App\Domain\CustomerInfoRepositoryInterface;
 use App\Domain\Order;
 use App\Domain\OrderRepositoryInterface;
 use App\Domain\ProductRepositoryInterface;
+use App\Domain\SellerInfoRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Customer\AddressController;
 use App\Http\Controllers\Customer\InfoController;
@@ -17,32 +18,38 @@ class OrderController extends Controller
 {
     private OrderRepositoryInterface $orderRepository;
     private ProductRepositoryInterface $productRepository;
+    private SellerInfoRepositoryInterface $sellerInfoRepository;
+    private CustomerInfoRepositoryInterface $customerInfoRepository;
+    private AddressRepositoryInterface $addressRepository;
 
-    public function __construct()
+    public function __construct(OrderRepositoryInterface $orderRepository,
+                                ProductRepositoryInterface $productRepository,
+                                SellerInfoRepositoryInterface $sellerInfoRepository,
+                                CustomerInfoRepositoryInterface $customerInfoRepository,
+                                AddressRepositoryInterface $addressRepository)
     {
-        $this->orderRepository = new DbOrderRepository();
-        $this->productRepository = new DbProductRepository();
+        $this->orderRepository = $orderRepository;
+        $this->productRepository = $productRepository;
+        $this->sellerInfoRepository = $sellerInfoRepository;
+        $this->customerInfoRepository = $customerInfoRepository;
+        $this->addressRepository = $addressRepository;
     }
 
     public function show($id)
     {
         $order = $this->orderRepository->getById($id);
-
         if (Auth::id() == $order->getSellerId()) {
-            $infoController = new InfoController();
-            $info = $infoController->getByCustomerId($order->getCustomerId());
-            $addressController = new AddressController();
-            $address = $addressController->getByUserId($order->getCustomerId());
+            $info = $this->customerInfoRepository->getByCustomerId($order->getCustomerId());
+            $address = $this->addressRepository->getByUserId($order->getCustomerId());
             return view('shop.order.seller', compact('order', 'info', 'address'));
         }
 
         if (Auth::id() == $order->getCustomerId()) {
-            $infoController = new \App\Http\Controllers\Seller\InfoController();
-            $info = $infoController->getBySellerId($order->getSellerId());
+            $info = $this->sellerInfoRepository->getBySellerId($order->getSellerId());
             return view('shop.order.customer', compact('order', 'info'));
         }
 
-        return abort(403);
+        return abort(403,'У вас нет доступа к данному заказу.');
     }
 
 
@@ -54,18 +61,12 @@ class OrderController extends Controller
 
         $order->changeStatus($request->status);
 
-        \App\Models\Order::where('id', '=', $id)->delete();
-
-        $this->save($order);
+        $this->orderRepository->save($order,$id);
 
         return redirect(route('seller_orders'));
 
     }
 
-    public function save(Order $order)
-    {
-        $this->orderRepository->save($order);
-    }
 
     public function sellerOrders()
     {
