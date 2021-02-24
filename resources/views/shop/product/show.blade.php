@@ -3,18 +3,19 @@
         <x-jet-nav-link href="{{ route('seller_page',$product->getSellerId()) }}" :active="request()->routeIs('seller_page')">
             {{ __('К магазину продавца') }}
         </x-jet-nav-link>
+
         @section('page-title')
             {{$product->getName()}}
         @endsection
     </x-slot>
 
-    <!-- Product Details -->
+    <!-- ProductModel Details -->
     <div class="max-w-2xl mx-auto py-10 sm:px-6 lg:px-8">
         <div class="product_details bg-white shadow-xl rounded-lg overflow-hidden ">
             <div class="container">
                 <div class="row details_row">
 
-                    <!-- Product Image -->
+                    <!-- ProductModel Image -->
                     <div class="col-lg-6 ">
                         <div class="details_image ">
                             @php
@@ -28,7 +29,7 @@
                         </div>
                     </div>
 
-                    <!-- Product Content -->
+                    <!-- ProductModel Content -->
                     <div class="col-lg-6">
                         <div class="px-2 details_content">
                             <div class="details_name uppercase tracking-wide mb-3 text-lg font-semibold text-gray-700 " data-id="{{$product->getId()}}">{{$product->getName()}}</div>
@@ -46,7 +47,7 @@
 
                             <form action="{{route('add_to_cart',$product->getId())}}" target="_blank" method="POST"  class="form-horizontal">
                             @csrf
-                        <!-- Product Quantity -->
+                        <!-- ProductModel Quantity -->
                             <div class="product_quantity_container">
                                 <div class="product_quantity clearfix">
                                     <label for="amount"></label><input name="amount" id="amount" pattern="[0-9]*" type="text"  value="1">
@@ -84,7 +85,7 @@
                             <div class="form-group">
                                 <input type="hidden" name="id" id="id" value="{{$product->getId()}}">
                                 <div class="col-sm-offset-3 col-sm-6">
-                                    @if($product->getamount() < 1)
+                                    @if($product->getAmount() < 1)
                                         <button type="submit" class="text-xl w-full bg-gray-800 text-white px-4 py-2 border disabled:opacity-40 rounded-md  " disabled>
                                             <i class="fa fa-plus"></i> Добавить в корзину
                                         </button>

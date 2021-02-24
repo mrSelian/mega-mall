@@ -3,16 +3,16 @@
 namespace App;
 
 use App\Domain\CustomerInfoRepositoryInterface;
-use App\Models\CustomerInfo;
+use App\Models\CustomerInfoModel;
 
 class DbCustomerInfoRepository implements CustomerInfoRepositoryInterface
 {
     public function getByCustomerId(int $id)
     {
-        return CustomerInfo::where('user_id','=',$id)->first();
+        return CustomerInfoModel::where('user_id','=',$id)->first();
     }
 
-    public function save(CustomerInfo $info)
+    public function save(CustomerInfoModel $info)
     {
         $info->save();
     }

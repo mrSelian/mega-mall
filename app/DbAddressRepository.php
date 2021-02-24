@@ -3,13 +3,13 @@
 namespace App;
 
 use App\Domain\AddressRepositoryInterface;
-use App\Models\Address;
+use App\Models\AddressModel;
 
 class DbAddressRepository implements AddressRepositoryInterface
 {
     public function getByUserId(int $id)
     {
-        return Address::where('user_id', '=', $id)->first();
+        return AddressModel::where('user_id', '=', $id)->first();
     }
 
     public function create($request)

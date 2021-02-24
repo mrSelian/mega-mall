@@ -3,8 +3,6 @@
 
 namespace App\Domain;
 
-use Exception;
-
 class Cart
 {
     /** @var CartProduct[] $products */
@@ -31,7 +29,7 @@ class Cart
 
     public function getProductsIds(): array
     {
-        return array_map(fn(CartProduct $product) => $product->getId(), $this->products);
+        return array_map(fn(CartProduct $product) => $product->getProductId(), $this->products);
     }
 
     public function getProducts(): array
@@ -71,38 +69,38 @@ class Cart
     {
         if ($this->sellerId == null) $this->sellerId = $product->getSellerId();
 
-        if (!$this->hasProductWithId($product->getId())) {
+        if (!$product->qtyIsAvailable($amount)) throw new \Exception('Указаное количество больше остатка товара у продавца.');
 
-            if (!$product->qtyIsAvailable($amount)) {
-                throw new Exception('Запрашиваемое количество товара больше остатка !');
-            }
 
-            $cartProduct = new CartProduct($product->getId(), $product->getName(), $product->getPrice(), $product->getSellerId(), $amount);
+        if (!$this->getProductById($product->getId())) {
+            $cartProduct = CartProduct::add($product, $amount);
             array_push($this->products, $cartProduct);
+//            $this->products[$cartProduct->getProductId()] = $cartProduct;
         }
-        $this->correctAmount($product, $this->hasProductWithId($product->getId())->getAmount() + $amount);
+        $this->correctAmount($product, $this->getProductById($product->getId())->getAmount() + $amount);
 
         if ($product->getAmount() == 0) $this->removeProduct($product->getId());
         if ($this->products == []) $this->sellerId = null;
 
     }
 
+
     public function removeProduct(int $id)
     {
         foreach ($this->products as $product) {
-            if ($product->getId() == $id) {
+            if ($product->getProductId() == $id) {
                 unset ($this->products[key($this->products)]);
             }
         }
         if ($this->products == []) $this->sellerId = null;
     }
 
-    public function hasProductWithId(int $id)
+    public function getProductById(int $id)
     {
         foreach ($this->products as $product) {
-            if ($product->getId() == $id) return $product;
+            if ($product->getProductId() == $id) return $product;
         }
-        return false;
+        return null;
     }
 
     public function clear()
@@ -113,17 +111,20 @@ class Cart
 
     public function correctAmount(Product $product, $amount)
     {
-        foreach ($this->products as $productCart) {
-            if ($product->getId() == $productCart->getId()) {
-                $productCart->correctAmount($product, $amount);
-            }
+        if (!$product->qtyIsAvailable($amount)) {
+            throw new \Exception('Указаное количество больше остатка товара у продавца.');
         }
+        $cartProduct = $this->getProductById($product->getId());
+
+        if (!$cartProduct) throw new \Exception('Продукт не найден.');
+        $cartProduct->correctAmount($amount);
+
     }
 
     public function actualize($repository)
     {
         foreach ($this->products as $product) {
-            $newProduct = $repository->getById($product->getId());
+            $newProduct = $repository->getById($product->getProductId());
             unset ($this->products[key($this->products)]);
             array_push($this->products, new CartProduct($newProduct->getId(), $newProduct->getName(), $newProduct->getPrice(), $product->getSellerId(), $product->getAmount()));
         }

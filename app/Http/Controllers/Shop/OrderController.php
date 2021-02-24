@@ -4,13 +4,10 @@ namespace App\Http\Controllers\Shop;
 
 use App\Domain\AddressRepositoryInterface;
 use App\Domain\CustomerInfoRepositoryInterface;
-use App\Domain\Order;
 use App\Domain\OrderRepositoryInterface;
 use App\Domain\ProductRepositoryInterface;
 use App\Domain\SellerInfoRepositoryInterface;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Customer\AddressController;
-use App\Http\Controllers\Customer\InfoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

@@ -4,17 +4,19 @@
 namespace App\Domain;
 
 
+use Exception;
+
 class CartProduct
 {
-    private int $id;
+    private int $productId;
     private string $name;
     private int $price;
     private int $amount;
     private int $sellerId;
 
-    public function __construct(int $id, string $name, int $price, int $sellerId, int $amount)
+    public function __construct(int $productId, string $name, int $price, int $sellerId, int $amount)
     {
-        $this->id = $id;
+        $this->productId = $productId;
         $this->name = $name;
         $this->price = $price;
         $this->sellerId = $sellerId;
@@ -26,15 +28,23 @@ class CartProduct
         return new self($product['id'], $product['name'], $product['price'],$product['seller_id'], $product['amount']);
     }
 
-    public function getId(): int
+    public static function add(Product $product, int $amount): CartProduct
     {
-        return $this->id;
+        if (!$product->qtyIsAvailable($amount)) {
+            throw new Exception('Запрашиваемое количество товара больше остатка !');
+        }
+        return new self($product->getId(), $product->getName(), $product->getPrice(), $product->getSellerId(),$amount);
+    }
+
+    public function getProductId(): int
+    {
+        return $this->productId;
     }
 
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
+            'id' => $this->productId,
             'name' => $this->name,
             'price' => $this->price,
             'seller_id' => $this->sellerId,
@@ -52,11 +62,8 @@ class CartProduct
         return $this->price * $this->amount;
     }
 
-    public function correctAmount(Product $product, int $newAmount)
+    public function correctAmount(int $newAmount)
     {
-        if (!$product->qtyIsAvailable($newAmount)) {
-            throw new \Exception('Указаное количество больше остатка товара у продавца.');
-        }
 
         $this->amount = abs($newAmount);
     }

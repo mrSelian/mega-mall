@@ -39,7 +39,7 @@ class SessionCartRepository implements CartRepositoryInterface
     {
         $photos = [];
         foreach ($cart->getProductsIds() as $productId) {
-            $photos[$productId] = $this->productRepository->getPhoto($productId);
+            $photos[$productId] = $this->productRepository->getById($productId)->getPhoto();
         }
         return $photos;
     }

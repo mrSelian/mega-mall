@@ -42,15 +42,15 @@
                     <div class="flex justify-evenly hover:bg-gray-100 -mx-8 px-6 py-5">
                         <div class="flex w-2/5"> <!-- product -->
                             <div class="w-20">
-                                <img class="h-24" src="{{$photos[$product->getId()]}}}}"
+                                <img class="h-24" src="{{$photos[$product->getProductId()]}}}}"
                                      alt="">
                             </div>
                             <div class="flex flex-col justify-between ml-4 flex-grow">
                                 <span class="font-bold text-sm">{{$product->getName()}}</span>
 
-                                <a href="{{route('show_product',$product->getId())}}" class="font-semibold hover:text-red-500 text-gray-500 text-xs">Подробнее</a>
+                                <a href="{{route('show_product',$product->getProductId())}}" class="font-semibold hover:text-red-500 text-gray-500 text-xs">Подробнее</a>
 
-                                <form action="{{ route('remove_from_cart', $product->getId())}}" method="post">
+                                <form action="{{ route('remove_from_cart', $product->getProductId())}}" method="post">
                                     @csrf
                                 <button class="font-semibold hover:text-red-500 text-gray-500 text-xs">Удалить</button>
                                 </form>
@@ -62,7 +62,7 @@
 {{--                                <path--}}
 {{--                                    d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>--}}
 {{--                            </svg>--}}
-                            <form action="{{ route('correct_amount', $product->getId())}}" method="post">
+                            <form action="{{ route('correct_amount', $product->getProductId())}}" method="post">
                                 @csrf
                                 <label for="amount"></label><input class="mx-2 border text-center w-14 h-8" type="text" pattern="[0-9]*" name="amount" id="amount" value="{{$product->getAmount()}}" >
 

@@ -34,7 +34,7 @@ class Order
             'доставлен',
         ];
 
-        if (!in_array($status, $statuses)) return abort(403, 'Некорректный статус заказа');
+        if (!in_array($status, $statuses)) throw new \Exception('Недопустимый статус заказа.');
 
         $this->status = $status;
 

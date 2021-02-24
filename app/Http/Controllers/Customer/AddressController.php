@@ -27,7 +27,7 @@ class AddressController extends Controller
 //    {
 //        $cart = $this->cartRepositiry->get(Auth::id());
 //
-//        $order = Order::checkOut($cart);
+//        $order = OrderModel::checkOut($cart);
 //
 //        $this->cartRepository->save($cart);
 //        $this->orderRepository->save($order);
@@ -53,7 +53,7 @@ class AddressController extends Controller
     {
         $address = $this->addressRepository->getByUserId(Auth::id());
         $address->update($request->all());
-        $address->save();
+        $this->addressRepository->save($address);
 
         return redirect(route('customer_profile'));
     }

@@ -61,22 +61,22 @@ class User extends Authenticatable
 
     public function products(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(ProductModel::class);
     }
 
     public function address(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->hasOne(Address::class);
+        return $this->hasOne(AddressModel::class);
     }
 
     public function sellerInfo(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->hasOne(SellerInfo::class);
+        return $this->hasOne(SellerInfoModel::class);
     }
 
     public function customerInfo(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->hasOne(CustomerInfo::class);
+        return $this->hasOne(CustomerInfoModel::class);
     }
 
 

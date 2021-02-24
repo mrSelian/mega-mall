@@ -5,14 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerInfo extends Model
+class AddressModel extends Model
 {
     use HasFactory;
 
+    protected $table = 'addresses';
+
     protected $fillable = [
-        'phone',
-        'email',
-        'additional_contact',
+        'country',
+        'region',
+        'city',
+        'street',
+        'house',
+        'apt',
+        'full_name',
+        'zip'
     ];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -6,7 +6,7 @@ namespace App\Domain;
 
 class Product
 {
-    private int $id;
+    private ?int $id;
     private string $name;
     private string $mainPhoto;
     private int $price;
@@ -14,18 +14,40 @@ class Product
     private string $description;
     private int $sellerId;
 
-    public function __construct($productRec)
+    public static function create(string $name, string $mainPhoto, int $price, int $amount, string $description, int $sellerId): Product
     {
-        $this->id = $productRec->id;
-        $this->name = $productRec->name;
-        $this->mainPhoto = $productRec->main_photo_path;
-        $this->price = $productRec->price;
-        $this->amount = $productRec->quantity;
-        $this->description = $productRec->full_specification;
-        $this->sellerId = $productRec->user_id;
+        //проверка можно ли создать
+        return new self($name, $mainPhoto, $price, $amount, $description, $sellerId);
     }
 
-    public function getId(): int
+    public static function from(int $id, string $name, string $mainPhoto, int $price, int $amount, string $description, int $sellerId): Product
+    {
+        $self = new self($name, $mainPhoto, $price, $amount, $description, $sellerId);
+        $self->id = $id;
+        return $self;
+    }
+
+//    public static function fromArray(array $data): Product
+//    {
+//        return  self::from(
+//            $data['id'],
+//            $data['name'],
+//            $data['mainPhoto']
+//        );
+//    }
+
+    protected function __construct(string $name, string $mainPhoto, int $price, int $amount, string $description, int $sellerId)
+    {
+        $this->id = null;
+        $this->name = $name;
+        $this->mainPhoto = $mainPhoto;
+        $this->price = $price;
+        $this->amount = $amount;
+        $this->description = $description;
+        $this->sellerId = $sellerId;
+    }
+
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -63,7 +85,19 @@ class Product
     public function qtyIsAvailable(int $qty): bool
     {
         return $this->amount >= $qty;
-
     }
+
+    public function update(string $name, string $mainPhoto, int $price, int $amount, string $description)
+    {
+        if ($amount < 0) throw new \Exception('Невозможно задать остаток товара менее 0.');
+        if ($price < 0) throw new \Exception('Невозможно задать цену товара менее 0.');
+
+        $this->name = $name;
+        $this->mainPhoto = $mainPhoto;
+        $this->price = $price;
+        $this->amount = $amount;
+        $this->description = $description;
+    }
+
 
 }

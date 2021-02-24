@@ -6,7 +6,7 @@ use App\Domain\AddressRepositoryInterface;
 use App\Domain\CustomerInfoRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerInfoRequest;
-use App\Models\CustomerInfo;
+use App\Models\CustomerInfoModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

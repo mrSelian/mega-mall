@@ -4,71 +4,68 @@ namespace App;
 
 use App\Domain\Product;
 use App\Domain\ProductRepositoryInterface;
-use App\Http\Requests\CreateProductRequest;
+use App\Models\ProductModel;
+
 
 class DbProductRepository implements ProductRepositoryInterface
 
 {
     public function getById(int $id): Product
     {
-        return new Product(Models\Product::where('id', '=', $id)->firstOrFail());
+        return ProductModel::withId($id)
+            ->get()
+            ->map($this->mapToProduct())
+            ->first();
     }
-
-    private function getModelById(int $id)
-    {
-        return Models\Product::where('id', '=', $id)->firstOrFail();
-    }
-
 
     public function getAllAvailable()
     {
-        return \App\Models\Product::where('quantity', '>', 0)->paginate(12);
+        return ProductModel::query()
+            ->where('quantity', '>', 0)->where('deleted', '=', 0)
+            ->get()
+            ->map($this->mapToProduct());
     }
-
-
-    public function create(CreateProductRequest $request)
-    {
-        $request->user()->products()->create($request->all());
-    }
-
-    public function update(CreateProductRequest $request, int $id)
-    {
-        $product = $this->getModelById($id);
-        $product->name = $request->get('name');
-        $product->price = $request->get('price');
-        $product->main_photo_path = $request->get('main_photo_path');
-        $product->quantity = $request->get('quantity');
-        $product->full_specification = $request->get('full_specification');
-        $product->save();
-    }
-
-    public function delete(int $id)
-    {
-        $product = $this->getModelById($id);
-
-        $product->delete();
-    }
-
 
     public function getAllByUserId(int $id)
     {
-        $records = \App\Models\Product::where('user_id', '=', $id)->get();
-        $products = $records->map(function ($item, $key) {
-            return new Product($item);
-        });
-        return $products;
+        return ProductModel::query()
+            ->where('user_id', '=', $id)->where('deleted', '=', 0)
+            ->get()
+            ->map($this->mapToProduct());
     }
 
-    public function getPhoto(int $productId): string
+    protected function mapToProduct(): \Closure
     {
-        $product = $this->getById($productId);
-        return $product->getPhoto();
+        return fn(ProductModel $item) => Product::from(
+            $item->id,
+            $item->name,
+            $item->main_photo_path,
+            $item->price,
+            $item->quantity,
+            $item->full_specification,
+            $item->user_id
+        );
     }
 
-    public function getSellerId(int $productId): int
+    public function save(Product $product)
     {
-        $product = $this->getById($productId);
-        return $product->getSellerId();
+        $record = ProductModel::withId($product->getId())->firstOrNew();
+        $record->name = $product->getName();
+        $record->price = $product->getPrice();
+        $record->main_photo_path = $product->getPhoto();
+        $record->quantity = $product->getAmount();
+        $record->full_specification = $product->getDescription();
+        $record->user_id = $product->getSellerId();
+        $record->save();
+
+    }
+
+    public function delete(Product $product)
+    {
+        $record = ProductModel::withId($product->getId())->firstOrFail();
+
+        $record->deleted = 1;
+        $record->save();
     }
 
 

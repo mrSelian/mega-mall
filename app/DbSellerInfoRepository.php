@@ -3,17 +3,17 @@
 namespace App;
 
 use App\Domain\SellerInfoRepositoryInterface;
-use App\Models\SellerInfo;
+use App\Models\SellerInfoModel;
 
 class DbSellerInfoRepository implements SellerInfoRepositoryInterface
 {
 
     public function getBySellerId(int $id)
     {
-        return SellerInfo::where('user_id', '=', $id)->first();
+        return SellerInfoModel::where('user_id', '=', $id)->first();
     }
 
-    public function save(SellerInfo $info)
+    public function save(SellerInfoModel $info)
     {
         $info->save();
     }
