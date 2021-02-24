@@ -6,10 +6,9 @@
 
 
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-        @if($orders->isEmpty())
+        @if($orders == [])
             Вы ещё ничего не продали.
         @else
-
             <table class=" max-w-7xl mx-auto  py-10 text-center  table-auto" dusk="product-table">
                 <thead class="justify-between  ">
                 <tr class="bg-gray-800">
@@ -41,16 +40,17 @@
 
                 </thead>
                 <tbody>
+
                 @foreach($orders as $order)
                     <tr class=" bg-white border-4 border-gray-200">
-                        <td >{{$order->customer_id}}</td>
-                        <td>{{$order->sum}} &#8381;</td>
-                        <td>{{$order->status}} </td>
-                        <td><a href="{{route('order_page',$order->id)}}"
+                        <td >{{$order->getCustomerId()}}</td>
+                        <td>{{$order->getSum()}} &#8381;</td>
+                        <td>{{$order->getStatus()}} </td>
+                        <td><a href="{{route('order_page',$order->getId())}}"
                                class="text-indigo-600 hover:underline">
                                 Страница заказа </a></td>
                         <td>
-                            <form action="{{ route('change_order_status', $order->id)}}" method="post">
+                            <form action="{{ route('change_order_status', $order->getId())}}" method="post">
                                 @csrf
                                 <label for="status" >
                                     <select name="status" id="status" required>

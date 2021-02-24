@@ -10,16 +10,23 @@ class Order
     private int $customerId;
     private int $sum;
     private string $status;
+    private ?int $id;
 
 
-    public function __construct(int $sellerId, int $customerId, int $sum, array $products, string $status)
+    public function __construct(int $sellerId, int $customerId, int $sum, array $products, string $status, ?int $id = null)
     {
         $this->sellerId = $sellerId;
         $this->customerId = $customerId;
         $this->sum = $sum;
         $this->products = $products;
         $this->status = $status;
+        $this->id = $id;
 
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function changeStatus(string $status)

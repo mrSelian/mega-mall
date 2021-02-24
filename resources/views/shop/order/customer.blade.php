@@ -39,7 +39,7 @@
                                 <div class="flex flex-col justify-between ml-4 flex-grow">
                                     <span class="font-bold text-sm">{{$product->getName()}}</span>
 
-                                    <a href="{{route('show_product',$product->getId())}}"
+                                    <a href="{{route('show_product',$product->getProductId())}}"
                                        class="font-semibold hover:text-red-500 text-gray-500 text-xs">Подробнее</a>
                                 </div>
                             </div>
@@ -72,6 +72,7 @@
                         </div>
                         <h1 class="font-semibold text-2xl mt-4">О продавце</h1>
                         <div class="border-t mt-8">
+                            @if($info != null)
                             <div class="flex font-semibold justify-between py-3 text-sm uppercase">
                                 <span>E-mail:</span>
                                 <span> {{$info->email}} </span>
@@ -87,6 +88,7 @@
                                     <span>Дополнительно:</span>
                                     <span> {{$info->additional_contact}} </span>
                                 </div>
+                            @endif
                             @endif
                         </div>
 

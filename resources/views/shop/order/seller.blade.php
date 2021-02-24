@@ -39,7 +39,7 @@
                                 <div class="flex flex-col justify-between ml-4 flex-grow">
                                     <span class="font-bold text-sm">{{$product->getName()}}</span>
 
-                                    <a href="{{route('show_product',$product->getId())}}"
+                                    <a href="{{route('show_product',$product->getProductId())}}"
                                        class="font-semibold hover:text-red-500 text-gray-500 text-xs">Подробнее</a>
                                 </div>
                             </div>

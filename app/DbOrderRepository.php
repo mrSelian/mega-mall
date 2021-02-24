@@ -5,37 +5,57 @@ namespace App;
 use App\Domain\CartProduct;
 use App\Domain\Order;
 use App\Domain\OrderRepositoryInterface;
+use App\Models\OrderModel;
 
 class DbOrderRepository implements OrderRepositoryInterface
 {
 
     public function getById(int $id): Order
     {
-        $record = \App\Models\OrderModel::where('id', '=', $id)->firstOrFail();
+        $order = OrderModel::query()
+            ->where('id', '=', $id)
+            ->get()
+            ->map($this->mapToOrder())
+            ->first();
 
-        $products = array_map(fn(array $product) => new CartProduct($product['id'], $product['name'], $product['price'], $record->seller_id, $product['amount']), json_decode($record->items, true));
+        if ($order == null) throw new \Exception('Заказ не найден!');
 
-        return new Order($record->seller_id, $record->customer_id, $record->sum, $products, $record->status);
-    }
+        return $order;
 
-    private function getModelById(?int $id)
-    {
-        return \App\Models\OrderModel::where('id', '=', $id)->firstOrNew();
     }
 
     public function getBySellerId(int $sellerId)
     {
-        return \App\Models\OrderModel::where('seller_id', '=', $sellerId)->get();
+        return OrderModel::query()
+            ->where('seller_id', '=', $sellerId)
+            ->get()
+            ->map($this->mapToOrder());
     }
+
+    protected function mapToOrder(): \Closure
+    {
+        return fn(OrderModel $record) => new Order(
+            $record->seller_id,
+            $record->customer_id,
+            $record->sum,
+            array_map(fn(array $product) => CartProduct::fromArray($product), json_decode($record->items, true)),
+            $record->status,
+            $record->id
+        );
+    }
+
 
     public function getByCustomerId(int $customerId)
     {
-        return \App\Models\OrderModel::where('customer_id', '=', $customerId)->get();
+        return OrderModel::query()
+            ->where('customer_id', '=', $customerId)
+            ->get()
+            ->map($this->mapToOrder());
     }
 
-    public function save(Order $order, int $id = null)
+    public function save(Order $order)
     {
-        $record = $this->getModelById($id);
+        $record = OrderModel::where('id', '=', $order->getId())->firstOrNew();
         $record->seller_id = $order->getSellerId();
         $record->customer_id = $order->getCustomerId();
         $record->items = json_encode(array_map(fn(CartProduct $product) => $product->toArray(), $order->getProducts()));

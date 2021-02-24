@@ -4,7 +4,7 @@
         История покупок
     @endsection
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-        @if($orders->isEmpty())
+        @if($orders == [])
             Вы ещё ничего не покупали.
         @else
 
@@ -37,10 +37,10 @@
                 <tbody>
                 @foreach($orders as $order)
                     <tr class=" bg-white border-4 border-gray-200">
-                        <td ><a href="{{route('seller_page',$order->seller_id)}}" target="_blank" class="text-indigo-600 hover:underline">Магазин продавца</a></td>
-                        <td>{{$order->sum}} &#8381;</td>
-                        <td>{{$order->status}} </td>
-                        <td><a href="{{route('order_page',$order->id)}}"
+                        <td ><a href="{{route('seller_page',$order->getSellerId())}}" target="_blank" class="text-indigo-600 hover:underline">Магазин продавца</a></td>
+                        <td>{{$order->getSum()}} &#8381;</td>
+                        <td>{{$order->getStatus()}} </td>
+                        <td><a href="{{route('order_page',$order->getId())}}"
                                class="text-indigo-600 hover:underline">
                                 Страница заказа </a></td>
 
