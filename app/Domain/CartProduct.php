@@ -33,7 +33,7 @@ class CartProduct
         if (!$product->qtyIsAvailable($amount)) {
             throw new Exception('Запрашиваемое количество товара больше остатка !');
         }
-        return new self($product->getId(), $product->getName(), $product->getPrice(), $product->getSellerId(),$amount);
+        return new self($product->getId(), $product->getName(), $product->getPrice(), $product->getSellerId(), abs($amount));
     }
 
     public function getProductId(): int
@@ -60,12 +60,6 @@ class CartProduct
     public function calculateTotalPrice()
     {
         return $this->price * $this->amount;
-    }
-
-    public function correctAmount(int $newAmount)
-    {
-
-        $this->amount = abs($newAmount);
     }
 
     public function getPrice(): int

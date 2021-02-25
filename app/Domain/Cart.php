@@ -69,16 +69,13 @@ class Cart
     {
         if ($this->sellerId == null) $this->sellerId = $product->getSellerId();
 
-        if (!$product->qtyIsAvailable($amount)) throw new \Exception('Указаное количество больше остатка товара у продавца.');
-
-
         if (!$this->getProductById($product->getId())) {
             $cartProduct = CartProduct::add($product, $amount);
             array_push($this->products, $cartProduct);
 //            $this->products[$cartProduct->getProductId()] = $cartProduct;
+        } else {
+            $this->correctAmount($product, $this->getProductById($product->getId())->getAmount());
         }
-        $this->correctAmount($product, $this->getProductById($product->getId())->getAmount() + $amount);
-
         if ($product->getAmount() == 0) $this->removeProduct($product->getId());
         if ($this->products == []) $this->sellerId = null;
 
@@ -111,14 +108,12 @@ class Cart
 
     public function correctAmount(Product $product, $amount)
     {
-        if (!$product->qtyIsAvailable($amount)) {
-            throw new \Exception('Указаное количество больше остатка товара у продавца.');
-        }
         $cartProduct = $this->getProductById($product->getId());
+        if (!$cartProduct) throw new \Exception('Продукт не найден!');
 
-        if (!$cartProduct) throw new \Exception('Продукт не найден.');
-        $cartProduct->correctAmount($amount);
+        $this->removeProduct($cartProduct->getProductId());
 
+        $this->addProduct($product, $amount);
     }
 
     public function actualize($repository)
