@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Seller;
 use App\Domain\SellerInfoRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SellerInfoRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class InfoController extends Controller
@@ -17,10 +16,10 @@ class InfoController extends Controller
         $this->infoRepository = $infoRepository;
     }
 
-    public function sellerProfile(Request $request)
+    public function sellerProfile()
     {
         $info = $this->infoRepository->getBySellerId(Auth::id());
-        return view('seller.profile',compact('info'));
+        return view('seller.profile', compact('info'));
     }
 
     public function create()
@@ -35,7 +34,7 @@ class InfoController extends Controller
         return redirect(route('seller_profile'));
     }
 
-    public function edit(Request $request)
+    public function edit()
     {
         $info = $this->infoRepository->getBySellerId(Auth::id());
         return view('seller.info.edit', compact('info'));
@@ -44,13 +43,17 @@ class InfoController extends Controller
     public function update(SellerInfoRequest $request)
     {
         $info = $this->infoRepository->getBySellerId(Auth::id());
-        $info->phone = $request->get('phone');
-        $info->email = $request->get('email');
-        $info->info = $request->get('info');
-        $info->name = $request->get('name');
-        $info->main_photo = $request->get('main_photo');
-        $info->additional_contact = $request->get('additional_contact');
-        $info->delivery_terms = $request->get('delivery_terms');
+
+        $info->update(
+            $request->name,
+            $request->email,
+            $request->delivery_terms,
+            $request->info,
+            $request->main_photo,
+            $request->phone,
+            $request->additional_contact
+        );
+
         $this->infoRepository->save($info);
 
         return redirect(route('seller_profile'));

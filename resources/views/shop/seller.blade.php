@@ -3,7 +3,7 @@
         @section('page-title')
             @if($info == null) Магазин
             @else
-                {{$info->name}}
+                {{$info->getShopName()}}
             @endif
         @endsection
     </x-slot>
@@ -28,7 +28,7 @@
                         <div class="col-lg-6 mb-2 ">
                             <div class="details_image ">
                                 @php
-                                    $image = $info->main_photo;
+                                    $image = $info->getMainPhoto();
                                 @endphp
                                 <div class="details_image_large   "><img width="1546px" height="423px" src="{{$image}}">
                                 </div>
@@ -42,7 +42,7 @@
                             <div class="px-2 details_content">
                                 <div
                                     class="details_name text-center uppercase tracking-wide mb-3 text-lg font-semibold text-gray-700 "
-                                >{{$info->name}}</div>
+                                >{{$info->getShopName()}}</div>
 
                                 <div class="px-2 row description_row mb-3 mt-3">
                                     <div class="col">
@@ -53,7 +53,7 @@
                                             </div>
                                         </div>
                                         <div class="description_text text-lg">
-                                            <p>{{$info->info}}</p>
+                                            <p>{{$info->getInfo()}}</p>
                                         </div>
                                     </div>
 
@@ -67,7 +67,7 @@
                                             </div>
                                         </div>
                                         <div class="description_text text-lg">
-                                            <p>{{$info->delivery_terms}}</p>
+                                            <p>{{$info->getDeliveryTerms()}}</p>
                                         </div>
                                     </div>
 
@@ -83,12 +83,12 @@
                                             </div>
                                         </div>
                                         <div class="description_text text-lg">
-                                            <p>E-mail: {{$info->email}}</p>
-                                            @if($info->phone != null)
-                                                <p>Телефон: {{$info->phone}}</p>
+                                            <p>E-mail: {{$info->getEmail()}}</p>
+                                            @if($info->getPhone() != null)
+                                                <p>Телефон: {{$info->getPhone()}}</p>
                                             @endif
-                                            @if($info->additional_contact != null)
-                                                <p>{{$info->additional_contact}}</p>
+                                            @if($info->getAdditionalContact() != null)
+                                                <p>{{$info->getAdditionalContact()}}</p>
                                             @endif
 
                                         </div>

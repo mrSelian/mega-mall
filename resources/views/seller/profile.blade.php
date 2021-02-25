@@ -11,19 +11,19 @@
             <a href="{{route('create_seller_info')}}"
                class=" bg-indigo-500 text-white px-4 py-2 border rounded-md  hover:bg-white hover:border-indigo-500 hover:text-black font-semibold">Добавить</a>
         @else
-            Название магазина: {{$info->name}}
+            Название магазина: {{$info->getShopName()}}
             <br>
-            Информация о магазине: {{$info->info}}
+            Информация о магазине: {{$info->getInfo()}}
             <br>
-            Обложка магазина: {{$info->main_photo}}
+            Обложка магазина: {{$info->getMainPhoto()}}
             <br>
-            Условия доставки: {{$info->delivery_terms}}
+            Условия доставки: {{$info->getDeliveryTerms()}}
             <br>
-            Ваш телефон: {{$info->phone}}
+            Ваш телефон: {{$info->getPhone()}}
             <br>
-            Ваш e-mail: {{$info->email}}
+            Ваш e-mail: {{$info->getEmail()}}
             <br>
-            Дополнительный контакт: {{$info->additional_contact}}
+            Дополнительный контакт: {{$info->getAdditionalContact()}}
             <br>
             <br>
             <a href="{{route('edit_seller_info')}}"
