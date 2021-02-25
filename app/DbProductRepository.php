@@ -7,6 +7,7 @@ use App\Domain\ProductRepositoryInterface;
 use App\Models\ProductModel;
 
 
+
 class DbProductRepository implements ProductRepositoryInterface
 
 {

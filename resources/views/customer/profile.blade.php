@@ -32,21 +32,21 @@
         @else
             Ваш Текущий Адрес:
             <br>
-            {{$address->full_name}}
+            {{$address->getFullName()}}
             <br>
-            {{$address->zip}}
+            {{$address->getZip()}}
             <br>
-            {{$address->country}}
+            {{$address->getCountry()}}
             <br>
-            {{$address->region}}
+            {{$address->getRegion()}}
             <br>
-            {{$address->city}}
+            {{$address->getCity()}}
             <br>
-            {{$address->street}}
+            {{$address->getStreet()}}
             <br>
-            {{$address->house}}
+            {{$address->getHouse()}}
             <br>
-            {{$address->apt}}
+            {{$address->getApt()}}
             <br>
             <br>
             <a href="{{route('edit_address')}}"

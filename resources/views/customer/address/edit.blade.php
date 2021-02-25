@@ -36,56 +36,56 @@
                         @csrf
                         <div class="flex flex-col text-sm">
                             <label for="full_name" class="font-bold mt-4 mb-2">Полное Имя</label>
-                            <input name="full_name" id="full_name" value="{{$address->full_name}}"
+                            <input name="full_name" id="full_name" value="{{$address->getFullName()}}"
                                    class="appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                    type="text" placeholder="Введите ФИО">
                         </div>
 
                         <div class="flex flex-col text-sm">
                             <label for="country" class="font-bold mt-4 mb-2">Страна</label>
-                            <input name="country" id="country" value="{{$address->country}}"
+                            <input name="country" id="country" value="{{$address->getCountry()}}"
                                    class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                    type="text" placeholder="Страна">
                         </div>
 
                         <div class="flex flex-col text-sm">
                             <label for="region" class="font-bold mt-4 mb-2">Регион </label>
-                            <input name="region" id="region" value="{{$address->region}}"
+                            <input name="region" id="region" value="{{$address->getRegion()}}"
                                    class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                    type="text" placeholder="Область, край, республика или штат">
                         </div>
 
                         <div class="flex flex-col text-sm">
                             <label for="city" class="font-bold mt-4 mb-2">Населенный пункт</label>
-                            <input name="city" id="city" value="{{$address->city}}"
+                            <input name="city" id="city" value="{{$address->getCity()}}"
                                    class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                    type="text" placeholder="Город, село и т.д.">
                         </div>
 
                         <div class="flex flex-col text-sm">
                             <label for="zip" class="font-bold mt-4 mb-2">Индекс</label>
-                            <input name="zip" id="zip" value="{{$address->zip}}"
+                            <input name="zip" id="zip" value="{{$address->getZip()}}"
                                    class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                    type="text" placeholder="Почтовый индекс">
                         </div>
 
                         <div class="flex flex-col text-sm">
                             <label for="street" class="font-bold mt-4 mb-2">Улица</label>
-                            <input name="street" id="street" value="{{$address->street}}"
+                            <input name="street" id="street" value="{{$address->getStreet()}}"
                                    class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                    type="text" placeholder="Улица">
                         </div>
 
                         <div class="flex flex-col text-sm">
                             <label for="house" class="font-bold mt-4 mb-2">Номер дома</label>
-                            <input name="house" id="house" value="{{$address->house}}"
+                            <input name="house" id="house" value="{{$address->getHouse()}}"
                                    class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                    type="text" placeholder="Номер дома">
                         </div>
 
                         <div class="flex flex-col text-sm">
                             <label for="apt" class="font-bold mt-4 mb-2">Номер квартиры/Комнаты/Офиса</label>
-                            <input name="apt" id="apt" value="{{$address->apt}}"
+                            <input name="apt" id="apt" value="{{$address->getApt()}}"
                                    class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                    type="text" placeholder="Ставьте прочерк если отсутствует">
                         </div>

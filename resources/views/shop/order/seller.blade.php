@@ -101,35 +101,35 @@
 
                         <div class="flex font-semibold justify-between py-3 text-sm uppercase">
                             <span>ФИО:</span>
-                            <span> {{$address->full_name}}</span>
+                            <span> {{$address->getFullName()}}</span>
                         </div>
                         <div class="flex font-semibold justify-between py-3 text-sm uppercase">
                             <span>Индекс:</span>
-                            <span> {{$address->zip}}</span>
+                            <span> {{$address->getZip()}}</span>
                         </div>
                         <div class="flex font-semibold justify-between py-3 text-sm uppercase">
                             <span>Страна:</span>
-                            <span> {{$address->country}}</span>
+                            <span> {{$address->getCountry()}}</span>
                         </div>
                         <div class="flex font-semibold justify-between py-3 text-sm uppercase">
                             <span>Регион:</span>
-                            <span> {{$address->region}}</span>
+                            <span> {{$address->getRegion()}}</span>
                         </div>
                         <div class="flex font-semibold justify-between py-3 text-sm uppercase">
                             <span>Населённый пункт:</span>
-                            <span> {{$address->city}}</span>
+                            <span> {{$address->getCity()}}</span>
                         </div>
                         <div class="flex font-semibold justify-between py-3 text-sm uppercase">
                             <span>Улица:</span>
-                            <span> {{$address->street}}</span>
+                            <span> {{$address->getStreet()}}</span>
                         </div>
                         <div class="flex font-semibold justify-between py-3 text-sm uppercase">
                             <span>Дом:</span>
-                            <span> {{$address->house}}</span>
+                            <span> {{$address->getHouse()}}</span>
                         </div>
                         <div class="flex font-semibold justify-between py-3 text-sm uppercase">
                             <span>Квартира/офис:</span>
-                            <span> {{$address->apt}}</span>
+                            <span> {{$address->getApt()}}</span>
                         </div>
                     </div>
                 </div>

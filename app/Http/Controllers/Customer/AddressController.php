@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Domain\Address;
 use App\Domain\AddressRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateAddressRequest;
@@ -38,7 +39,18 @@ class AddressController extends Controller
 
     public function store(CreateAddressRequest $request)
     {
-        $this->addressRepository->create($request);
+        $this->addressRepository->save(
+            new Address(
+                $request->user_id,
+                $request->zip,
+                $request->country,
+                $request->region,
+                $request->city,
+                $request->street,
+                $request->house,
+                $request->apt,
+                $request->full_name
+            ));
 
         return redirect(route('customer_profile'));
     }
@@ -52,7 +64,16 @@ class AddressController extends Controller
     public function update(CreateAddressRequest $request)
     {
         $address = $this->addressRepository->getByUserId(Auth::id());
-        $address->update($request->all());
+        $address->update(
+            $request->zip,
+            $request->country,
+            $request->region,
+            $request->city,
+            $request->street,
+            $request->house,
+            $request->apt,
+            $request->full_name
+        );
         $this->addressRepository->save($address);
 
         return redirect(route('customer_profile'));
