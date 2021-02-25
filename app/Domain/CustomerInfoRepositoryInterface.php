@@ -2,10 +2,10 @@
 
 namespace App\Domain;
 
-use App\Models\CustomerInfoModel;
 
 interface CustomerInfoRepositoryInterface
 {
-    public function getByCustomerId(int $id);
-    public function save(CustomerInfoModel $info);
+    public function getByCustomerId(int $id): CustomerInfo;
+
+    public function save(CustomerInfo $info);
 }

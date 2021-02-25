@@ -21,19 +21,19 @@
                     <div class="flex flex-col text-sm">
                         <label for="phone" class="font-bold mt-4 mb-2">Номер телефона</label>
                         <input name="phone" id="phone" class="appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
-                               type="text" value="{{$info->phone}}" placeholder="Введите номер телефона">
+                               type="text" value="{{$info->getPhone()}}" placeholder="Введите номер телефона">
                     </div>
 
                     <div class="flex flex-col text-sm">
                         <label for="email" class="font-bold mt-4 mb-2">E-mail*</label>
                         <input name="email" id="email" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
-                               type="text" value="{{$info->email}}" placeholder="Адрес электронной почты">
+                               type="text" value="{{$info->getEmail()}}" placeholder="Адрес электронной почты">
                     </div>
 
                     <div class="flex flex-col text-sm">
                         <label for="additional_contact" class="font-bold mt-4 mb-2">Дополнительный контакт</label>
                         <input name="additional_contact" id="additional_contact" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
-                               type="text" value="{{$info->additional_contact}}" placeholder="Соц.сети, Telegram или другое">
+                               type="text" value="{{$info->getAdditionalContact()}}" placeholder="Соц.сети, Telegram или другое">
                     </div>
 
                     <div class="mt-4 mb-2"><b>*</b> - обязательное поле</div>

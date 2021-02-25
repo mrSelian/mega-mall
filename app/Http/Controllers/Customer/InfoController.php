@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Domain\AddressRepositoryInterface;
+use App\Domain\CustomerInfo;
 use App\Domain\CustomerInfoRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerInfoRequest;
-use App\Models\CustomerInfoModel;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class InfoController extends Controller
@@ -25,7 +24,7 @@ class InfoController extends Controller
     {
         $address = $this->addressRepository->getByUserId(Auth::id());
         $info = $this->infoRepository->getByCustomerId(Auth::id());
-        return view('customer.profile', compact('address'),compact('info'));
+        return view('customer.profile', compact('address'), compact('info'));
     }
 
     public function create()
@@ -35,12 +34,17 @@ class InfoController extends Controller
 
     public function store(CustomerInfoRequest $request)
     {
-        $request->user()->customerInfo()->create($request->all());
+        $this->infoRepository->save(new CustomerInfo(
+            $request->email,
+            $request->user_id,
+            $request->phone,
+            $request->additional_contact
+        ));
 
         return redirect(route('customer_profile'));
     }
 
-    public function edit(Request $request)
+    public function edit()
     {
         $info = $this->infoRepository->getByCustomerId(Auth::id());
         return view('customer.info.edit', compact('info'));
@@ -49,9 +53,12 @@ class InfoController extends Controller
     public function update(CustomerInfoRequest $request)
     {
         $info = $this->infoRepository->getByCustomerId(Auth::id());
-        $info->phone = $request->get('phone');
-        $info->email = $request->get('email');
-        $info->additional_contact = $request->get('additional_contact');
+        $info->update(
+            $request->email,
+            $request->phone,
+            $request->additional_contact
+        );
+
         $this->infoRepository->save($info);
 
         return redirect(route('customer_profile'));

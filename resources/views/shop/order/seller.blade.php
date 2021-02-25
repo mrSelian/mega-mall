@@ -81,18 +81,18 @@
 
                         <div class="flex font-semibold justify-between py-3 text-sm uppercase">
                             <span>E-mail:</span>
-                            <span> {{$info->email}} </span>
+                            <span> {{$info->getEmail()}} </span>
                         </div>
-                        @if($info->phone != null)
+                        @if($info->getPhone() != null)
                             <div class="flex font-semibold justify-between py-3 text-sm uppercase">
                                 <span>Телефон:</span>
-                                <span> {{$info->phone}} </span>
+                                <span> {{$info->getPhone()}} </span>
                             </div>
                         @endif
-                        @if($info->additional_contact != null)
+                        @if($info->getAdditionalContact() != null)
                             <div class="flex font-semibold justify-between py-3 text-sm uppercase">
                                 <span>Дополнительно:</span>
-                                <span> {{$info->additional_contact}} </span>
+                                <span> {{$info->getAdditionalContact()}} </span>
                             </div>
                         @endif
                     </div>
