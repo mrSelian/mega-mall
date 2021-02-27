@@ -44,7 +44,8 @@ class DbProductRepository implements ProductRepositoryInterface
             $item->price,
             $item->quantity,
             $item->full_specification,
-            $item->user_id
+            $item->user_id,
+            (bool)$item->deleted
         );
     }
 
@@ -57,6 +58,7 @@ class DbProductRepository implements ProductRepositoryInterface
         $record->quantity = $product->getAmount();
         $record->full_specification = $product->getDescription();
         $record->user_id = $product->getSellerId();
+        $record->deleted = (int)$product->isDeleted();
         $record->save();
 
     }

@@ -73,7 +73,7 @@ class ProductController extends Controller
 
         $this->authorize('destroy', $product);
 
-//      $product->delete();
+        $product->delete();
 
         $this->productRepository->delete($product);
 

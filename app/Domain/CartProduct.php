@@ -25,14 +25,14 @@ class CartProduct
 
     public static function fromArray(array $product): CartProduct
     {
-        return new self($product['id'], $product['name'], $product['price'],$product['seller_id'], $product['amount']);
+        return new self($product['id'], $product['name'], $product['price'], $product['seller_id'], $product['amount']);
     }
 
     public static function add(Product $product, int $amount): CartProduct
     {
-        if (!$product->qtyIsAvailable($amount)) {
-            throw new Exception('Запрашиваемое количество товара больше остатка !');
-        }
+        if (!$product->qtyIsAvailable($amount)) throw new Exception('Запрашиваемое количество товара больше остатка !');
+        if ($product->isDeleted()) throw new Exception('Невозможно приобрести удаленный товар!');
+
         return new self($product->getId(), $product->getName(), $product->getPrice(), $product->getSellerId(), abs($amount));
     }
 

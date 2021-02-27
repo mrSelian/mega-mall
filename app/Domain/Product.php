@@ -13,6 +13,7 @@ class Product
     private int $amount;
     private string $description;
     private int $sellerId;
+    private bool $deleted;
 
     public static function create(string $name, string $mainPhoto, int $price, int $amount, string $description, int $sellerId): Product
     {
@@ -20,9 +21,9 @@ class Product
         return new self($name, $mainPhoto, $price, $amount, $description, $sellerId);
     }
 
-    public static function from(int $id, string $name, string $mainPhoto, int $price, int $amount, string $description, int $sellerId): Product
+    public static function from(int $id, string $name, string $mainPhoto, int $price, int $amount, string $description, int $sellerId, bool $deleted): Product
     {
-        $self = new self($name, $mainPhoto, $price, $amount, $description, $sellerId);
+        $self = new self($name, $mainPhoto, $price, $amount, $description, $sellerId, $deleted);
         $self->id = $id;
         return $self;
     }
@@ -36,7 +37,7 @@ class Product
 //        );
 //    }
 
-    protected function __construct(string $name, string $mainPhoto, int $price, int $amount, string $description, int $sellerId)
+    protected function __construct(string $name, string $mainPhoto, int $price, int $amount, string $description, int $sellerId, bool $deleted = false)
     {
         $this->id = null;
         $this->name = $name;
@@ -45,6 +46,12 @@ class Product
         $this->amount = $amount;
         $this->description = $description;
         $this->sellerId = $sellerId;
+        $this->deleted = $deleted;
+    }
+
+    public function delete()
+    {
+        $this->deleted = true;
     }
 
     public function getId(): ?int
@@ -97,6 +104,12 @@ class Product
         $this->price = $price;
         $this->amount = $amount;
         $this->description = $description;
+    }
+
+
+    public function isDeleted(): bool
+    {
+        return $this->deleted;
     }
 
 
