@@ -14,7 +14,7 @@
             <form action="{{route('update_customer_info')}}" method="POST" class="form mt-4">
                 @method('PATCH')
                 <div class="mx-4 card bg-white max-w-md p-10 md:rounded-lg my-12 mx-auto">
-                    <label for="customer_info" class=" control-label font-bold text-center"><h1>Изменить контакты</h1></label>
+                    <label for="customerInfo" class=" control-label font-bold text-center"><h1>Изменить контакты</h1></label>
 
 
                     @csrf
@@ -31,8 +31,8 @@
                     </div>
 
                     <div class="flex flex-col text-sm">
-                        <label for="additional_contact" class="font-bold mt-4 mb-2">Дополнительный контакт</label>
-                        <input name="additional_contact" id="additional_contact" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                        <label for="additionalContact" class="font-bold mt-4 mb-2">Дополнительный контакт</label>
+                        <input name="additionalContact" id="additionalContact" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                type="text" value="{{$info->getAdditionalContact()}}" placeholder="Соц.сети, Telegram или другое">
                     </div>
 

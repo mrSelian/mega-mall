@@ -35,7 +35,7 @@ class CartController extends Controller
     }
 
 
-    public function addProduct(Request $request)
+    public function addProduct(Request $request): RedirectResponse
     {
 
         $cart = $this->cartRepository->get();
@@ -66,7 +66,7 @@ class CartController extends Controller
         return redirect()->back();
     }
 
-    public function toOrder()
+    public function toOrder(): RedirectResponse
     {
         $cart = $this->cartRepository->get();
 
@@ -74,7 +74,7 @@ class CartController extends Controller
         $this->orderRepository->save($order);
         $this->cartRepository->save($cart);
 
-        return redirect(route('customer_orders'));
+        return redirect()->route('customer_orders');
     }
 
     public function clearCart(): RedirectResponse

@@ -6,6 +6,7 @@ use App\Domain\Address;
 use App\Domain\AddressRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateAddressRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
 class AddressController extends Controller
@@ -21,7 +22,7 @@ class AddressController extends Controller
     {
         if (!$this->addressRepository->getByUserId(Auth::id())) return view('customer.address.create');
 
-        return redirect(route('edit_address'));
+        return redirect()->route('edit_address');
     }
 
 //    public function checkOut()
@@ -37,11 +38,11 @@ class AddressController extends Controller
 //    }
 
 
-    public function store(CreateAddressRequest $request)
+    public function store(CreateAddressRequest $request): RedirectResponse
     {
         $this->addressRepository->save(
             new Address(
-                $request->user_id,
+                Auth::id(),
                 $request->zip,
                 $request->country,
                 $request->region,
@@ -49,10 +50,10 @@ class AddressController extends Controller
                 $request->street,
                 $request->house,
                 $request->apt,
-                $request->full_name
+                $request->fullName
             ));
 
-        return redirect(route('customer_profile'));
+        return redirect()->route('customer_profile');
     }
 
     public function edit()
@@ -61,7 +62,7 @@ class AddressController extends Controller
         return view('customer.address.edit', compact('address'));
     }
 
-    public function update(CreateAddressRequest $request)
+    public function update(CreateAddressRequest $request): RedirectResponse
     {
         $address = $this->addressRepository->getByUserId(Auth::id());
         $address->update(
@@ -72,10 +73,10 @@ class AddressController extends Controller
             $request->street,
             $request->house,
             $request->apt,
-            $request->full_name
+            $request->fullName
         );
         $this->addressRepository->save($address);
 
-        return redirect(route('customer_profile'));
+        return redirect()->route('customer_profile');
     }
 }

@@ -13,7 +13,7 @@
 
             <form action="{{route('store_seller_info')}}" method="POST" class="form mt-4">
                 <div class="mx-4 card bg-white max-w-md p-10 md:rounded-lg my-12 mx-auto">
-                    <label for="" class=" control-label font-bold text-center"><h1>Добавить информацию</h1></label>
+                    <label for="SellerInfo" class=" control-label font-bold text-center"><h1>Добавить информацию</h1></label>
 
 
                     @csrf
@@ -25,8 +25,8 @@
                     </div>
 
                     <div class="flex flex-col text-sm">
-                        <label for="main_photo" class="font-bold mt-4 mb-2">Основное фото (URL)</label>
-                        <input name="main_photo" id="main_photo" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                        <label for="mainPhoto" class="font-bold mt-4 mb-2">Основное фото (URL)</label>
+                        <input name="mainPhoto" id="mainPhoto" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                type="text" placeholder="Основное фото магазина ">
                     </div>
 
@@ -49,14 +49,14 @@
                     </div>
 
                     <div class="flex flex-col text-sm">
-                        <label for="delivery_terms" class="font-bold mt-4 mb-2">Условия доставки*</label>
-                        <textarea name="delivery_terms" id="delivery_terms" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                        <label for="deliveryTerms" class="font-bold mt-4 mb-2">Условия доставки*</label>
+                        <textarea name="deliveryTerms" id="deliveryTerms" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                   placeholder="Опишите условия и цену доставки."></textarea>
                     </div>
 
                     <div class="flex flex-col text-sm">
-                        <label for="additional_contact" class="font-bold mt-4 mb-2">Дополнительный контакт</label>
-                        <input name="additional_contact" id="additional_contact" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                        <label for="additionalContact" class="font-bold mt-4 mb-2">Дополнительный контакт</label>
+                        <input name="additionalContact" id="additionalContact" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                type="text" placeholder="Наименование и контакт (пример Telegram: ник)">
                     </div>
 

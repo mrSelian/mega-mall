@@ -28,8 +28,8 @@
 
                     @csrf
                     <div class="flex flex-col text-sm">
-                        <label for="full_name" class="font-bold mt-4 mb-2">Полное Имя</label>
-                        <input name="full_name" id="full_name" class="appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                        <label for="fullName" class="font-bold mt-4 mb-2">Полное Имя</label>
+                        <input name="fullName" id="fullName" class="appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                type="text" placeholder="Введите ФИО">
                     </div>
 

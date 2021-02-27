@@ -28,9 +28,9 @@ class SellerInfoRequest extends FormRequest
             'phone' => [ 'max:20'],
             'email' => ['required','string', 'max:25'],
             'info' => ['max:700'],
-            'main_photo' => [ 'max:100'],
-            'additional_contact' =>[ 'max:50'],
-            'delivery_terms' => ['required','string', 'max:300']
+            'mainPhoto' => [ 'max:100'],
+            'additionalContact' =>[ 'max:50'],
+            'deliveryTerms' => ['required','string', 'max:300']
         ];
     }
 }

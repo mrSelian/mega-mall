@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -59,22 +61,22 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function products(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function products(): HasMany
     {
         return $this->hasMany(ProductModel::class);
     }
 
-    public function address(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function address(): HasOne
     {
         return $this->hasOne(AddressModel::class);
     }
 
-    public function sellerInfo(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function sellerInfo(): HasOne
     {
         return $this->hasOne(SellerInfoModel::class);
     }
 
-    public function customerInfo(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function customerInfo(): HasOne
     {
         return $this->hasOne(CustomerInfoModel::class);
     }

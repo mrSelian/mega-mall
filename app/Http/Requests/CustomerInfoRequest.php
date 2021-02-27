@@ -11,7 +11,7 @@ class CustomerInfoRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,12 +21,12 @@ class CustomerInfoRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'phone' => ['max:20'],
             'email' => ['required','string', 'max:25'],
-            'additional_contact' => ['max:25'],
+            'additionalContact' => ['max:25'],
         ];
     }
 }

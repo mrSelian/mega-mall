@@ -36,8 +36,8 @@
                 </div>
 
                 <div class="flex flex-col text-sm">
-                    <label for="main_photo_path" class="font-bold mt-4 mb-2">Фото</label>
-                    <input name="main_photo_path" id="main_photo_path" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                    <label for="mainPhotoPath" class="font-bold mt-4 mb-2">Фото</label>
+                    <input name="mainPhotoPath" id="mainPhotoPath" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                            type="text" placeholder="Ссылка на фото товара">
                 </div>
 
@@ -54,9 +54,9 @@
                 </div>
 
                 <div class="text-sm flex flex-col">
-                    <label for="full_specification" class="font-bold mt-4 mb-2">Описание</label>
+                    <label for="fullSpecification" class="font-bold mt-4 mb-2">Описание</label>
                     <textarea
-                        name="full_specification" id="full_specification" class=" appearance-none w-full border border-gray-200 p-2 h-40 focus:outline-none focus:border-gray-500"
+                        name="fullSpecification" id="fullSpecification" class=" appearance-none w-full border border-gray-200 p-2 h-40 focus:outline-none focus:border-gray-500"
                         placeholder="Опишите ваш товар"></textarea>
                 </div>
 

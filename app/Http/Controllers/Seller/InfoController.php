@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Seller;
 use App\Domain\SellerInfoRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SellerInfoRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
 class InfoController extends Controller
@@ -27,11 +28,11 @@ class InfoController extends Controller
         return view('seller.info.create');
     }
 
-    public function store(SellerInfoRequest $request)
+    public function store(SellerInfoRequest $request): RedirectResponse
     {
         $request->user()->sellerInfo()->create($request->all());
 
-        return redirect(route('seller_profile'));
+        return redirect()->route('seller_profile');
     }
 
     public function edit()
@@ -40,22 +41,22 @@ class InfoController extends Controller
         return view('seller.info.edit', compact('info'));
     }
 
-    public function update(SellerInfoRequest $request)
+    public function update(SellerInfoRequest $request): RedirectResponse
     {
         $info = $this->infoRepository->getBySellerId(Auth::id());
 
         $info->update(
             $request->name,
             $request->email,
-            $request->delivery_terms,
+            $request->deliveryTerms,
             $request->info,
-            $request->main_photo,
+            $request->mainPhoto,
             $request->phone,
-            $request->additional_contact
+            $request->additionalContact
         );
 
         $this->infoRepository->save($info);
 
-        return redirect(route('seller_profile'));
+        return redirect()->route('seller_profile');
     }
 }

@@ -30,7 +30,7 @@ class CreateAddressRequest extends FormRequest
             'street' => ['required', 'string'],
             'house' => ['required', 'string'],
             'apt' => ['required', 'string'],
-            'full_name' => ['required', 'string'],
+            'fullName' => ['required', 'string'],
             'zip' => ['required', 'string'],
         ];
     }

@@ -6,6 +6,7 @@ use App\Domain\Product;
 use App\Domain\ProductRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateProductRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -22,20 +23,20 @@ class ProductController extends Controller
         return view('seller.product.create');
     }
 
-    public function store(CreateProductRequest $request)
+    public function store(CreateProductRequest $request): RedirectResponse
     {
         $product = Product::create(
             $request->name,
-            $request->main_photo_path,
+            $request->mainPhotoPath,
             $request->price,
             $request->quantity,
-            $request->full_specification,
+            $request->fullSpecification,
             Auth::id()
         );
 
         $this->productRepository->save($product);
 
-        return redirect(route('seller_products'));
+        return redirect()->route('seller_products');
     }
 
     public function edit($id)
@@ -47,7 +48,7 @@ class ProductController extends Controller
         return view('seller.product.edit', compact('product'));
     }
 
-    public function update(CreateProductRequest $request, $id)
+    public function update(CreateProductRequest $request, $id): RedirectResponse
     {
         $product = $this->productRepository->getById($id);
 
@@ -55,18 +56,18 @@ class ProductController extends Controller
 
         $product->update(
             $request->name,
-            $request->main_photo_path,
+            $request->mainPhotoPath,
             $request->price,
             $request->quantity,
-            $request->full_specification
+            $request->fullSpecification
         );
 
         $this->productRepository->save($product);
 
-        return redirect(route('seller_products'))->with('success', 'Товар успешно обновлен.');
+        return redirect()->route('seller_products')->with('success', 'Товар успешно обновлен.');
     }
 
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
         $product = $this->productRepository->getById($id);
 
@@ -76,7 +77,7 @@ class ProductController extends Controller
 
         $this->productRepository->delete($product);
 
-        return redirect(route('seller_products'))->with('success', 'Товар удалён.');
+        return redirect()->route('seller_products')->with('success', 'Товар удалён.');
     }
 
     public function getSellerProducts()

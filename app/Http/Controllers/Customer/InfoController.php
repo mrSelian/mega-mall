@@ -7,6 +7,7 @@ use App\Domain\CustomerInfo;
 use App\Domain\CustomerInfoRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerInfoRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
 class InfoController extends Controller
@@ -32,16 +33,16 @@ class InfoController extends Controller
         return view('customer.info.create');
     }
 
-    public function store(CustomerInfoRequest $request)
+    public function store(CustomerInfoRequest $request): RedirectResponse
     {
         $this->infoRepository->save(new CustomerInfo(
             $request->email,
-            $request->user_id,
+            Auth::id(),
             $request->phone,
-            $request->additional_contact
+            $request->additionalContact
         ));
 
-        return redirect(route('customer_profile'));
+        return redirect()->route('customer_profile');
     }
 
     public function edit()
@@ -50,17 +51,17 @@ class InfoController extends Controller
         return view('customer.info.edit', compact('info'));
     }
 
-    public function update(CustomerInfoRequest $request)
+    public function update(CustomerInfoRequest $request): RedirectResponse
     {
         $info = $this->infoRepository->getByCustomerId(Auth::id());
         $info->update(
             $request->email,
             $request->phone,
-            $request->additional_contact
+            $request->additionalContact
         );
 
         $this->infoRepository->save($info);
 
-        return redirect(route('customer_profile'));
+        return redirect()->route('customer_profile');
     }
 }

@@ -5,28 +5,25 @@ namespace App\Http\Controllers\Shop;
 use App\Domain\AddressRepositoryInterface;
 use App\Domain\CustomerInfoRepositoryInterface;
 use App\Domain\OrderRepositoryInterface;
-use App\Domain\ProductRepositoryInterface;
 use App\Domain\SellerInfoRepositoryInterface;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
     private OrderRepositoryInterface $orderRepository;
-    private ProductRepositoryInterface $productRepository;
     private SellerInfoRepositoryInterface $sellerInfoRepository;
     private CustomerInfoRepositoryInterface $customerInfoRepository;
     private AddressRepositoryInterface $addressRepository;
 
     public function __construct(OrderRepositoryInterface $orderRepository,
-                                ProductRepositoryInterface $productRepository,
                                 SellerInfoRepositoryInterface $sellerInfoRepository,
                                 CustomerInfoRepositoryInterface $customerInfoRepository,
                                 AddressRepositoryInterface $addressRepository)
     {
         $this->orderRepository = $orderRepository;
-        $this->productRepository = $productRepository;
         $this->sellerInfoRepository = $sellerInfoRepository;
         $this->customerInfoRepository = $customerInfoRepository;
         $this->addressRepository = $addressRepository;
@@ -50,7 +47,7 @@ class OrderController extends Controller
     }
 
 
-    public function changeStatus($id, Request $request)
+    public function changeStatus($id, Request $request): RedirectResponse
     {
         $order = $this->orderRepository->getById($id);
 
@@ -58,9 +55,9 @@ class OrderController extends Controller
 
         $order->changeStatus($request->status);
 
-        $this->orderRepository->save($order,$id);
+        $this->orderRepository->save($order);
 
-        return redirect(route('seller_orders'));
+        return redirect()->route('seller_orders');
 
     }
 
