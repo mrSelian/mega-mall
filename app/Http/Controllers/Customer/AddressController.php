@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Customer;
 
-use App\Domain\Address;
+use App\Domain\CustomerAddress;
 use App\Domain\AddressRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateAddressRequest;
@@ -41,7 +41,7 @@ class AddressController extends Controller
     public function store(CreateAddressRequest $request): RedirectResponse
     {
         $this->addressRepository->save(
-            new Address(
+            new CustomerAddress(
                 Auth::id(),
                 $request->zip,
                 $request->country,

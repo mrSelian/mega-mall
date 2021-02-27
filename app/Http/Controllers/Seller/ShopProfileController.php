@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Seller;
 
-use App\Domain\SellerInfoRepositoryInterface;
+use App\Domain\ShopProfileRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SellerInfoRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
-class InfoController extends Controller
+class ShopProfileController extends Controller
 {
-    private SellerInfoRepositoryInterface $infoRepository;
+    private ShopProfileRepositoryInterface $infoRepository;
 
-    public function __construct(SellerInfoRepositoryInterface $infoRepository)
+    public function __construct(ShopProfileRepositoryInterface $infoRepository)
     {
         $this->infoRepository = $infoRepository;
     }

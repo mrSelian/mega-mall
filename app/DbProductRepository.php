@@ -30,7 +30,7 @@ class DbProductRepository implements ProductRepositoryInterface
     public function getAllByUserId(int $id)
     {
         return ProductModel::query()
-            ->where('user_id', '=', $id)->where('deleted', '=', 0)
+            ->where('user_id', '=', $id)->where('deleted', '=', 0)->where('quantity', '>', 0)
             ->get()
             ->map($this->mapToProduct());
     }

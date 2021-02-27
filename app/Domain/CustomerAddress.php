@@ -3,7 +3,7 @@
 
 namespace App\Domain;
 
-class Address
+class CustomerAddress
 {
     private int $userId;
     private int $zip;
@@ -94,7 +94,7 @@ class Address
     }
 
 
-//    public function updateAddress(Address $address)
+//    public function updateAddress(CustomerAddress $address)
 //    {
 //        $this->address = $address;
 //    }

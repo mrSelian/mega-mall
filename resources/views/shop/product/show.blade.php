@@ -80,7 +80,7 @@
                                             <p>{{$product->getDescription()}}</p>
                                         </div>
                                     </div>
-                                    <a href="{{route('seller_page',$product->getId())}}"
+                                    <a href="{{route('seller_page',$product->getSellerId())}}"
                                        class="flex font-semibold text-indigo-600 text-sm mt-4">
 
                                         <svg class="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512">

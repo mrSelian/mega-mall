@@ -3,19 +3,19 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Domain\AddressRepositoryInterface;
-use App\Domain\CustomerInfo;
-use App\Domain\CustomerInfoRepositoryInterface;
+use App\Domain\Customer;
+use App\Domain\CustomerRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerInfoRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
-class InfoController extends Controller
+class CustomerController extends Controller
 {
-    private CustomerInfoRepositoryInterface $infoRepository;
+    private CustomerRepositoryInterface $infoRepository;
     private AddressRepositoryInterface $addressRepository;
 
-    public function __construct(CustomerInfoRepositoryInterface $infoRepository, AddressRepositoryInterface $addressRepository)
+    public function __construct(CustomerRepositoryInterface $infoRepository, AddressRepositoryInterface $addressRepository)
     {
         $this->infoRepository = $infoRepository;
         $this->addressRepository = $addressRepository;
@@ -35,7 +35,7 @@ class InfoController extends Controller
 
     public function store(CustomerInfoRequest $request): RedirectResponse
     {
-        $this->infoRepository->save(new CustomerInfo(
+        $this->infoRepository->save(new Customer(
             $request->email,
             Auth::id(),
             $request->phone,

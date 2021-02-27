@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Shop;
 
 use App\Domain\ProductRepositoryInterface;
-use App\Domain\SellerInfoRepositoryInterface;
+use App\Domain\ShopProfileRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
     private ProductRepositoryInterface $productRepository;
-    private SellerInfoRepositoryInterface $sellerInfoRepository;
+    private ShopProfileRepositoryInterface $sellerInfoRepository;
 
-    public function __construct(ProductRepositoryInterface $productRepository, SellerInfoRepositoryInterface $sellerInfoRepository)
+    public function __construct(ProductRepositoryInterface $productRepository, ShopProfileRepositoryInterface $sellerInfoRepository)
     {
         $this->productRepository = $productRepository;
         $this->sellerInfoRepository = $sellerInfoRepository;

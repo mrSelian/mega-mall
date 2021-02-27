@@ -4,7 +4,7 @@ namespace App\Domain;
 
 interface AddressRepositoryInterface
 {
-    public function getByUserId(int $id): Address;
+    public function getByUserId(int $id): CustomerAddress;
 
-    public function save(Address $address);
+    public function save(CustomerAddress $address);
 }

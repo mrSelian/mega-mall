@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Shop;
 
 use App\Domain\AddressRepositoryInterface;
-use App\Domain\CustomerInfoRepositoryInterface;
+use App\Domain\CustomerRepositoryInterface;
 use App\Domain\OrderRepositoryInterface;
-use App\Domain\SellerInfoRepositoryInterface;
+use App\Domain\ShopProfileRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,13 +14,13 @@ use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
     private OrderRepositoryInterface $orderRepository;
-    private SellerInfoRepositoryInterface $sellerInfoRepository;
-    private CustomerInfoRepositoryInterface $customerInfoRepository;
+    private ShopProfileRepositoryInterface $sellerInfoRepository;
+    private CustomerRepositoryInterface $customerInfoRepository;
     private AddressRepositoryInterface $addressRepository;
 
     public function __construct(OrderRepositoryInterface $orderRepository,
-                                SellerInfoRepositoryInterface $sellerInfoRepository,
-                                CustomerInfoRepositoryInterface $customerInfoRepository,
+                                ShopProfileRepositoryInterface $sellerInfoRepository,
+                                CustomerRepositoryInterface $customerInfoRepository,
                                 AddressRepositoryInterface $addressRepository)
     {
         $this->orderRepository = $orderRepository;

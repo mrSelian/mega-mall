@@ -2,17 +2,17 @@
 
 namespace App;
 
-use App\Domain\Address;
+use App\Domain\CustomerAddress;
 use App\Domain\AddressRepositoryInterface;
 use App\Models\AddressModel;
 
 class DbAddressRepository implements AddressRepositoryInterface
 {
-    public function getByUserId(int $id): Address
+    public function getByUserId(int $id): CustomerAddress
     {
         $addressModel = AddressModel::where('user_id', '=', $id)->first();
 
-        return new Address(
+        return new CustomerAddress(
             $addressModel->user_id,
             $addressModel->zip,
             $addressModel->country,
@@ -25,7 +25,7 @@ class DbAddressRepository implements AddressRepositoryInterface
         );
     }
 
-    public function save(Address $address)
+    public function save(CustomerAddress $address)
     {
         $addressModel = AddressModel::where('user_id', '=', $address->getUserId())->firstOrNew();
 

@@ -2,7 +2,7 @@
 
 namespace App\Domain;
 
-class SellerInfo
+class ShopProfile
 {
     private int $sellerId;
     private string $shopName;

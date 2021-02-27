@@ -3,18 +3,18 @@
 
 namespace App\Domain;
 
-class CustomerInfo
+class Customer
 {
     private string $email;
-    private int $userId;
+    private int $id;
     private ?string $phone;
     private ?string $additionalContact;
 
 
-    public function __construct(string $email, int $userId, string $phone = null, string $additionalContact = null)
+    public function __construct(string $email, int $id, string $phone = null, string $additionalContact = null)
     {
         $this->email = $email;
-        $this->userId = $userId;
+        $this->id = $id;
         $this->phone = $phone;
         $this->additionalContact = $additionalContact;
     }
@@ -33,9 +33,9 @@ class CustomerInfo
     }
 
 
-    public function getUserId(): int
+    public function getId(): int
     {
-        return $this->userId;
+        return $this->id;
     }
 
 

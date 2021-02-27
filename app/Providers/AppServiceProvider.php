@@ -3,16 +3,16 @@
 namespace App\Providers;
 
 use App\DbAddressRepository;
-use App\DbCustomerInfoRepository;
+use App\DbCustomerRepository;
 use App\DbOrderRepository;
 use App\DbProductRepository;
-use App\DbSellerInfoRepository;
+use App\DbShopProfileRepository;
 use App\Domain\AddressRepositoryInterface;
 use App\Domain\CartRepositoryInterface;
-use App\Domain\CustomerInfoRepositoryInterface;
+use App\Domain\CustomerRepositoryInterface;
 use App\Domain\OrderRepositoryInterface;
 use App\Domain\ProductRepositoryInterface;
-use App\Domain\SellerInfoRepositoryInterface;
+use App\Domain\ShopProfileRepositoryInterface;
 use App\SessionCartRepository;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -30,8 +30,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ProductRepositoryInterface::class, DbProductRepository::class);
         $this->app->bind(OrderRepositoryInterface::class, DbOrderRepository::class);
         $this->app->bind(AddressRepositoryInterface::class, DbAddressRepository::class);
-        $this->app->bind(SellerInfoRepositoryInterface::class, DbSellerInfoRepository::class);
-        $this->app->bind(CustomerInfoRepositoryInterface::class, DbCustomerInfoRepository::class);
+        $this->app->bind(ShopProfileRepositoryInterface::class, DbShopProfileRepository::class);
+        $this->app->bind(CustomerRepositoryInterface::class, DbCustomerRepository::class);
 
     }
 

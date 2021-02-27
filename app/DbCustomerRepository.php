@@ -2,17 +2,17 @@
 
 namespace App;
 
-use App\Domain\CustomerInfo;
-use App\Domain\CustomerInfoRepositoryInterface;
+use App\Domain\Customer;
+use App\Domain\CustomerRepositoryInterface;
 use App\Models\CustomerInfoModel;
 
-class DbCustomerInfoRepository implements CustomerInfoRepositoryInterface
+class DbCustomerRepository implements CustomerRepositoryInterface
 {
-    public function getByCustomerId(int $id): CustomerInfo
+    public function getByCustomerId(int $id): Customer
     {
         $infoModel = CustomerInfoModel::where('user_id', '=', $id)->first();
 
-        return new CustomerInfo(
+        return new Customer(
             $infoModel->email,
             $infoModel->user_id,
             $infoModel->phone,
@@ -20,12 +20,12 @@ class DbCustomerInfoRepository implements CustomerInfoRepositoryInterface
     }
 
 
-    public function save(CustomerInfo $info)
+    public function save(Customer $info)
     {
-        $infoModel = CustomerInfoModel::where('user_id', '=', $info->getUserId())->firstOrNew();
+        $infoModel = CustomerInfoModel::where('user_id', '=', $info->getId())->firstOrNew();
 
         $infoModel->email = $info->getEmail();
-        $infoModel->user_id = $info->getUserId();
+        $infoModel->user_id = $info->getId();
         $infoModel->phone = $info->getPhone();
         $infoModel->additional_contact = $info->getAdditionalContact();
 

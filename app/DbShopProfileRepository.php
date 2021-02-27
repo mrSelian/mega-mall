@@ -2,18 +2,18 @@
 
 namespace App;
 
-use App\Domain\SellerInfo;
-use App\Domain\SellerInfoRepositoryInterface;
+use App\Domain\ShopProfile;
+use App\Domain\ShopProfileRepositoryInterface;
 use App\Models\SellerInfoModel;
 
-class DbSellerInfoRepository implements SellerInfoRepositoryInterface
+class DbShopProfileRepository implements ShopProfileRepositoryInterface
 {
 
-    public function getBySellerId(int $id): SellerInfo
+    public function getBySellerId(int $id): ShopProfile
     {
         $infoModel = SellerInfoModel::where('user_id', '=', $id)->firstOrFail();
 
-        return new SellerInfo(
+        return new ShopProfile(
             $infoModel->user_id,
             $infoModel->name,
             $infoModel->email,
@@ -24,7 +24,7 @@ class DbSellerInfoRepository implements SellerInfoRepositoryInterface
             $infoModel->additional_contact);
     }
 
-    public function save(SellerInfo $info)
+    public function save(ShopProfile $info)
     {
         $infoModel = SellerInfoModel::where('user_id', '=', $info->getSellerId())->firstOrNew();
 

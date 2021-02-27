@@ -80,7 +80,7 @@ class ProductController extends Controller
         return redirect()->route('seller_products')->with('success', 'Товар удалён.');
     }
 
-    public function getSellerProducts()
+    public function getProducts()
     {
         $products = $this->productRepository->getAllByUserId(Auth::id());
 
