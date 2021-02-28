@@ -24,4 +24,16 @@ class OrderPolicy
     {
         return $user->id == $order->getSellerId();
     }
+
+    public function showForSeller(User $user, Order $order): bool
+    {
+        return $user->id == $order->getSellerId();
+    }
+
+    public function showForCustomer(User $user, Order $order): bool
+    {
+        return $user->id == $order->getCustomerId();
+    }
+
+
 }

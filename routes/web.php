@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\Customer\AddressController;
-use App\Http\Controllers\Shop\OrderController;
+use App\Http\Controllers\Seller\OrderController;
+use App\Http\Controllers\Seller\ShopProfileController;
 use App\Http\Controllers\Shop\PageController;
 use App\Http\Controllers\Shop\CartController;
 use App\Http\Controllers\Seller\ProductController;
@@ -21,8 +22,8 @@ use App\Http\Controllers\Customer\CustomerController;
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['prefix' => '/'], function () {
-        Route::get('/', [PageController::class, 'shop'])->name('index');
-        Route::post('/search', [PageController::class, 'search'])->name('search');
+        Route::get('/', [\App\Http\Controllers\Shop\ProductController::class, 'showShop'])->name('index');
+        Route::post('/search', [\App\Http\Controllers\Shop\ProductController::class, 'search'])->name('search');
         Route::get('dashboard', fn() => redirect('/'))->name('dashboard');
     });
 
@@ -31,14 +32,14 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 
     Route::group(['prefix' => 'order'], function () {
-        Route::get('/{id}', [OrderController::class, 'show'])->name('order_page');
         Route::post('/{id}', [OrderController::class, 'changeStatus'])->name('change_order_status');
     });
 
     Route::group(['prefix' => 'customer'], function () {
         Route::get('/', fn() => redirect(route('customer_orders')))->name('customer');
-        Route::get('/profile', [CustomerController::class, 'customerProfile'])->name('customer_profile');
-        Route::get('/orders', [OrderController::class, 'customerOrders'])->name('customer_orders');
+        Route::get('/profile', [CustomerController::class, 'showProfile'])->name('customer_profile');
+        Route::get('/orders', [\App\Http\Controllers\Customer\OrderController::class, 'getAllByCustomer'])->name('customer_orders');
+        Route::get('/order/{id}', [\App\Http\Controllers\Customer\OrderController::class, 'show'])->name('customer_order_page');
 
         Route::group(['prefix' => 'info'], function () {
             Route::get('/create', [CustomerController::class, 'create'])->name('create_customer_info');
@@ -58,15 +59,16 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['prefix' => 'seller'], function () {
         Route::get('/', fn() => redirect(route('seller_orders')))->name('seller');
-        Route::get('/profile', [\App\Http\Controllers\Seller\ShopProfileController::class, 'sellerProfile'])->name('seller_profile');
-        Route::get('/orders', [OrderController::class, 'sellerOrders'])->name('seller_orders');
+        Route::get('/profile', [ShopProfileController::class, 'showProfile'])->name('seller_profile');
+        Route::get('/orders', [OrderController::class, 'getAllBySeller'])->name('seller_orders');
         Route::get('/products', [ProductController::class, 'getProducts'])->name('seller_products');
+        Route::get('/order/{id}', [OrderController::class, 'show'])->name('seller_order_page');
 
         Route::group(['prefix' => 'info'], function () {
-            Route::get('/create', [\App\Http\Controllers\Seller\ShopProfileController::class, 'create'])->name('create_seller_info');
-            Route::post('/create', [\App\Http\Controllers\Seller\ShopProfileController::class, 'store'])->name('store_seller_info');
-            Route::get('/edit', [\App\Http\Controllers\Seller\ShopProfileController::class, 'edit'])->name('edit_seller_info');
-            Route::patch('/update', [\App\Http\Controllers\Seller\ShopProfileController::class, 'update'])->name('update_seller_info');
+            Route::get('/create', [ShopProfileController::class, 'create'])->name('create_seller_info');
+            Route::post('/create', [ShopProfileController::class, 'store'])->name('store_seller_info');
+            Route::get('/edit', [ShopProfileController::class, 'edit'])->name('edit_seller_info');
+            Route::patch('/update', [ShopProfileController::class, 'update'])->name('update_seller_info');
         });
 
         Route::group(['prefix' => 'product'], function () {
@@ -81,16 +83,16 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['prefix' => 'cart'], function () {
         Route::get('/', [CartController::class, 'index'])->name('cart');
-        Route::post('/clear', [CartController::class, 'clearCart'])->name('clear_cart');
+        Route::post('/clear', [CartController::class, 'clear'])->name('clear_cart');
         Route::post('/correct/{id}',[CartController::class, 'correctAmount'])->name('correct_amount');
 //        Route::post('/actualize', [CartController::class, 'actualize'])->name('actualize_cart');
-        Route::post('/to-order', [CartController::class, 'toOrder'])->name('cart_to_order');
+        Route::post('/to-order', [CartController::class, 'order'])->name('cart_to_order');
         Route::post('/add/{id}', [CartController::class, 'addProduct'])->name('add_to_cart');
         Route::post('/remove/{id}', [CartController::class, 'removeProduct'])->name('remove_from_cart');
     });
 
     Route::group(['prefix' => 'product'], function () {
-        Route::get('/{id}/show', [PageController::class, 'showProduct'])->name('show_product');
+        Route::get('/{id}/show', [\App\Http\Controllers\Shop\ProductController::class, 'show'])->name('show_product');
 
     });
 });

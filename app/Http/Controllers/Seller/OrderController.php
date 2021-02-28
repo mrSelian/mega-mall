@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Shop;
+namespace App\Http\Controllers\Seller;
 
 use App\Domain\AddressRepositoryInterface;
 use App\Domain\CustomerRepositoryInterface;
 use App\Domain\OrderRepositoryInterface;
-use App\Domain\ShopProfileRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,17 +13,14 @@ use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
     private OrderRepositoryInterface $orderRepository;
-    private ShopProfileRepositoryInterface $sellerInfoRepository;
     private CustomerRepositoryInterface $customerInfoRepository;
     private AddressRepositoryInterface $addressRepository;
 
     public function __construct(OrderRepositoryInterface $orderRepository,
-                                ShopProfileRepositoryInterface $sellerInfoRepository,
                                 CustomerRepositoryInterface $customerInfoRepository,
                                 AddressRepositoryInterface $addressRepository)
     {
         $this->orderRepository = $orderRepository;
-        $this->sellerInfoRepository = $sellerInfoRepository;
         $this->customerInfoRepository = $customerInfoRepository;
         $this->addressRepository = $addressRepository;
     }
@@ -32,20 +28,13 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = $this->orderRepository->getById($id);
-        if (Auth::id() == $order->getSellerId()) {
-            $info = $this->customerInfoRepository->getByCustomerId($order->getCustomerId());
-            $address = $this->addressRepository->getByUserId($order->getCustomerId());
-            return view('shop.order.seller', compact('order', 'info', 'address'));
-        }
+        $this->authorize('showForSeller', $order);
 
-        if (Auth::id() == $order->getCustomerId()) {
-            $info = $this->sellerInfoRepository->getBySellerId($order->getSellerId());
-            return view('shop.order.customer', compact('order', 'info'));
-        }
+        $info = $this->customerInfoRepository->getByCustomerId($order->getCustomerId());
+        $address = $this->addressRepository->getByUserId($order->getCustomerId());
 
-        return abort(403,'У вас нет доступа к данному заказу.');
+        return view('shop.order.seller', compact('order', 'info', 'address'));
     }
-
 
     public function changeStatus($id, Request $request): RedirectResponse
     {
@@ -61,19 +50,12 @@ class OrderController extends Controller
 
     }
 
-
-    public function sellerOrders()
+    public function getAllBySeller()
     {
         $orders = $this->orderRepository->getBySellerId(Auth::id());
 
         return view('seller.orders', compact('orders'));
     }
 
-    public function customerOrders()
-    {
-        $orders = $this->orderRepository->getByCustomerId(Auth::id());
 
-        return view('customer.orders', compact('orders'));
-
-    }
 }

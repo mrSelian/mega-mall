@@ -40,7 +40,7 @@
                         <td ><a href="{{route('seller_page',$order->getSellerId())}}" target="_blank" class="text-indigo-600 hover:underline">Магазин продавца</a></td>
                         <td>{{$order->getSum()}} &#8381;</td>
                         <td>{{$order->getStatus()}} </td>
-                        <td><a href="{{route('order_page',$order->getId())}}"
+                        <td><a href="{{route('customer_order_page',$order->getId())}}"
                                class="text-indigo-600 hover:underline">
                                 Страница заказа </a></td>
 

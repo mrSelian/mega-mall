@@ -21,7 +21,7 @@ class CustomerController extends Controller
         $this->addressRepository = $addressRepository;
     }
 
-    public function customerProfile()
+    public function showProfile()
     {
         $address = $this->addressRepository->getByUserId(Auth::id());
         $info = $this->infoRepository->getByCustomerId(Auth::id());

@@ -17,7 +17,7 @@ class ShopProfileController extends Controller
         $this->infoRepository = $infoRepository;
     }
 
-    public function sellerProfile()
+    public function showProfile()
     {
         $info = $this->infoRepository->getBySellerId(Auth::id());
         return view('seller.profile', compact('info'));

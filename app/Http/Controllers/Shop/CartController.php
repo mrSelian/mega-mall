@@ -66,7 +66,7 @@ class CartController extends Controller
         return redirect()->back();
     }
 
-    public function toOrder(): RedirectResponse
+    public function order(): RedirectResponse
     {
         $cart = $this->cartRepository->get();
 
@@ -77,7 +77,7 @@ class CartController extends Controller
         return redirect()->route('customer_orders');
     }
 
-    public function clearCart(): RedirectResponse
+    public function clear(): RedirectResponse
     {
         $cart = $this->cartRepository->get();
 
