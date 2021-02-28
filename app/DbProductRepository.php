@@ -7,7 +7,6 @@ use App\Domain\ProductRepositoryInterface;
 use App\Models\ProductModel;
 
 
-
 class DbProductRepository implements ProductRepositoryInterface
 
 {
@@ -69,6 +68,17 @@ class DbProductRepository implements ProductRepositoryInterface
 
         $record->deleted = 1;
         $record->save();
+    }
+
+    public function search(string $query)
+    {
+        return ProductModel::query()
+            ->where('name', 'ILIKE', '%' . $query . '%')
+            ->orWhere('full_specification', 'ILIKE', '%' . $query . '%')
+            ->where('quantity', '>', 0)
+            ->where('deleted', '=', 0)
+            ->get()
+            ->map($this->mapToProduct());
     }
 
 

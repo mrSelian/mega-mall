@@ -13,4 +13,6 @@ interface ProductRepositoryInterface
 
     public function delete(Product $product);
 
+    public function search(string $query);
+
 }

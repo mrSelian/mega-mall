@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Shop;
 
 use App\Domain\ProductRepositoryInterface;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\SearchRequest;
 
 
 class ProductController extends Controller
@@ -30,9 +30,12 @@ class ProductController extends Controller
         return view('shop.product.show', compact('product'));
     }
 
-    public function search(Request $request)
+    public function search(SearchRequest $request)
     {
 
+        $products = $this->productRepository->search($request->search);
+
+        return view('shop.index', compact('products'));
     }
 
 }
