@@ -32,7 +32,6 @@ class ProductController extends Controller
 
     public function search(SearchRequest $request)
     {
-
         $products = $this->productRepository->search($request->search);
 
         return view('shop.index', compact('products'));

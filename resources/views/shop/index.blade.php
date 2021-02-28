@@ -24,7 +24,8 @@
         </form>
     </div>
     <div class="flex flex-wrap max-w-6xl mx-auto ">
-
+@if($products->isEmpty()) Товары, соответствующие вашему запросу, отсутствуют!
+        @endif
         @foreach($products as $product)
             @if($product->getAmount() <1 )
                 @continue
