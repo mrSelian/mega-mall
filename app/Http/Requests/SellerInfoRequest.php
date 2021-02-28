@@ -24,7 +24,7 @@ class SellerInfoRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required','string','max:30'],
+            'shopName' => ['required','string','max:30'],
             'phone' => [ 'max:20'],
             'email' => ['required','string', 'max:25'],
             'info' => ['max:700'],

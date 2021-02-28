@@ -15,7 +15,16 @@ class CustomerAddress
     private string $apt;
     private string $fullName;
 
-    public function __construct(int $userId, int $zip, string $country, string $region, string $city, string $street, string $house, string $apt, string $fullName)
+    public function __construct(
+        int $userId,
+        int $zip,
+        string $country,
+        string $region,
+        string $city,
+        string $street,
+        string $house,
+        string $apt,
+        string $fullName)
     {
         $this->userId = $userId;
         $this->zip = $zip;
@@ -26,6 +35,36 @@ class CustomerAddress
         $this->house = $house;
         $this->apt = $apt;
         $this->fullName = $fullName;
+    }
+
+    public static function fromArray(array $array): CustomerAddress
+    {
+        return new self(
+            $array['userId'],
+            $array['zip'],
+            $array['country'],
+            $array['region'],
+            $array['city'],
+            $array['street'],
+            $array['house'],
+            $array['apt'],
+            $array['fullName']
+        );
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'userId' => $this->userId,
+            'zip' => $this->zip,
+            'country' => $this->country,
+            'region' => $this->region,
+            'city' => $this->city,
+            'street' => $this->street,
+            'house' => $this->house,
+            'apt' => $this->apt,
+            'fullName' => $this->fullName
+        ];
     }
 
     public function getFullName(): string

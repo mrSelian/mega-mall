@@ -17,9 +17,10 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->integer('seller_id');
             $table->integer('customer_id');
-            $table->string('items');
+            $table->text('items');
             $table->integer('sum');
             $table->string('status');
+            $table->text('delivery_address');
             $table->timestamps();
         });
     }

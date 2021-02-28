@@ -24,7 +24,7 @@
         </form>
     </div>
     <div class="flex flex-wrap max-w-6xl mx-auto ">
-@if($products->isEmpty()) Товары, соответствующие вашему запросу, отсутствуют!
+        @if($products->isEmpty()) Товары, соответствующие вашему запросу, отсутствуют!
         @endif
         @foreach($products as $product)
             @if($product->getAmount() <1 )
@@ -45,7 +45,7 @@
                         <p class="uppercase tracking-wide text-lg font-semibold text-gray-700">{{$product->getName()}}</p>
                         <p class="text-3xl text-gray-900 mb-3">{{$product->getPrice()}} &#8381;</p>
 
-                        <a href="{{route('show_product',$product->getId())}}"
+                        <a href="{{route('show_product',$product->getId())}}" target="_blank"
                            class="float-right bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black font-semibold">Подробнее</a>
                         <form action="{{route('add_to_cart',$product->getId())}}" target="_blank" method="POST"
                               class="form-horizontal">
@@ -68,7 +68,7 @@
 
 
         @endforeach
-{{--        <div class="max-w-sm sm:w-1/2 lg:w-1/3 py-6 px-3"> {{ $products->links() }} </div>--}}
+        {{--        <div class="max-w-sm sm:w-1/2 lg:w-1/3 py-6 px-3"> {{ $products->links() }} </div>--}}
     </div>
 
 

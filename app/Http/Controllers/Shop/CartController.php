@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Shop;
 
+use App\Domain\AddressRepositoryInterface;
 use App\Domain\CartRepositoryInterface;
 use App\Domain\OrderRepositoryInterface;
 use App\Domain\ProductRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class CartController extends Controller
@@ -15,14 +17,17 @@ class CartController extends Controller
     private CartRepositoryInterface $cartRepository;
     private ProductRepositoryInterface $productRepository;
     private OrderRepositoryInterface $orderRepository;
+    private AddressRepositoryInterface $addressRepository;
 
     public function __construct(CartRepositoryInterface $cartRepository,
                                 ProductRepositoryInterface $productRepository,
-                                OrderRepositoryInterface $orderRepository)
+                                OrderRepositoryInterface $orderRepository,
+                                AddressRepositoryInterface $addressRepository)
     {
         $this->cartRepository = $cartRepository;
         $this->productRepository = $productRepository;
         $this->orderRepository = $orderRepository;
+        $this->addressRepository = $addressRepository;
     }
 
     public function index()
@@ -70,7 +75,11 @@ class CartController extends Controller
     {
         $cart = $this->cartRepository->get();
 
-        $order = $cart->toOrder($this->productRepository);
+        $address = $this->addressRepository->getByUserId(Auth::id());
+
+        if($address == null) abort(403,'Добавьте адрес доставки в профиле покупателя перед тем, как делать заказ!');
+
+        $order = $cart->order($this->productRepository,$address);
         $this->orderRepository->save($order);
         $this->cartRepository->save($cart);
 

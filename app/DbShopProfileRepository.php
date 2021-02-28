@@ -9,11 +9,11 @@ use App\Models\SellerInfoModel;
 class DbShopProfileRepository implements ShopProfileRepositoryInterface
 {
 
-    public function getBySellerId(int $id): ShopProfile
+    public function getBySellerId(int $id): ?ShopProfile
     {
-        $infoModel = SellerInfoModel::where('user_id', '=', $id)->firstOrFail();
+        $infoModel = SellerInfoModel::where('user_id', '=', $id)->first();
 
-        return new ShopProfile(
+        return $infoModel == null ? null : new ShopProfile(
             $infoModel->user_id,
             $infoModel->name,
             $infoModel->email,
@@ -22,6 +22,7 @@ class DbShopProfileRepository implements ShopProfileRepositoryInterface
             $infoModel->main_photo,
             $infoModel->phone,
             $infoModel->additional_contact);
+
     }
 
     public function save(ShopProfile $info)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Seller;
 
+use App\Domain\ShopProfile;
 use App\Domain\ShopProfileRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SellerInfoRequest;
@@ -30,7 +31,19 @@ class ShopProfileController extends Controller
 
     public function store(SellerInfoRequest $request): RedirectResponse
     {
-        $request->user()->sellerInfo()->create($request->all());
+        $shopProfile = new ShopProfile
+        (
+            Auth::id(),
+            $request->shopName,
+            $request->email,
+            $request->deliveryTerms,
+            $request->info,
+            $request->mainPhoto,
+            $request->phone,
+            $request->additionalContact
+        );
+
+        $this->infoRepository->save($shopProfile);
 
         return redirect()->route('seller_profile');
     }

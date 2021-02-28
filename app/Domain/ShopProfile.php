@@ -18,10 +18,10 @@ class ShopProfile
         string $shopName,
         string $email,
         string $deliveryTerms,
-        string $info = null,
-        string $mainPhoto = null,
-        string $phone = null,
-        string $additionalContact = null
+        ?string $info,
+        ?string $mainPhoto,
+        ?string $phone,
+        ?string $additionalContact
     )
     {
         $this->sellerId = $sellerId;

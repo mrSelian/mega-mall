@@ -125,11 +125,11 @@ class Cart
         }
     }
 
-    public function toOrder(ProductRepositoryInterface $productRepository): Order
+    public function order(ProductRepositoryInterface $productRepository,CustomerAddress $address): Order
     {
         $this->actualize($productRepository);
         if ($this->products == []) throw new \Exception('В корзине нет товаров для заказа !');
-        $order = new Order($this->sellerId, $this->customerId, $this->calculateTotalPrice(), $this->products, 'оформлен');;
+        $order = new Order($this->sellerId, $this->customerId, $this->calculateTotalPrice(), $this->products, 'оформлен',$address);
         $this->clear();
         return $order;
     }

@@ -8,11 +8,11 @@ use App\Models\AddressModel;
 
 class DbAddressRepository implements AddressRepositoryInterface
 {
-    public function getByUserId(int $id): CustomerAddress
+    public function getByUserId(int $id): ?CustomerAddress
     {
         $addressModel = AddressModel::where('user_id', '=', $id)->first();
 
-        return new CustomerAddress(
+        return $addressModel == null ? null : new CustomerAddress(
             $addressModel->user_id,
             $addressModel->zip,
             $addressModel->country,
@@ -23,6 +23,7 @@ class DbAddressRepository implements AddressRepositoryInterface
             $addressModel->apt,
             $addressModel->full_name
         );
+
     }
 
     public function save(CustomerAddress $address)

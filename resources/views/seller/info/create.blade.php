@@ -19,8 +19,8 @@
                     @csrf
 
                     <div class="flex flex-col text-sm">
-                        <label for="name" class="font-bold mt-4 mb-2">Название магазина*</label>
-                        <input name="name" id="name" class="appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                        <label for="shopName" class="font-bold mt-4 mb-2">Название магазина*</label>
+                        <input name="shopName" id="shopName" class="appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                type="text" placeholder="Так будут видеть название покупатели">
                     </div>
 

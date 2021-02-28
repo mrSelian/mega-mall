@@ -16,7 +16,8 @@ class OrderModel extends Model
         'customer_id',
         'items',
         'status',
-        'sum'
+        'sum',
+        'delivery_address'
 
     ];
 }

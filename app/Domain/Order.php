@@ -11,15 +11,17 @@ class Order
     private int $sum;
     private string $status;
     private ?int $id;
+    private CustomerAddress $deliveryAddress;
 
 
-    public function __construct(int $sellerId, int $customerId, int $sum, array $products, string $status, ?int $id = null)
+    public function __construct(int $sellerId, int $customerId, int $sum, array $products, string $status, CustomerAddress $address, ?int $id = null)
     {
         $this->sellerId = $sellerId;
         $this->customerId = $customerId;
         $this->sum = $sum;
         $this->products = $products;
         $this->status = $status;
+        $this->deliveryAddress = $address;
         $this->id = $id;
 
     }
@@ -77,6 +79,11 @@ class Order
     public function getProducts(): array
     {
         return $this->products;
+    }
+
+    public function getDeliveryAddress(): CustomerAddress
+    {
+        return $this->deliveryAddress;
     }
 
 }

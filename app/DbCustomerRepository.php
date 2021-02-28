@@ -8,15 +8,16 @@ use App\Models\CustomerInfoModel;
 
 class DbCustomerRepository implements CustomerRepositoryInterface
 {
-    public function getByCustomerId(int $id): Customer
+    public function getByCustomerId(int $id): ?Customer
     {
         $infoModel = CustomerInfoModel::where('user_id', '=', $id)->first();
 
-        return new Customer(
+        return $infoModel == null ? null : new Customer(
             $infoModel->email,
             $infoModel->user_id,
             $infoModel->phone,
             $infoModel->additional_contact);
+
     }
 
 
