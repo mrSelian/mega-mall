@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-use App\DbAddressRepository;
+use App\DbCustomerAddressRepository;
 use App\DbCustomerRepository;
 use App\DbOrderRepository;
 use App\DbProductRepository;
 use App\DbShopProfileRepository;
-use App\Domain\AddressRepositoryInterface;
+use App\Domain\CustomerAddressRepositoryInterface;
 use App\Domain\CartRepositoryInterface;
 use App\Domain\CustomerRepositoryInterface;
 use App\Domain\OrderRepositoryInterface;
@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CartRepositoryInterface::class, SessionCartRepository::class);
         $this->app->bind(ProductRepositoryInterface::class, DbProductRepository::class);
         $this->app->bind(OrderRepositoryInterface::class, DbOrderRepository::class);
-        $this->app->bind(AddressRepositoryInterface::class, DbAddressRepository::class);
+        $this->app->bind(CustomerAddressRepositoryInterface::class, DbCustomerAddressRepository::class);
         $this->app->bind(ShopProfileRepositoryInterface::class, DbShopProfileRepository::class);
         $this->app->bind(CustomerRepositoryInterface::class, DbCustomerRepository::class);
 

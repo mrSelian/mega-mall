@@ -5,6 +5,7 @@ namespace App;
 use App\Domain\CartProduct;
 use App\Domain\CustomerAddress;
 use App\Domain\Order;
+use App\Domain\OrderProduct;
 use App\Domain\OrderRepositoryInterface;
 use App\Models\OrderModel;
 
@@ -39,7 +40,7 @@ class DbOrderRepository implements OrderRepositoryInterface
             $record->seller_id,
             $record->customer_id,
             $record->sum,
-            array_map(fn(array $product) => CartProduct::fromArray($product), json_decode($record->items, true)),
+            array_map(fn(array $product) => OrderProduct::fromArray($product), json_decode($record->items, true)),
             $record->status,
             CustomerAddress::fromArray(json_decode($record->delivery_address,true)),
             $record->id
@@ -60,7 +61,7 @@ class DbOrderRepository implements OrderRepositoryInterface
         $record = OrderModel::where('id', '=', $order->getId())->firstOrNew();
         $record->seller_id = $order->getSellerId();
         $record->customer_id = $order->getCustomerId();
-        $record->items = json_encode(array_map(fn(CartProduct $product) => $product->toArray(), $order->getProducts()));
+        $record->items = json_encode(array_map(fn(OrderProduct $product) => $product->toArray(), $order->getProducts()));
         $record->sum = $order->getSum();
         $record->status = $order->getStatus();
         $record->delivery_address = json_encode($order->getDeliveryAddress()->toArray());

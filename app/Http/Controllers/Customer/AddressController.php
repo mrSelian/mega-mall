@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Domain\CustomerAddress;
-use App\Domain\AddressRepositoryInterface;
+use App\Domain\CustomerAddressRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateAddressRequest;
 use Illuminate\Http\RedirectResponse;
@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Auth;
 
 class AddressController extends Controller
 {
-    private AddressRepositoryInterface $addressRepository;
+    private CustomerAddressRepositoryInterface $addressRepository;
 
-    public function __construct(AddressRepositoryInterface $addressRepository)
+    public function __construct(CustomerAddressRepositoryInterface $addressRepository)
     {
         $this->addressRepository = $addressRepository;
     }

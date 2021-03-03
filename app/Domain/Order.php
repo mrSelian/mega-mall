@@ -4,7 +4,7 @@ namespace App\Domain;
 
 class Order
 {
-    /** @var CartProduct[] $products */
+    /** @var OrderProduct[] $products */
     private array $products;
     private int $sellerId;
     private int $customerId;

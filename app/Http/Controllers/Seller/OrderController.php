@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Seller;
 
-use App\Domain\AddressRepositoryInterface;
+use App\Domain\CustomerAddressRepositoryInterface;
 use App\Domain\CustomerRepositoryInterface;
 use App\Domain\OrderRepositoryInterface;
 use App\Http\Controllers\Controller;
@@ -14,11 +14,11 @@ class OrderController extends Controller
 {
     private OrderRepositoryInterface $orderRepository;
     private CustomerRepositoryInterface $customerInfoRepository;
-    private AddressRepositoryInterface $addressRepository;
+    private CustomerAddressRepositoryInterface $addressRepository;
 
     public function __construct(OrderRepositoryInterface $orderRepository,
                                 CustomerRepositoryInterface $customerInfoRepository,
-                                AddressRepositoryInterface $addressRepository)
+                                CustomerAddressRepositoryInterface $addressRepository)
     {
         $this->orderRepository = $orderRepository;
         $this->customerInfoRepository = $customerInfoRepository;

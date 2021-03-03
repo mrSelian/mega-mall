@@ -3,10 +3,10 @@
 namespace App;
 
 use App\Domain\CustomerAddress;
-use App\Domain\AddressRepositoryInterface;
+use App\Domain\CustomerAddressRepositoryInterface;
 use App\Models\AddressModel;
 
-class DbAddressRepository implements AddressRepositoryInterface
+class DbCustomerAddressRepository implements CustomerAddressRepositoryInterface
 {
     public function getByUserId(int $id): ?CustomerAddress
     {

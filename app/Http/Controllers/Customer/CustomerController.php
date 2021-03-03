@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Customer;
 
-use App\Domain\AddressRepositoryInterface;
+use App\Domain\CustomerAddressRepositoryInterface;
 use App\Domain\Customer;
 use App\Domain\CustomerRepositoryInterface;
 use App\Http\Controllers\Controller;
@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Auth;
 class CustomerController extends Controller
 {
     private CustomerRepositoryInterface $infoRepository;
-    private AddressRepositoryInterface $addressRepository;
+    private CustomerAddressRepositoryInterface $addressRepository;
 
-    public function __construct(CustomerRepositoryInterface $infoRepository, AddressRepositoryInterface $addressRepository)
+    public function __construct(CustomerRepositoryInterface $infoRepository, CustomerAddressRepositoryInterface $addressRepository)
     {
         $this->infoRepository = $infoRepository;
         $this->addressRepository = $addressRepository;

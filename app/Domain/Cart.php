@@ -70,29 +70,29 @@ class Cart
 //        if ($this->sellerId != $product->getSellerId()) throw new \Exception('Невозможно добавить товар в корзину другого продавца!');
         if ($amount < 1) throw new \Exception('Невозможно добавить менее 1 товара!');
 
+        $cartProduct = $this->getProductById($product->getId());
+
+        if ($cartProduct) {
+            $this->removeProduct($cartProduct->getProductId());
+        }
+        $cartProduct = CartProduct::add($product, $amount);
+
+        array_push($this->products, $cartProduct);
+
         $this->sellerId = $product->getSellerId();
 
-        $cartProduct = $this->getProductById($product->getId());
-
-        if (!$cartProduct) {
-            $cartProduct = CartProduct::add($product, $amount);
-            array_push($this->products, $cartProduct);
-            return true;
-        }
-
-        return $this->correctAmount($product, $cartProduct->getAmount() + $amount);
     }
 
-    public function correctAmount(Product $product, $amount): bool
-    {
-        $cartProduct = $this->getProductById($product->getId());
-        if (!$cartProduct) throw new \Exception('Продукт не найден!');
-
-        $this->removeProduct($cartProduct->getProductId());
-        $this->addProduct($product, $amount);
-
-        return true;
-    }
+//    public function correctAmount(Product $product, $amount): bool
+//    {
+//        $cartProduct = $this->getProductById($product->getId());
+//        if (!$cartProduct) throw new \Exception('Продукт не найден!');
+//
+//        $this->removeProduct($cartProduct->getProductId());
+//        $this->addProduct($product, $amount);
+//
+//        return true;
+//    }
 
 
     public function removeProduct(int $id)
@@ -133,7 +133,8 @@ class Cart
     {
         $this->actualize($productRepository);
         if ($this->products == []) throw new \Exception('В корзине нет товаров для заказа !');
-        $order = new Order($this->sellerId, $this->customerId, $this->calculateTotalPrice(), $this->products, 'оформлен', $address);
+        $products = array_map(fn(CartProduct $product) => OrderProduct::fromCartProduct($product), $this->products);
+        $order = new Order($this->sellerId, $this->customerId, $this->calculateTotalPrice(), $products, 'оформлен', $address);
         $this->clear();
         return $order;
     }

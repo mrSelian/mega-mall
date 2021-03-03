@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Shop;
 
-use App\Domain\AddressRepositoryInterface;
+use App\Domain\CustomerAddressRepositoryInterface;
 use App\Domain\CartRepositoryInterface;
 use App\Domain\OrderRepositoryInterface;
 use App\Domain\ProductRepositoryInterface;
@@ -17,12 +17,12 @@ class CartController extends Controller
     private CartRepositoryInterface $cartRepository;
     private ProductRepositoryInterface $productRepository;
     private OrderRepositoryInterface $orderRepository;
-    private AddressRepositoryInterface $addressRepository;
+    private CustomerAddressRepositoryInterface $addressRepository;
 
     public function __construct(CartRepositoryInterface $cartRepository,
                                 ProductRepositoryInterface $productRepository,
                                 OrderRepositoryInterface $orderRepository,
-                                AddressRepositoryInterface $addressRepository)
+                                CustomerAddressRepositoryInterface $addressRepository)
     {
         $this->cartRepository = $cartRepository;
         $this->productRepository = $productRepository;
@@ -45,6 +45,8 @@ class CartController extends Controller
 
         $cart = $this->cartRepository->get();
         $product = $this->productRepository->getById($request->id);
+
+        if($cart->getProductById($request->id)) redirect()->back()->withErrors("Данный товар уже есть в корзине! Вы можете добавить или удалить товар на этой странице.");;
 
         $cart->addProduct($product, $request->amount);
         $this->cartRepository->save($cart);
@@ -77,7 +79,7 @@ class CartController extends Controller
 
         $address = $this->addressRepository->getByUserId(Auth::id());
 
-        if($address == null) abort(403,'Добавьте адрес доставки в профиле покупателя перед тем, как делать заказ!');
+        if($address == null) redirect()->back()->withErrors('Добавьте адрес доставки в профиле покупателя перед тем, как делать заказ!');
 
         $order = $cart->order($this->productRepository,$address);
         $this->orderRepository->save($order);
@@ -101,7 +103,7 @@ class CartController extends Controller
         $cart = $this->cartRepository->get();
 
         $product = $this->productRepository->getById($request->id);
-        $cart->correctAmount($product, $request->amount);
+        $cart->addProduct($product, $request->amount);
         $this->cartRepository->save($cart);
 
         return redirect()->back();

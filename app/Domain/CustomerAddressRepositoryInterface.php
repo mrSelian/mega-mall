@@ -2,7 +2,7 @@
 
 namespace App\Domain;
 
-interface AddressRepositoryInterface
+interface CustomerAddressRepositoryInterface
 {
     public function getByUserId(int $id): ?CustomerAddress;
 
