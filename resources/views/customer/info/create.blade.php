@@ -19,19 +19,19 @@
                     @csrf
                     <div class="flex flex-col text-sm">
                         <label for="phone" class="font-bold mt-4 mb-2">Номер телефона</label>
-                        <input name="phone" id="phone" class="appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                        <input name="phone" id="phone" value="{{old('phone')}}" class="appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                type="text" placeholder="Введите номер телефона">
                     </div>
 
                     <div class="flex flex-col text-sm">
                         <label for="email" class="font-bold mt-4 mb-2">E-mail*</label>
-                        <input name="email" id="email" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                        <input name="email" id="email" value="{{old('email')}}" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                type="text" placeholder="Адрес электронной почты">
                     </div>
 
                     <div class="flex flex-col text-sm">
                         <label for="additionalContact" class="font-bold mt-4 mb-2">Дополнительный контакт</label>
-                        <input name="additionalContact" id="additionalContact" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                        <input name="additionalContact" id="additionalContact" value="{{old('additionalContact')}}" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                type="text" placeholder="Соц.сети, Telegram или другое">
                     </div>
 

@@ -17,10 +17,15 @@ class PageController extends Controller
         $this->sellerInfoRepository = $sellerInfoRepository;
     }
 
-
-    public function sellerShop($id)
+    public function showShop()
     {
+        $products = $this->productRepository->getAllAvailable();
 
+        return view('shop.index', compact('products'));
+    }
+
+    public function showSellerShop($id)
+    {
         $products = $this->productRepository->getAllByUserId($id);
 
         $info = $this->sellerInfoRepository->getBySellerId($id);

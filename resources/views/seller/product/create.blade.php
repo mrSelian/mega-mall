@@ -31,33 +31,33 @@
                 @csrf
                 <div class="flex flex-col text-sm">
                     <label for="name" class="font-bold mt-4 mb-2">Название</label>
-                    <input name="name" id="product-name" class="appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                    <input name="name" id="product-name" value="{{old('product-name')}}" class="appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                            type="text" placeholder="Название товара">
                 </div>
 
                 <div class="flex flex-col text-sm">
                     <label for="mainPhotoPath" class="font-bold mt-4 mb-2">Фото</label>
-                    <input name="mainPhotoPath" id="mainPhotoPath" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                    <input name="mainPhotoPath" id="mainPhotoPath" value="{{old('mainPhotoPath')}}" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                            type="text" placeholder="Ссылка на фото товара">
                 </div>
 
                 <div class="flex flex-col text-sm">
                     <label for="price" class="font-bold mt-4 mb-2">Цена, &#8381; </label>
-                    <input name="price" id="price" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                    <input name="price" id="price" value="{{old('price')}}" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                            type="text" placeholder="Цена товара">
                 </div>
 
                 <div class="flex flex-col text-sm">
                     <label for="quantity" class="font-bold mt-4 mb-2">Количество, шт; </label>
-                    <input name="quantity" id="quantity" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                    <input name="quantity" id="quantity" value="{{old('quantity')}}" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                            type="text" placeholder="Количество товара">
                 </div>
 
                 <div class="text-sm flex flex-col">
                     <label for="fullSpecification" class="font-bold mt-4 mb-2">Описание</label>
                     <textarea
-                        name="fullSpecification" id="fullSpecification" class=" appearance-none w-full border border-gray-200 p-2 h-40 focus:outline-none focus:border-gray-500"
-                        placeholder="Опишите ваш товар"></textarea>
+                        name="fullSpecification" id="fullSpecification"  class=" appearance-none w-full border border-gray-200 p-2 h-40 focus:outline-none focus:border-gray-500"
+                        placeholder="Опишите ваш товар">{{old('fullSpecification')}}</textarea>
                 </div>
 
                 <div class="submit">

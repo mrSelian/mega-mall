@@ -29,49 +29,49 @@
                     @csrf
                     <div class="flex flex-col text-sm">
                         <label for="fullName" class="font-bold mt-4 mb-2">Полное Имя</label>
-                        <input name="fullName" id="fullName" class="appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                        <input name="fullName" id="fullName" value="{{old('fullName')}}" class="appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                type="text" placeholder="Введите ФИО">
                     </div>
 
                     <div class="flex flex-col text-sm">
                         <label for="country" class="font-bold mt-4 mb-2">Страна</label>
-                        <input name="country" id="country" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                        <input name="country" id="country" value="{{old('country')}}" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                type="text" placeholder="Страна">
                     </div>
 
                     <div class="flex flex-col text-sm">
                         <label for="region" class="font-bold mt-4 mb-2">Регион </label>
-                        <input name="region" id="region" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                        <input name="region" id="region" value="{{old('region')}}" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                type="text" placeholder="Область, край, республика или штат">
                     </div>
 
                     <div class="flex flex-col text-sm">
                         <label for="city" class="font-bold mt-4 mb-2">Населенный пункт</label>
-                        <input name="city" id="city" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                        <input name="city" id="city" value="{{old('city')}}" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                type="text" placeholder="Город, село и т.д.">
                     </div>
 
                     <div class="flex flex-col text-sm">
                         <label for="zip" class="font-bold mt-4 mb-2">Индекс</label>
-                        <input name="zip" id="zip" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                        <input name="zip" id="zip" value="{{old('zip')}}" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                type="text" placeholder="Почтовый индекс">
                     </div>
 
                     <div class="flex flex-col text-sm">
                         <label for="street" class="font-bold mt-4 mb-2">Улица</label>
-                        <input name="street" id="street" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                        <input name="street" id="street" value="{{old('street')}}" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                type="text" placeholder="Улица">
                     </div>
 
                     <div class="flex flex-col text-sm">
                         <label for="house" class="font-bold mt-4 mb-2">Номер дома</label>
-                        <input name="house" id="house" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                        <input name="house" id="house" value="{{old('house')}}" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                type="text" placeholder="Номер дома">
                     </div>
 
                     <div class="flex flex-col text-sm">
                         <label for="apt" class="font-bold mt-4 mb-2">Номер квартиры/Комнаты/Офиса</label>
-                        <input name="apt" id="apt" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
+                        <input name="apt" id="apt" value="{{old('apt')}}" class=" appearance-none border border-gray-200 p-2 focus:outline-none focus:border-gray-500"
                                type="text" placeholder="Ставьте прочерк если отсутствует">
                     </div>
 

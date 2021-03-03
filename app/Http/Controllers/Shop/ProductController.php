@@ -16,12 +16,6 @@ class ProductController extends Controller
         $this->productRepository = $productRepository;
     }
 
-    public function showShop()
-    {
-        $products = $this->productRepository->getAllAvailable();
-
-        return view('shop.index', compact('products'));
-    }
 
     public function show($id)
     {

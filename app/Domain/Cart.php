@@ -67,18 +67,31 @@ class Cart
 
     public function addProduct(Product $product, int $amount)
     {
-        if ($this->sellerId == null) $this->sellerId = $product->getSellerId();
+//        if ($this->sellerId != $product->getSellerId()) throw new \Exception('Невозможно добавить товар в корзину другого продавца!');
+        if ($amount < 1) throw new \Exception('Невозможно добавить менее 1 товара!');
 
-        if (!$this->getProductById($product->getId())) {
+        $this->sellerId = $product->getSellerId();
+
+        $cartProduct = $this->getProductById($product->getId());
+
+        if (!$cartProduct) {
             $cartProduct = CartProduct::add($product, $amount);
             array_push($this->products, $cartProduct);
-//            $this->products[$cartProduct->getProductId()] = $cartProduct;
-        } else {
-            $this->correctAmount($product, $this->getProductById($product->getId())->getAmount());
+            return true;
         }
-        if ($product->getAmount() == 0) $this->removeProduct($product->getId());
-        if ($this->products == []) $this->sellerId = null;
 
+        return $this->correctAmount($product, $cartProduct->getAmount() + $amount);
+    }
+
+    public function correctAmount(Product $product, $amount): bool
+    {
+        $cartProduct = $this->getProductById($product->getId());
+        if (!$cartProduct) throw new \Exception('Продукт не найден!');
+
+        $this->removeProduct($cartProduct->getProductId());
+        $this->addProduct($product, $amount);
+
+        return true;
     }
 
 
@@ -89,7 +102,7 @@ class Cart
                 unset ($this->products[key($this->products)]);
             }
         }
-        if ($this->products == []) $this->sellerId = null;
+        if (!$this->products) $this->sellerId = null;
     }
 
     public function getProductById(int $id)
@@ -106,15 +119,6 @@ class Cart
         $this->sellerId = null;
     }
 
-    public function correctAmount(Product $product, $amount)
-    {
-        $cartProduct = $this->getProductById($product->getId());
-        if (!$cartProduct) throw new \Exception('Продукт не найден!');
-
-        $this->removeProduct($cartProduct->getProductId());
-
-        $this->addProduct($product, $amount);
-    }
 
     public function actualize($repository)
     {
@@ -125,11 +129,11 @@ class Cart
         }
     }
 
-    public function order(ProductRepositoryInterface $productRepository,CustomerAddress $address): Order
+    public function order(ProductRepositoryInterface $productRepository, CustomerAddress $address): Order
     {
         $this->actualize($productRepository);
         if ($this->products == []) throw new \Exception('В корзине нет товаров для заказа !');
-        $order = new Order($this->sellerId, $this->customerId, $this->calculateTotalPrice(), $this->products, 'оформлен',$address);
+        $order = new Order($this->sellerId, $this->customerId, $this->calculateTotalPrice(), $this->products, 'оформлен', $address);
         $this->clear();
         return $order;
     }

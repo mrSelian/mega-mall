@@ -36,6 +36,7 @@ class CartProduct
         return new self($product->getId(), $product->getName(), $product->getPrice(), $product->getSellerId(), abs($amount));
     }
 
+
     public function getProductId(): int
     {
         return $this->productId;

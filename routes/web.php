@@ -22,14 +22,14 @@ use App\Http\Controllers\Customer\CustomerController;
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['prefix' => '/'], function () {
-        Route::get('/', [\App\Http\Controllers\Shop\ProductController::class, 'showShop'])->name('index');
+        Route::get('/', [PageController::class, 'showShop'])->name('index');
         Route::post('/search', [\App\Http\Controllers\Shop\ProductController::class, 'search'])->name('search');
         Route::get('/search', fn() => redirect(route('index')));
         Route::get('dashboard', fn() => redirect('/'))->name('dashboard');
     });
 
     Route::group(['prefix' => 'shop'], function () {
-        Route::get('/{id}', [PageController::class, 'sellerShop'])->name('seller_page');
+        Route::get('/{id}', [PageController::class, 'showSellerShop'])->name('seller_page');
     });
 
     Route::group(['prefix' => 'order'], function () {
